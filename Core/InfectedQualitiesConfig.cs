@@ -10,6 +10,7 @@ namespace InfectedQualities.Core
 
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
+        [Header("$Mods.InfectedQualities.Config.Title.Visual")]
         [LabelKey("$Mods.InfectedQualities.Config.InfectedPlantera.Label"), TooltipKey("$Mods.InfectedQualities.Config.InfectedPlantera.Tooltip")]
         [BackgroundColor(45, 148, 185)]
         [DefaultValue(true)]

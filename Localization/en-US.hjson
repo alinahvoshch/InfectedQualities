@@ -71,6 +71,7 @@ Mods: {
 
 				Content: Content Configuration
 				Experimental: Experimental Configuration
+				Visual: Visual Configuration
 			}
 
 			InfectedBiomes: {
