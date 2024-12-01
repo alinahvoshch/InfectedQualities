@@ -81,3 +81,6 @@ You can make corrupt and crimson snow get purified in the config with no issues,
 Hallowed jungle grass cannot be added in the config file.
 
 RADIANCE --> No manual compability, but there should be no issues.
+
+|CREDITS|
+alinahvoshch --> Russian translation.

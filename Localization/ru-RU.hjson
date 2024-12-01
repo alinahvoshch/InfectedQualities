@@ -71,6 +71,7 @@ Mods: {
 
 				Content: Конфигурация контента
 				Experimental: Конфигурация экспериментальных функций
+				Visual: Visual Configuration
 			}
 
 			InfectedBiomes: {
@@ -129,7 +130,7 @@ Mods: {
 				Tooltip:
 					'''
 					Позволяет городским НИПам жить в искажении и багрянце
-          Их уровень счастья будет на минимуме, но это лучше, чем их выселение
+					Их уровень счастья будет на минимуме, но это лучше, чем их выселение
 					'''
 			}
 
@@ -142,6 +143,11 @@ Mods: {
 					Изменение настройки никак не влияет на изменение спрайта бутона плантеры
 					ПРИМЕЧАНИЕ: Не предназначено для призыва нескольких Плантер за раз
 					'''
+			}
+
+			BiomeSightWallHighlighting: {
+				Label: "[i:5211] Biome Sight Wall Highlighting"
+				Tooltip: Biome sight potion will highlights infection walls. Compatible with other mods.
 			}
 		}
 
