@@ -16,6 +16,11 @@ namespace InfectedQualities.Core
         [DefaultValue(true)]
         [ReloadRequired]
         public bool InfectedPlantera { get; set; }
+
+        [LabelKey("$Mods.InfectedQualities.Config.BiomeSightWallHighlighting.Label"), TooltipKey("$Mods.InfectedQualities.Config.BiomeSightWallHighlighting.Tooltip")]
+        [BackgroundColor(45, 148, 185)]
+        [DefaultValue(true)]
+        public bool BiomeSightWallHighlighting { get; set; }
     }
 
     [BackgroundColor(29, 11, 45, 200)]

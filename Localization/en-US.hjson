@@ -140,6 +140,11 @@ Mods: {
 					NOTE: Only meant to work with one plantera at a time.
 					'''
 			}
+
+			BiomeSightWallHighlighting: {
+				Label: "[i:5211] Biome Sight Wall Highlighting"
+				Tooltip: Biome sight potion will highlights infection walls. Compatible with other mods.
+			}
 		}
 
 		Misc: {

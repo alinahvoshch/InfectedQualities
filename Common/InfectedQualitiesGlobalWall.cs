@@ -62,7 +62,7 @@ namespace InfectedQualities.Common
         private static bool GetBiomeSightColor(int i, int j, int type, out Color sightColor)
         {
             sightColor = InfectedQualitiesModSupport.ModWallBiomeSight[type];
-            if (Main.LocalPlayer.biomeSight && !WorldGen.SolidTile(i, j, true) && (Main.tile[i, j].LiquidAmount == 0 || Main.tile[i, j].LiquidType == LiquidID.Water))
+            if (ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlighting && Main.LocalPlayer.biomeSight && !WorldGen.SolidTile(i, j, true) && (Main.tile[i, j].LiquidAmount == 0 || Main.tile[i, j].LiquidType == LiquidID.Water))
             {
                 if(sightColor == default)
                 {
