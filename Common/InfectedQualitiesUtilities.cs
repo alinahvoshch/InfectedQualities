@@ -7,6 +7,7 @@ using InfectedQualities.Content.Tiles.Plants;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using Microsoft.Xna.Framework;
 
 namespace InfectedQualities.Common
 {
@@ -266,29 +267,6 @@ namespace InfectedQualities.Common
             }
         }
 
-        public static void ChlorophyteWallDefense(int i, int j)
-        {
-            if(Main.remixWorld)
-            {
-                if (Main.tile[i, j].WallType is WallID.CorruptGrassUnsafe or WallID.CrimsonGrassUnsafe or WallID.HallowedGrassUnsafe)
-                {
-                    Main.tile[i, j].WallType = WallID.JungleUnsafe;
-                }
-                else if (Main.tile[i, j].WallType is WallID.EbonstoneUnsafe or WallID.CrimstoneUnsafe or WallID.PearlstoneBrickUnsafe)
-                {
-                    Main.tile[i, j].WallType = WallID.Stone;
-                }
-                else if (Main.tile[i, j].WallType is WallID.CorruptHardenedSand or WallID.CrimsonHardenedSand or WallID.HallowHardenedSand)
-                {
-                    Main.tile[i, j].WallType = WallID.HardenedSand;
-                }
-                else if (Main.tile[i, j].WallType is WallID.CorruptSandstone or WallID.CrimsonSandstone or WallID.HallowSandstone)
-                {
-                    Main.tile[i, j].WallType = WallID.Sandstone;
-                }
-            }
-        }
-
         public static void GetTopLeft(int i, int j, out int x, out int y, out short num)
         {
             num = -1;
@@ -320,6 +298,73 @@ namespace InfectedQualities.Common
                 {
                     num = 72;
                 }
+            }
+        }
+
+        public static bool GetBiomeSightColor(int i, int j, int type, out Color sightColor)
+        {
+            sightColor = InfectedQualitiesModSupport.ModWallBiomeSight[type];
+            if (ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlighting && Main.LocalPlayer.biomeSight && !WorldGen.SolidTile(i, j, true) && (Main.tile[i, j].LiquidAmount == 0 || Main.tile[i, j].LiquidType == LiquidID.Water))
+            {
+                if (sightColor == default)
+                {
+                    if (WallID.Sets.Corrupt[type])
+                    {
+                        sightColor = new(200, 100, 240);
+                        return true;
+                    }
+                    else if (WallID.Sets.Crimson[type])
+                    {
+                        sightColor = new(255, 100, 100);
+                        return true;
+                    }
+                    else if (WallID.Sets.Hallow[type])
+                    {
+                        sightColor = new(255, 160, 240);
+                        return true;
+                    }
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public static void WallSpread(int i, int j, InfectionType infectionType)
+        {
+            if (RefectionMethod(i, j, "nearbyChlorophyte"))
+            {
+                if(WorldGen.AllowedToSpreadInfections && Main.remixWorld)
+                {
+                    if (Main.tile[i, j].WallType is WallID.CorruptGrassUnsafe or WallID.CrimsonGrassUnsafe or WallID.HallowedGrassUnsafe)
+                    {
+                        Main.tile[i, j].WallType = WallID.JungleUnsafe;
+                        WorldGen.SquareWallFrame(i, j);
+                        NetMessage.SendTileSquare(-1, i, j);
+                    }
+                    else if (Main.tile[i, j].WallType is WallID.EbonstoneUnsafe or WallID.CrimstoneUnsafe or WallID.PearlstoneBrickUnsafe)
+                    {
+                        Main.tile[i, j].WallType = WallID.Stone;
+                        WorldGen.SquareWallFrame(i, j);
+                        NetMessage.SendTileSquare(-1, i, j);
+                    }
+                    else if (Main.tile[i, j].WallType is WallID.CorruptHardenedSand or WallID.CrimsonHardenedSand or WallID.HallowHardenedSand)
+                    {
+                        Main.tile[i, j].WallType = WallID.HardenedSand;
+                        WorldGen.SquareWallFrame(i, j);
+                        NetMessage.SendTileSquare(-1, i, j);
+                    }
+                    else if (Main.tile[i, j].WallType is WallID.CorruptSandstone or WallID.CrimsonSandstone or WallID.HallowSandstone)
+                    {
+                        Main.tile[i, j].WallType = WallID.Sandstone;
+                        WorldGen.SquareWallFrame(i, j);
+                        NetMessage.SendTileSquare(-1, i, j);
+                    }
+                }
+            }
+            else
+            {
+                SpreadInfection(i, j, infectionType);
             }
         }
 
