@@ -30,7 +30,7 @@ This also disables the normal key of night recipe when inside a graveyard.
 
 INFECTED PLANTERA BULB & LIFE FRUIT --> Pretty self-explanatory, these tiles get their own custom texture when their jungle grass is infected.
 
-INFECTED PLANTERA --> Purely visual, plantera now gets her own custom textures when spawned in an infected biome. If you are in an infected jungle biome, plantera should not enrage.y
+INFECTED PLANTERA --> Purely visual, plantera now gets her own custom textures when spawned in an infected biome. If you are in an infected jungle biome, plantera should not enrage.
 
 |SMALL CHANGES|
 ===============
