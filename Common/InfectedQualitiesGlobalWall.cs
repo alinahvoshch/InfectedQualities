@@ -9,6 +9,16 @@ namespace InfectedQualities.Common
 {
     public class InfectedQualitiesGlobalWall : GlobalWall
     {
+        public override void SetStaticDefaults()
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                WallID.Sets.Corrupt[WallID.CorruptionUnsafe1 + i] = true;
+                WallID.Sets.Crimson[WallID.CrimsonUnsafe1 + i] = true;
+                WallID.Sets.Hallow[WallID.HallowUnsafe1 + i] = true;
+            }
+        }
+
         public override void RandomUpdate(int i, int j, int type)
         {
             if (WallID.Sets.Corrupt[type] && !(Main.tile[i, j].HasTile && TileID.Sets.Corrupt[Main.tile[i, j].TileType]))
@@ -80,12 +90,9 @@ namespace InfectedQualities.Common
 
         private static void WallSpread(int i, int j, InfectionType infectionType)
         {
-            if (InfectedQualitiesUtilities.RefectionMethod(i, j, "nearbyChlorophyte"))
+            if (InfectedQualitiesUtilities.RefectionMethod(i, j, "nearbyChlorophyte") && WorldGen.AllowedToSpreadInfections)
             {
-                if (WorldGen.AllowedToSpreadInfections && Main.remixWorld)
-                {
-                    WorldGen.Convert(i, j, BiomeConversionID.Purity);
-                }
+                InfectedQualitiesUtilities.ChlorophyteWallDefense(i, j);
             }
             else
             {

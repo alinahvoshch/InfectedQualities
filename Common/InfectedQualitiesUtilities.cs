@@ -266,6 +266,29 @@ namespace InfectedQualities.Common
             }
         }
 
+        public static void ChlorophyteWallDefense(int i, int j)
+        {
+            if(Main.remixWorld)
+            {
+                if (Main.tile[i, j].WallType is WallID.CorruptGrassUnsafe or WallID.CrimsonGrassUnsafe or WallID.HallowedGrassUnsafe)
+                {
+                    Main.tile[i, j].WallType = WallID.JungleUnsafe;
+                }
+                else if (Main.tile[i, j].WallType is WallID.EbonstoneUnsafe or WallID.CrimstoneUnsafe or WallID.PearlstoneBrickUnsafe)
+                {
+                    Main.tile[i, j].WallType = WallID.Stone;
+                }
+                else if (Main.tile[i, j].WallType is WallID.CorruptHardenedSand or WallID.CrimsonHardenedSand or WallID.HallowHardenedSand)
+                {
+                    Main.tile[i, j].WallType = WallID.HardenedSand;
+                }
+                else if (Main.tile[i, j].WallType is WallID.CorruptSandstone or WallID.CrimsonSandstone or WallID.HallowSandstone)
+                {
+                    Main.tile[i, j].WallType = WallID.Sandstone;
+                }
+            }
+        }
+
         public static void GetTopLeft(int i, int j, out int x, out int y, out short num)
         {
             num = -1;
