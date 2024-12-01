@@ -1,3 +1,12 @@
+0.7.2
+=====
+-Added Russian translation. Credit goes to alinahvoshch.
+-File organization
+-Fixed description typo
+-Infected cave walls now get highlighted by biome sight potions and spread infections. However they won't convert other cave walls.
+-Added a config header for client.
+-Added a config option to disable biome sight potion highlighting walls.
+
 0.7.1
 =====
 -Initial Release
