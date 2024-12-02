@@ -143,12 +143,12 @@ Mods: {
 
 			BiomeSightWallHighlighting: {
 				Label: "[i:5211] Biome Sight Wall Highlighting"
-				Tooltip: Biome sight potion will highlights infection walls. Compatible with other mods.
+				Tooltip: Biome sight potion will highlight infection walls. Compatible with other mods.
 			}
 		}
 
 		Misc: {
-			ChasmPurifyMessage: The chasms have been cleansed.
+			ChasmPurifyMessage: The chasms have been cleansed!
 			Pylon: Pylon
 		}
 	}

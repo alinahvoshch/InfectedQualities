@@ -44,6 +44,7 @@ INFECTED PLANTERA --> Purely visual, plantera now gets her own custom textures w
 -Hallowed grass and hallowed golf grass can now grow crystal shards.
 -Corrupt and Crimson ice now grows deathweed instead of shiverthorn.
 -Hardmode V-Generation now affects moss blocks and thorns.
+-Unused corrupt and crimson lily pads and cattails can now appear.
 
 |EXPERIMENTAL FEATURES|
 =======================
@@ -79,8 +80,6 @@ EXXO AVALON --> Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was 
 PYLONS PREVENT EVILS --> The game runs, but the features are partially incompatible.
 You can make corrupt and crimson snow get purified in the config with no issues, but the hallowed snow gets purified by the hallow pylon.
 Hallowed jungle grass cannot be added in the config file.
-
-RADIANCE --> No manual compability, but there should be no issues.
 
 |CREDITS|
 alinahvoshch --> Russian translation.

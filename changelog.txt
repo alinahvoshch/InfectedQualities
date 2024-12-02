@@ -1,12 +1,13 @@
 0.7.2
 =====
+-Added a config header for client.
+-Added a background color for client-side config
 -Added Russian translation. Credit goes to alinahvoshch.
 -File organization
--Fixed description typo
+-Fixed description typo, and added missing features to the description. Also removed comment about Radiance mod compat, since it had no point in existing.
+
 -Infected cave walls now get highlighted by biome sight potions and spread infections. However they won't convert other cave walls.
--Added a config header for client.
 -Added a config option to disable biome sight potion highlighting walls.
--Added a background color for client-side config
 
 0.7.1
 =====
