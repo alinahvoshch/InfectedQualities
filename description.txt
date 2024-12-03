@@ -8,6 +8,7 @@
 Если вы нашли какие-то ошибки или у вас есть предложения, вы можете сообщить о них мне через [url=github.com/Mellohi138/InfectedQualities]GitHub[/url]. Если у вас возникнут вопросы насчёт перевода или вы найдте в нём ошибки (в том числе в этом тексте), мы можете сообщить на них на моём [url=discord.gg/rU2pfs9Bky]Discord-сервере[/url]
 
 [h1]Контент мода[/h1]
+[hr][/hr]
 [b]Заражённые блоки снега[/b]: появляется естественным образом и имеет искажённый, багровый и освящённый вариант.
   Появление заражения в снегах может вызвать много проблем, поскольку многий контет заражений (в том числе, банальное появление врагов) завязан на заражённых блоках, а т.к. лёд, который может заражаться, в отличии от снега малочисленен в биоме. Добавление заражённого снега должно их исправить.
 
@@ -32,6 +33,7 @@ INFECTED PLANTERA BULB & LIFE FRUIT --> Pretty self-explanatory, these tiles get
 INFECTED PLANTERA --> Purely visual, plantera now gets her own custom textures when spawned in an infected biome. If you are in an infected jungle biome, plantera should not enrage.y
 
 [h2]Небольшие изменения[/h2]
+[hr][/hr]
 -Corrupt plants now spread corruption.
 -Crimson plants now count as crimson biome blocks.
 -Infected vines now count towards their respective biome blocks.
@@ -44,6 +46,7 @@ INFECTED PLANTERA --> Purely visual, plantera now gets her own custom textures w
 -Hardmode V-Generation now affects moss blocks and thorns.
 
 [h2]Эксперементальный контент[/h2]
+[hr][/hr]
 These features are normally disabled, and can be turned on in the config file.
 
 CHASM PURIFICATION UPON HARDMODE --> After the wall of flesh gets defeated and before the 'ancient spirits of light and dark' get released, the entire world gets purified. 
@@ -54,7 +57,7 @@ DISABLING INFECTION SPREADING --> Self explanatory, just enable it in the config
 NPCS BEING ABLE TO LIVE IN EVIL BIOMES --> Again, self explanatory. Should save you the annoyance of having to build new houses.
 
 [h2]Совместимость с модами[/h2]
-=================
+[hr][/hr]
 The mod was designed with other mods in mind, and manual compability was added when it was needed to. But there might still be incompabilities.
 
 [h3]Calamity Mod[/h3]
@@ -67,14 +70,14 @@ You can use Calamity pylons to craft a 'PYLON OF NIGHT'.
 Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 
 [h3]Spirit Mod[/h3]
-SPIRIT MOD --> You can use the spirit mod pylons to craft a 'PYLON OF NIGHT'.
+You can use the spirit mod pylons to craft a 'PYLON OF NIGHT'.
 
 [h3]Remnants[/h3]
-REMNANTS --> Due to the way Remnants generates it's corruption and crimson, the 'CHASM PURIFICATION UPON HARDMODE' is automatically disabled.
+Due to the way Remnants generates it's corruption and crimson, the 'CHASM PURIFICATION UPON HARDMODE' is automatically disabled.
 Additionally, Remnants' Hallow generation avoids jungle grass blocks, this means the Hallowed Jungle cannot generate upon defeating the WoF.
 
 [h3]Exxo Avalon Origins[/h3]
-EXXO AVALON --> Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
+Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 'CHASM PURIFICATION UPON HARDMODE' also purifies the contagion chasms.
 'PYLON OF NIGHT' works in the Contagion.
 
