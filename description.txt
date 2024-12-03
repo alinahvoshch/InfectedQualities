@@ -81,5 +81,11 @@ PYLONS PREVENT EVILS --> The game runs, but the features are partially incompati
 You can make corrupt and crimson snow get purified in the config with no issues, but the hallowed snow gets purified by the hallow pylon.
 Hallowed jungle grass cannot be added in the config file.
 
+TERRARIA ORIGINS --> Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
+'CHASM PURIFICATION UPON HARDMODE' also purifies the chasm of Defiled Wastelands and Riven Hive.
+'PYLON OF NIGHT' works in the Defiled Wastelands and Riven Hive.
+
+ALTERNATIVES LIBRARY --> The way the mod uses to generate it's hardmode had clashes with this mod. I tried my best to resolve this issue, though expect the hardmode world generation to slow down by a bit.
+
 |CREDITS|
 alinahvoshch --> Russian translation.

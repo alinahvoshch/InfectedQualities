@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
+using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -11,70 +13,60 @@ namespace InfectedQualities.Core
         internal static readonly Mod ConfectionRebaked = ModLoader.TryGetMod("TheConfectionRebirth", out Mod result) ? result : null;
         internal static readonly Mod SpiritMod = ModLoader.TryGetMod("SpiritMod", out Mod result) ? result : null;
         internal static readonly Mod ExxoAvalon = ModLoader.TryGetMod("Avalon", out Mod result) ? result : null;
+        internal static readonly Mod TerrariaOrigins = ModLoader.TryGetMod("Origins", out Mod result) ? result : null;
 
         internal static Color[] ModWallBiomeSight = WallID.Sets.Factory.CreateCustomSet(default(Color));
 
-        private static readonly string[] ContagionTiles = [
-            "Chunkstone",
-            "HardenedSnotsand",
-            "Snotsandstone",
-            "Ickgrass",
-            "ContagionJungleGrass",
-            "Snotsand",
-            "YellowIce"
-        ];
-
-        private static readonly string[] ContagionWalls = [
-            "ContagionGrassWall",
-            "ChunkstoneWall",
-            "HardenedSnotsandWallUnsafe",
-            "SnotsandstoneWallUnsafe",
-            "ContagionLumpWallUnsafe",
-            "ContagionMouldWallUnsafe",
-            "ContagionCystWallUnsafe",
-            "ContagionBoilWallUnsafe"
+        private static readonly string[][] EvilBlocks =
+        [
+            ["AstralGrassWall", "HardenedAstralSandWall", "AstralSandstoneWall", "AstralStoneWall", "AstralDirtWall", "AstralSnowWall", "CelestialRemainsWall", "AstralIceWall", "AstralMonolithWall"],
+            ["CreamGrassWall", "HardenedCreamsandWall", "CreamsandstoneWall", "CreamstoneWall", "Creamstone2Wall", "Creamstone3Wall", "Creamstone4Wall", "Creamstone5Wall", "CookieWall", "CookieStonedWall", "PinkFairyFlossWall", "BlueIceWall", "CreamWall"],
+            ["Chunkstone", "HardenedSnotsand", "Snotsandstone", "Ickgrass", "ContagionJungleGrass", "Snotsand", "YellowIce"],
+            ["ContagionGrassWall", "ChunkstoneWall", "HardenedSnotsandWallUnsafe", "SnotsandstoneWallUnsafe", "ContagionLumpWallUnsafe", "ContagionMouldWallUnsafe", "ContagionCystWallUnsafe", "ContagionBoilWallUnsafe"],
+            ["Defiled_Stone", "Defiled_Grass", "Defiled_Sand", "Defiled_Sandstone", "Hardened_Defiled_Sand", "Defiled_Ice", "Defiled_Jungle_Grass"],
+            ["Defiled_Stone_Wall", "Defiled_Sandstone_Wall", "Hardened_Defiled_Sand_Wall", "Defiled_Grass_Wall_Natural"],
+            ["Riven_Flesh", "Riven_Grass", "Silica", "Brittle_Quartz", "Quartz", "Primordial_Permafrost", "Riven_Jungle_Grass"],
+            ["Riven_Flesh_Wall", "Quartz_Wall", "Brittle_Quartz_Wall", "Riven_Grass_Wall_Natural"]
         ];
 
         public static void PostSetupContent()
         {
             if (CalamityMod != null)
             {
-                ModWallBiomeSight[CalamityMod.Find<ModWall>("AstralGrassWall").Type] = Color.Cyan;
-                ModWallBiomeSight[CalamityMod.Find<ModWall>("HardenedAstralSandWall").Type] = Color.Cyan;
-                ModWallBiomeSight[CalamityMod.Find<ModWall>("AstralSandstoneWall").Type] = Color.Cyan;
-                ModWallBiomeSight[CalamityMod.Find<ModWall>("AstralStoneWall").Type] = Color.Cyan;
-                ModWallBiomeSight[CalamityMod.Find<ModWall>("AstralDirtWall").Type] = Color.Cyan;
-                ModWallBiomeSight[CalamityMod.Find<ModWall>("AstralSnowWall").Type] = Color.Cyan;
-                ModWallBiomeSight[CalamityMod.Find<ModWall>("CelestialRemainsWall").Type] = Color.Cyan;
-                ModWallBiomeSight[CalamityMod.Find<ModWall>("AstralIceWall").Type] = Color.Cyan;
-                ModWallBiomeSight[CalamityMod.Find<ModWall>("AstralMonolithWall").Type] = Color.Cyan;
+                foreach (string wallName in EvilBlocks[0])
+                {
+                    ModWallBiomeSight[CalamityMod.Find<ModWall>(wallName).Type] = Color.Cyan;
+                }
             }
 
             if (ConfectionRebaked != null)
             {
                 Color confectionGlow = new(210, 196, 145);
-
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("CreamGrassWall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("HardenedCreamsandWall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("CreamsandstoneWall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("CreamstoneWall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("Creamstone2Wall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("Creamstone3Wall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("Creamstone4Wall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("Creamstone5Wall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("CookieWall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("CookieStonedWall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("PinkFairyFlossWall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("BlueIceWall").Type] = confectionGlow;
-                ModWallBiomeSight[ConfectionRebaked.Find<ModWall>("CreamWall").Type] = confectionGlow;
+                foreach (string wallName in EvilBlocks[1])
+                {
+                    ModWallBiomeSight[ConfectionRebaked.Find<ModWall>(wallName).Type] = confectionGlow;
+                }
             }
 
             if (ExxoAvalon != null)
             {
                 Color contagionGlow = new(170, 255, 0);
-                foreach (string wallName in ContagionWalls)
+                foreach (string wallName in EvilBlocks[3])
                 {
                     ModWallBiomeSight[ExxoAvalon.Find<ModWall>(wallName).Type] = contagionGlow;
+                }
+            }
+
+            if(TerrariaOrigins != null)
+            {
+                foreach(string wallName in EvilBlocks[5])
+                {
+                    ModWallBiomeSight[TerrariaOrigins.Find<ModWall>(wallName).Type] = Color.White;
+                }
+
+                foreach (string wallName in EvilBlocks[7])
+                {
+                    ModWallBiomeSight[TerrariaOrigins.Find<ModWall>(wallName).Type] = Color.Cyan;
                 }
             }
         }
@@ -105,12 +97,36 @@ namespace InfectedQualities.Core
             if (ExxoAvalon != null)
             {
                 int contagionTileCount = 0;
-                foreach (string tileName in ContagionTiles)
+                foreach (string tileName in EvilBlocks[2])
                 {
                     contagionTileCount += sceneMetrics.GetTileCount(ExxoAvalon.Find<ModTile>(tileName).Type);
                 }
 
                 if (contagionTileCount >= 300)
+                {
+                    return true;
+                }
+            }
+
+            if (TerrariaOrigins != null)
+            {
+                int defiledTiles = 0, rivenTiles = 0;
+                foreach (string tileName in EvilBlocks[4])
+                {
+                    defiledTiles += sceneMetrics.GetTileCount(TerrariaOrigins.Find<ModTile>(tileName).Type);
+                }
+
+                if(defiledTiles > 200)
+                {
+                    return true;
+                }
+
+                foreach (string tileName in EvilBlocks[6])
+                {
+                    rivenTiles += sceneMetrics.GetTileCount(TerrariaOrigins.Find<ModTile>(tileName).Type);
+                }
+
+                if (rivenTiles > 200)
                 {
                     return true;
                 }
@@ -122,7 +138,7 @@ namespace InfectedQualities.Core
         {
             if (ExxoAvalon != null)
             {
-                foreach (string wallName in ContagionWalls)
+                foreach (string wallName in EvilBlocks[3])
                 {
                     if (Main.tile[i, j].WallType == ExxoAvalon.Find<ModWall>(wallName).Type)
                     {
@@ -130,12 +146,65 @@ namespace InfectedQualities.Core
                     }
                 }
 
-                foreach (string tileName in ContagionTiles)
+                foreach (string tileName in EvilBlocks[2])
                 {
                     if (Main.tile[i, j].TileType == ExxoAvalon.Find<ModTile>(tileName).Type)
                     {
                         return true;
                     }
+                }
+            }
+
+            if (TerrariaOrigins != null)
+            {
+                foreach (string wallName in EvilBlocks[5])
+                {
+                    if (Main.tile[i, j].WallType == TerrariaOrigins.Find<ModWall>(wallName).Type)
+                    {
+                        return true;
+                    }
+                }
+
+                foreach (string tileName in EvilBlocks[4])
+                {
+                    if (Main.tile[i, j].TileType == TerrariaOrigins.Find<ModTile>(tileName).Type)
+                    {
+                        return true;
+                    }
+                }
+
+                foreach (string wallName in EvilBlocks[7])
+                {
+                    if (Main.tile[i, j].WallType == TerrariaOrigins.Find<ModWall>(wallName).Type)
+                    {
+                        return true;
+                    }
+                }
+
+                foreach (string tileName in EvilBlocks[6])
+                {
+                    if (Main.tile[i, j].TileType == TerrariaOrigins.Find<ModTile>(tileName).Type)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static bool AltLibraryInfection(bool good)
+        {
+            if(ModLoader.TryGetMod("AltLibrary", out Mod altLib))
+            {
+                Type biomeManager = altLib.Code.GetType("AltLibrary.Common.Systems.WorldBiomeManager");
+                BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Static;
+                if (good)
+                {
+                    return (string)biomeManager.GetField("worldHallowName", flags).GetValue(null) != "";
+                }
+                else
+                {
+                    return (string)biomeManager.GetField("worldEvilName", flags).GetValue(null) != "";
                 }
             }
             return false;

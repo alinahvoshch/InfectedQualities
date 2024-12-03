@@ -109,126 +109,137 @@ namespace InfectedQualities.Core
         private static void WorldGen_GERunner(ILContext il)
         {
             ILCursor cursor = new(il);
-            if(cursor.TryGotoNext(i => i.MatchLdarg(4)))
+
+            bool flag = false;
+            cursor.Emit(OpCodes.Ldarg, 4);
+            cursor.EmitDelegate<Action<bool>>((good) =>
+            {
+                flag = InfectedQualitiesModSupport.AltLibraryInfection(good);
+            });
+
+            if (cursor.TryGotoNext(i => i.MatchLdarg(4)))
             {
                 cursor.Emit(OpCodes.Ldloc, 15);
                 cursor.Emit(OpCodes.Ldloc, 16);
                 cursor.Emit(OpCodes.Ldarg, 4);
                 cursor.EmitDelegate<Action<int, int, bool>>((m, n, good) =>
                 {
-                    if (good)
+                    if(!flag)
                     {
-                        if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                        if (good)
                         {
-                            if(Main.tile[m, n].WallType is WallID.JungleUnsafe or WallID.Jungle)
+                            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                             {
-                                Main.tile[m, n].WallType = WallID.HallowedGrassUnsafe;
+                                if (Main.tile[m, n].WallType is WallID.JungleUnsafe or WallID.Jungle)
+                                {
+                                    Main.tile[m, n].WallType = WallID.HallowedGrassUnsafe;
+                                }
+
+                                if (Main.tile[m, n].TileType is TileID.JungleGrass or TileID.CorruptJungleGrass or TileID.CrimsonJungleGrass)
+                                {
+                                    Main.tile[m, n].TileType = (ushort)ModContent.TileType<HallowedJungleGrass>();
+                                    WorldGen.SquareTileFrame(m, n);
+                                }
+                                else if (Main.tile[m, n].TileType == TileID.SnowBlock)
+                                {
+                                    Main.tile[m, n].TileType = (ushort)ModContent.TileType<HallowedSnow>();
+                                    WorldGen.SquareTileFrame(m, n);
+                                }
+                                else if (Main.tile[m, n].TileType == TileID.JungleThorns)
+                                {
+                                    Main.tile[m, n].TileType = (ushort)ModContent.TileType<HallowedThorns>();
+                                    WorldGen.SquareTileFrame(m, n);
+                                }
                             }
 
-                            if (Main.tile[m, n].TileType is TileID.JungleGrass or TileID.CorruptJungleGrass or TileID.CrimsonJungleGrass)
+                            if (Main.tile[m, n].WallType == WallID.Stone)
                             {
-                                Main.tile[m, n].TileType = (ushort)ModContent.TileType<HallowedJungleGrass>();
-                                WorldGen.SquareTileFrame(m, n);
-                            }
-                            else if (Main.tile[m, n].TileType == TileID.SnowBlock)
-                            {
-                                Main.tile[m, n].TileType = (ushort)ModContent.TileType<HallowedSnow>();
-                                WorldGen.SquareTileFrame(m, n);
-                            }
-                            else if (Main.tile[m, n].TileType == TileID.JungleThorns)
-                            {
-                                Main.tile[m, n].TileType = (ushort)ModContent.TileType<HallowedThorns>();
-                                WorldGen.SquareTileFrame(m, n);
-                            }
-                        }
-
-                        if (Main.tile[m, n].WallType == WallID.Stone)
-                        {
-                            Main.tile[m, n].WallType = WallID.PearlstoneBrickUnsafe;
-                        }
-
-                        if (Main.tileMoss[Main.tile[m, n].TileType]) 
-                        {
-                            Main.tile[m, n].TileType = TileID.Pearlstone;
-                            WorldGen.SquareTileFrame(m, n);
-                        }
-                        else if (Main.tile[m, n].TileType is TileID.CorruptThorns or TileID.CrimsonThorns)
-                        {
-                            WorldGen.KillTile(m, n);
-                        }
-                    }
-                    else if(WorldGen.crimson)
-                    {
-                        if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                        {
-                            if (Main.tile[m, n].WallType is WallID.JungleUnsafe or WallID.Jungle)
-                            {
-                                Main.tile[m, n].WallType = WallID.CrimsonGrassUnsafe;
+                                Main.tile[m, n].WallType = WallID.PearlstoneBrickUnsafe;
                             }
 
-                            if (Main.tile[m, n].TileType == TileID.SnowBlock)
+                            if (Main.tileMoss[Main.tile[m, n].TileType])
                             {
-                                Main.tile[m, n].TileType = (ushort)ModContent.TileType<CrimsonSnow>();
+                                Main.tile[m, n].TileType = TileID.Pearlstone;
                                 WorldGen.SquareTileFrame(m, n);
                             }
-                            else if (Main.tile[m, n].TileType == ModContent.TileType<HallowedThorns>())
+                            else if (Main.tile[m, n].TileType is TileID.CorruptThorns or TileID.CrimsonThorns)
+                            {
+                                WorldGen.KillTile(m, n);
+                            }
+                        }
+                        else if (WorldGen.crimson)
+                        {
+                            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                            {
+                                if (Main.tile[m, n].WallType is WallID.JungleUnsafe or WallID.Jungle)
+                                {
+                                    Main.tile[m, n].WallType = WallID.CrimsonGrassUnsafe;
+                                }
+
+                                if (Main.tile[m, n].TileType == TileID.SnowBlock)
+                                {
+                                    Main.tile[m, n].TileType = (ushort)ModContent.TileType<CrimsonSnow>();
+                                    WorldGen.SquareTileFrame(m, n);
+                                }
+                                else if (Main.tile[m, n].TileType == ModContent.TileType<HallowedThorns>())
+                                {
+                                    Main.tile[m, n].TileType = TileID.CrimsonThorns;
+                                    WorldGen.SquareTileFrame(m, n);
+                                }
+                            }
+
+                            if (Main.tile[m, n].WallType is WallID.Stone or WallID.EbonstoneUnsafe or WallID.PearlstoneBrickUnsafe)
+                            {
+                                Main.tile[m, n].WallType = WallID.CrimstoneUnsafe;
+                            }
+
+                            if (Main.tileMoss[Main.tile[m, n].TileType])
+                            {
+                                Main.tile[m, n].TileType = TileID.Crimstone;
+                                WorldGen.SquareTileFrame(m, n);
+                            }
+                            else if (Main.tile[m, n].TileType is TileID.CorruptThorns or TileID.JungleThorns)
                             {
                                 Main.tile[m, n].TileType = TileID.CrimsonThorns;
                                 WorldGen.SquareTileFrame(m, n);
                             }
                         }
-
-                        if (Main.tile[m, n].WallType is WallID.Stone or WallID.EbonstoneUnsafe or WallID.PearlstoneBrickUnsafe)
+                        else
                         {
-                            Main.tile[m, n].WallType = WallID.CrimstoneUnsafe;
-                        }
-
-                        if (Main.tileMoss[Main.tile[m, n].TileType])
-                        {
-                            Main.tile[m, n].TileType = TileID.Crimstone;
-                            WorldGen.SquareTileFrame(m, n);
-                        }
-                        else if (Main.tile[m, n].TileType is TileID.CorruptThorns or TileID.JungleThorns)
-                        {
-                            Main.tile[m, n].TileType = TileID.CrimsonThorns;
-                            WorldGen.SquareTileFrame(m, n);
-                        }
-                    }
-                    else
-                    {
-                        if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                        {
-                            if (Main.tile[m, n].WallType is WallID.JungleUnsafe or WallID.Jungle)
+                            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                             {
-                                Main.tile[m, n].WallType = WallID.CorruptGrassUnsafe;
+                                if (Main.tile[m, n].WallType is WallID.JungleUnsafe or WallID.Jungle)
+                                {
+                                    Main.tile[m, n].WallType = WallID.CorruptGrassUnsafe;
+                                }
+
+                                if (Main.tile[m, n].TileType == TileID.SnowBlock)
+                                {
+                                    Main.tile[m, n].TileType = (ushort)ModContent.TileType<CorruptSnow>();
+                                    WorldGen.SquareTileFrame(m, n);
+                                }
+                                else if (Main.tile[m, n].TileType == ModContent.TileType<HallowedThorns>())
+                                {
+                                    Main.tile[m, n].TileType = TileID.CorruptThorns;
+                                    WorldGen.SquareTileFrame(m, n);
+                                }
                             }
 
-                            if (Main.tile[m, n].TileType == TileID.SnowBlock)
+                            if (Main.tile[m, n].WallType is WallID.Stone or WallID.CrimstoneUnsafe or WallID.PearlstoneBrickUnsafe)
                             {
-                                Main.tile[m, n].TileType = (ushort)ModContent.TileType<CorruptSnow>();
+                                Main.tile[m, n].WallType = WallID.EbonstoneUnsafe;
+                            }
+
+                            if (Main.tileMoss[Main.tile[m, n].TileType])
+                            {
+                                Main.tile[m, n].TileType = TileID.Ebonstone;
                                 WorldGen.SquareTileFrame(m, n);
                             }
-                            else if (Main.tile[m, n].TileType == ModContent.TileType<HallowedThorns>())
+                            else if (Main.tile[m, n].TileType is TileID.CrimsonThorns or TileID.JungleThorns)
                             {
                                 Main.tile[m, n].TileType = TileID.CorruptThorns;
                                 WorldGen.SquareTileFrame(m, n);
                             }
-                        }
-
-                        if (Main.tile[m, n].WallType is WallID.Stone or WallID.CrimstoneUnsafe or WallID.PearlstoneBrickUnsafe)
-                        {
-                            Main.tile[m, n].WallType = WallID.EbonstoneUnsafe;
-                        }
-
-                        if (Main.tileMoss[Main.tile[m, n].TileType])
-                        {
-                            Main.tile[m, n].TileType = TileID.Ebonstone;
-                            WorldGen.SquareTileFrame(m, n);
-                        }
-                        else if (Main.tile[m, n].TileType is TileID.CrimsonThorns or TileID.JungleThorns)
-                        {
-                            Main.tile[m, n].TileType = TileID.CorruptThorns;
-                            WorldGen.SquareTileFrame(m, n);
                         }
                     }
                 });

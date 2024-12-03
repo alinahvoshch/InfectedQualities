@@ -1,5 +1,4 @@
-﻿using InfectedQualities.Content.Items.Placables;
-using InfectedQualities.Content.Worldgen;
+﻿using InfectedQualities.Content.Worldgen;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
