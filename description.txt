@@ -1,39 +1,37 @@
-Quality of life, perhaps you may consider it something different, it really depends on your interpertation.
-Focused on the 3 infectious biomes, corruption, crimson, and the hallow. Fixing some issues, some overlooked stuff, and adding new content.
-Right now, the mod is in beta, and has not much content. But the content added is at the very least polished.
+[i]Моды «Качества жизни» можно воспринимать абсолютно по-разному, всё зависит от вашей интерпретации.[/i]
 
-The main idea of the mod was to fuse the infection biomes with whatever biome they take over. Instead of just cutting you off from probably important stuff, it only makes it harder to get them.
+Данный мод сосредоточен на биомах заражения — искажении, багрянце и освящении. Он включает исправления некоторых проблем игры, облегчения сомнительных вещей, а также добавляет новый контент.
+На данный момент мод находится в бете, поэтому содержит относительно мало контента. Однако добавленный контент, по крайней мере, тщательно отполирован.
 
-If you have any bugs or suggestions, you can report to me via GitHub: https://github.com/Mellohi138/InfectedQualities
+Основная идея мода заключается в объединении контента заражений и заражённых биомов, вместо того чтобы перекрывать большую часть контента одного биома контентом другого.
 
-|MAIN FEATURES|
-===============
-INFECTED SNOW BLOCKS --> Natrually, comes with corrupt, crimson, and hallowed variants. 
-Normally, snow biome doesn't spread properly on the surface, and a snow biome might actually block off a part of the corruption.
-The addition of these blocks fixes this ''issue''.
+Если вы нашли какие-то ошибки или у вас есть предложения, вы можете сообщить о них мне через [url=github.com/Mellohi138/InfectedQualities]GitHub[/url]. Если у вас возникнут вопросы насчёт перевода или вы найдте в нём ошибки (в том числе в этом тексте), мы можете сообщить на них на моём [url=discord.gg/rU2pfs9Bky]Discord-сервере[/url]
 
-INFECTED JUNGLE BIOMES --> Comes with hallowed jungle grass, meaning the hallow can now spread into the jungle. Hallowed thorns are added as well, but they only spawn in the Hallowed Jungle.
-Corrupt and crimson jungle grass blocks now count as jungle blocks, meaning spawn rates are increased, and plantera doesn't engrage.
+[h1]Контент мода[/h1]
+[b]Заражённые блоки снега[/b]: появляется естественным образом и имеет искажённый, багровый и освящённый вариант.
+  Появление заражения в снегах может вызвать много проблем, поскольку многий контет заражений (в том числе, банальное появление врагов) завязан на заражённых блоках, а т.к. лёд, который может заражаться, в отличии от снега малочисленен в биоме. Добавление заражённого снега должно их исправить.
 
-BIOME SIGHT WALL HIGHLIGHTING --> The biome sight potion now highlights all infected walls. Was designed to be compatible with other mods.
+[b]Заражённые джунгли[/b]: добавлена освящённая трава джунгли, так что освящение теперь может покрывать и джунгли. Также добавленна освящённая версия колючей лозы, появляющаяся только в освящённых джунглях.
+Искажённая и багровая трава джунглей теперь будут считаться блоком джунглей, что увеличит количество появляемых существ и позволит Плантере не входить в ярость.
 
-BIOME SPREAD CHANGES --> Infected walls can now spread infections themselves, this is why I made biome sight potions highlight them.
-And if the world is pre-plantera, chlorophyte is powerless against stopping it from spreading. Additionally, chlorophyte now prevents hallow from spreading as well.
+[b]Подсветка стен биомным зрением[/b]: эффект зелья биомного зелья теперь также подсвечивает заражённые стены. Код написан таким образом, что эта функция должна быть совместима с другими модами.
 
-DIVINE POWDER --> Acts like a normal powder, spreads hallow. Also purification powder now purifies hallow.
+[b]Изменения в распространении биомов[/b]: заражённые стены теперь также способны распространять заражение, что делает упомянутое выше изменение более логичным.
+Кроме того, хлорофит больше не может препятствовать распространению заражения до убийства Плантеры. После её убийства хлорофит сможет предотвращать распространение заражения, включая освящение.
 
-PYLON OF NIGHT --> My own take on the 'corruption pylon' idea. Instead of making seperate pylons for both corruption and crimson, I made a singular pylon that can teleport to both corruption AND crimson. 
+[b]Священный порошок[/b]: действует как и любой порошок, но уже распространяя освящение. Очищающий порошок, в свою очередь, сможет очищать освящение.
+
+[b]Пилон ночи[/b]: моя реалиция идеи «пилона заражения». Instead of making seperate pylons for both corruption and crimson, I made a singular pylon that can teleport to both corruption AND crimson. 
 Unlike other pylons, this one does not require villagers to function, nor is it sold by them. Instead, it is crafted.
 
-KEY OF NAUGHT --> Crafted with 15 souls of night inside a graveyard, this functions exactly like a normal key of night, except it summons the mimic of the evil biome that wasn't chosen. 
+[b]Ключ нечисти[/b]: Crafted with 15 souls of night inside a graveyard, this functions exactly like a normal key of night, except it summons the mimic of the evil biome that wasn't chosen. 
 This also disables the normal key of night recipe when inside a graveyard.
 
 INFECTED PLANTERA BULB & LIFE FRUIT --> Pretty self-explanatory, these tiles get their own custom texture when their jungle grass is infected.
 
 INFECTED PLANTERA --> Purely visual, plantera now gets her own custom textures when spawned in an infected biome. If you are in an infected jungle biome, plantera should not enrage.y
 
-|SMALL CHANGES|
-===============
+[h2]Небольшие изменения[/h2]
 -Corrupt plants now spread corruption.
 -Crimson plants now count as crimson biome blocks.
 -Infected vines now count towards their respective biome blocks.
@@ -45,8 +43,7 @@ INFECTED PLANTERA --> Purely visual, plantera now gets her own custom textures w
 -Corrupt and Crimson ice now grows deathweed instead of shiverthorn.
 -Hardmode V-Generation now affects moss blocks and thorns.
 
-|EXPERIMENTAL FEATURES|
-=======================
+[h2]Эксперементальный контент[/h2]
 These features are normally disabled, and can be turned on in the config file.
 
 CHASM PURIFICATION UPON HARDMODE --> After the wall of flesh gets defeated and before the 'ancient spirits of light and dark' get released, the entire world gets purified. 
@@ -56,28 +53,35 @@ DISABLING INFECTION SPREADING --> Self explanatory, just enable it in the config
 
 NPCS BEING ABLE TO LIVE IN EVIL BIOMES --> Again, self explanatory. Should save you the annoyance of having to build new houses.
 
-|MOD COMPABILITY|
+[h2]Совместимость с модами[/h2]
 =================
 The mod was designed with other mods in mind, and manual compability was added when it was needed to. But there might still be incompabilities.
 
-CALAMITY --> Astral infection does not convert infected snow blocks. Astral worldgen only looks for the normal snow block to convert instead of just using the snow block list.
+[h3]Calamity Mod[/h3]
+Astral infection does not convert infected snow blocks. Astral worldgen only looks for the normal snow block to convert instead of just using the snow block list.
 Additionally, Calamity's system for handling the conversion between normal plants and astral plants messes up the way infected plants and vines work in the jungle, as a result they are just gone.
 Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 You can use Calamity pylons to craft a 'PYLON OF NIGHT'.
 
-CONFECTION REBAKED --> Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
+[h3]Confection REBAKED[/h3]
+Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 
+[h3]Spirit Mod[/h3]
 SPIRIT MOD --> You can use the spirit mod pylons to craft a 'PYLON OF NIGHT'.
 
+[h3]Remnants[/h3]
 REMNANTS --> Due to the way Remnants generates it's corruption and crimson, the 'CHASM PURIFICATION UPON HARDMODE' is automatically disabled.
 Additionally, Remnants' Hallow generation avoids jungle grass blocks, this means the Hallowed Jungle cannot generate upon defeating the WoF.
 
+[h3]Exxo Avalon Origins[/h3]
 EXXO AVALON --> Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 'CHASM PURIFICATION UPON HARDMODE' also purifies the contagion chasms.
 'PYLON OF NIGHT' works in the Contagion.
 
-PYLONS PREVENT EVILS --> The game runs, but the features are partially incompatible.
+[h3]Pylons Prevent Evils[/h3]
+The game runs, but the features are partially incompatible.
 You can make corrupt and crimson snow get purified in the config with no issues, but the hallowed snow gets purified by the hallow pylon.
 Hallowed jungle grass cannot be added in the config file.
 
+[h3]Radiance Mod[/h3]
 RADIANCE --> No manual compability, but there should be no issues.
