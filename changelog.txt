@@ -10,6 +10,7 @@
 -Added a config option to disable biome sight potion highlighting walls.
 -Added mod compat with 'Terraria Origins' and 'AltLibrary'.
 -Chlorophyte infection preventation now goes back to normal if 'InfectedBiomes' config is turned off.
+-Added an experimental config option to bring back demon altars spawning in infected blocks.
 
 0.7.1
 =====

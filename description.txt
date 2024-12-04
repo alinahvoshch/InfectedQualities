@@ -57,6 +57,8 @@ DISABLING INFECTION SPREADING --> Self explanatory, just enable it in the config
 
 NPCS BEING ABLE TO LIVE IN EVIL BIOMES --> Again, self explanatory. Should save you the annoyance of having to build new houses.
 
+DEMON ALTAR EVIL BLOCK SPAWNING --> Demon altars have a 66% chance to spawn an evil block in the world. This feature used to exist in the main game, before it was removed in 1.4.4
+
 |MOD COMPABILITY|
 =================
 The mod was designed with other mods in mind, and manual compability was added when it was needed to. But there might still be incompabilities.

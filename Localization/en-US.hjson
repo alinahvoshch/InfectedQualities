@@ -131,6 +131,15 @@ Mods: {
 				Tooltip: Allows NPCs to live inside evil biomes. Happiness will be at minimum, but it's better than just completetly losing the house
 			}
 
+			AltarEvilSpawning: {
+				Label: "[i:833] Demon Altars Spawn Infection Blocks"
+				Tooltip:
+					'''
+					Brings back the notorious feature that had a chance to spawn an evil block whenever you broke a demon altar
+					Enable this if you want to suffer
+					'''
+			}
+
 			InfectedPlantera: {
 				Label: "[i:1370] Infected Plantera Textures"
 				Tooltip:

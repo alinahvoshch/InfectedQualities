@@ -71,5 +71,10 @@ namespace InfectedQualities.Core
         [BackgroundColor(185, 133, 45)]
         [DefaultValue(false)]
         public bool AllowNPCsInEvilBiomes { get; set; }
+
+        [LabelKey("$Mods.InfectedQualities.Config.AltarEvilSpawning.Label"), TooltipKey("$Mods.InfectedQualities.Config.AltarEvilSpawning.Tooltip")]
+        [BackgroundColor(185, 133, 45)]
+        [DefaultValue(false)]
+        public bool AltarEvilSpawning { get; set; }
     }
 }
