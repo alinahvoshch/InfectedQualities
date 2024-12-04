@@ -18,7 +18,7 @@ Corrupt and crimson jungle grass blocks now count as jungle blocks, meaning spaw
 BIOME SIGHT WALL HIGHLIGHTING --> The biome sight potion now highlights all infected walls. Was designed to be compatible with other mods.
 
 BIOME SPREAD CHANGES --> Infected walls can now spread infections themselves, this is why I made biome sight potions highlight them.
-And if the world is pre-plantera, chlorophyte is powerless against stopping it from spreading. Additionally, chlorophyte now prevents hallow from spreading as well.
+And if the world is pre-plantera, and infected jungle and snow biomes are enabled, chlorophyte is powerless against stopping infections from spreading. Additionally, chlorophyte now prevents hallow from spreading as well.
 
 DIVINE POWDER --> Acts like a normal powder, spreads hallow. Also purification powder now purifies hallow.
 

@@ -9,6 +9,7 @@
 -Infected cave walls now get highlighted by biome sight potions and spread infections. However they won't convert other cave walls.
 -Added a config option to disable biome sight potion highlighting walls.
 -Added mod compat with 'Terraria Origins' and 'AltLibrary'.
+-Chlorophyte infection preventation now goes back to normal if 'InfectedBiomes' config is turned off.
 
 0.7.1
 =====

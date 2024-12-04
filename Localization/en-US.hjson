@@ -80,6 +80,7 @@ Mods: {
 					'''
 					Adds additional content to infected biomes, this is the main meat and bones of the mod.
 					Adds the hallowed jungle biome, the infected plantera bulbs and life fruits, and the infected snow blocks.. for now.
+					Enabling this will disable chlorophyte's effects on infectious tiles pre-plantera.
 					'''
 			}
 

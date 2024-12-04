@@ -930,7 +930,7 @@ namespace InfectedQualities.Core
 
         private static bool WorldGen_nearbyChlorophyte(On_WorldGen.orig_nearbyChlorophyte orig, int i, int j)
         {
-            if (!NPC.downedPlantBoss)
+            if (!NPC.downedPlantBoss && ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
             {
                 return false;
             }
