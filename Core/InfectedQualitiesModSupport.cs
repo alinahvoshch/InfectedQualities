@@ -110,7 +110,7 @@ namespace InfectedQualities.Core
 
             if (TerrariaOrigins != null)
             {
-                int defiledTiles = 0, rivenTiles = 0;
+                int defiledTiles = 0;
                 foreach (string tileName in EvilBlocks[4])
                 {
                     defiledTiles += sceneMetrics.GetTileCount(TerrariaOrigins.Find<ModTile>(tileName).Type);
@@ -121,6 +121,7 @@ namespace InfectedQualities.Core
                     return true;
                 }
 
+                int rivenTiles = 0;
                 foreach (string tileName in EvilBlocks[6])
                 {
                     rivenTiles += sceneMetrics.GetTileCount(TerrariaOrigins.Find<ModTile>(tileName).Type);

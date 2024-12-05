@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 
 namespace InfectedQualities.Content.Items.Placables
 {
-    public class CrimsonSnow : ModItem, ILocalizedModType
+    public class CrimsonSnow : ModItem
     {
-        string ILocalizedModType.LocalizationCategory => "Items.Placables";
+        public override string LocalizationCategory => "Items.Placables";
 
         public override void SetDefaults()
         {

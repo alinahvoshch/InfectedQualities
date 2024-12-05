@@ -573,114 +573,6 @@ namespace InfectedQualities.Core
             }
         }
 
-        private static void WorldGen_PlantAlch(ILContext il)
-        {
-            ILCursor cursor = new(il);
-            ILLabel label = cursor.DefineLabel();
-
-            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.JungleGrass), i => i.MatchBeq(out label)))
-            {
-                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
-                cursor.Emit(OpCodes.Ldloc_0);
-                cursor.Emit(OpCodes.Ldloc_1);
-                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
-                cursor.Emit(OpCodes.Stloc, 8);
-                cursor.Emit(OpCodes.Ldloca, 8);
-                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
-                cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<HallowedJungleGrass>();
-                    }
-                    return -1;
-                });
-                cursor.Emit(OpCodes.Beq, label);
-            }
-
-            label = cursor.DefineLabel();
-            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.CrimsonGrass), i => i.MatchBeq(out label)))
-            {
-                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
-                cursor.Emit(OpCodes.Ldloc_0);
-                cursor.Emit(OpCodes.Ldloc_1);
-                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
-                cursor.Emit(OpCodes.Stloc, 8);
-                cursor.Emit(OpCodes.Ldloca, 8);
-                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
-                cursor.Emit(OpCodes.Ldind_U2);
-                cursor.Emit(OpCodes.Ldc_I4, TileID.CorruptIce);
-                cursor.Emit(OpCodes.Beq, label);
-
-                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
-                cursor.Emit(OpCodes.Ldloc_0);
-                cursor.Emit(OpCodes.Ldloc_1);
-                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
-                cursor.Emit(OpCodes.Stloc, 8);
-                cursor.Emit(OpCodes.Ldloca, 8);
-                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
-                cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<CorruptSnow>();
-                    }
-                    return -1;
-                });
-                cursor.Emit(OpCodes.Beq, label);
-
-                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
-                cursor.Emit(OpCodes.Ldloc_0);
-                cursor.Emit(OpCodes.Ldloc_1);
-                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
-                cursor.Emit(OpCodes.Stloc, 8);
-                cursor.Emit(OpCodes.Ldloca, 8);
-                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
-                cursor.Emit(OpCodes.Ldind_U2);
-                cursor.Emit(OpCodes.Ldc_I4, TileID.FleshIce);
-                cursor.Emit(OpCodes.Beq, label);
-
-                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
-                cursor.Emit(OpCodes.Ldloc_0);
-                cursor.Emit(OpCodes.Ldloc_1);
-                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
-                cursor.Emit(OpCodes.Stloc, 8);
-                cursor.Emit(OpCodes.Ldloca, 8);
-                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
-                cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<CrimsonSnow>();
-                    }
-                    return -1;
-                });
-                cursor.Emit(OpCodes.Beq, label);
-            }
-
-            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.CorruptIce)))
-            {
-                cursor.Emit(OpCodes.Pop);
-                cursor.Emit(OpCodes.Ldc_I4_M1);
-            }
-
-            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.FleshIce)))
-            {
-                cursor.Emit(OpCodes.Pop);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<HallowedSnow>();
-                    }
-                    return -1;
-                });
-            }
-        }
-
         private static void WorldGen_PlaceAlch(ILContext il)
         {
             ILCursor cursor = new(il);
@@ -792,6 +684,114 @@ namespace InfectedQualities.Core
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
                         return ModContent.TileType<HallowedJungleGrass>();
+                    }
+                    return -1;
+                });
+            }
+        }
+
+        private static void WorldGen_PlantAlch(ILContext il)
+        {
+            ILCursor cursor = new(il);
+            ILLabel label = cursor.DefineLabel();
+
+            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.JungleGrass), i => i.MatchBeq(out label)))
+            {
+                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
+                cursor.Emit(OpCodes.Ldloc_0);
+                cursor.Emit(OpCodes.Ldloc_1);
+                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
+                cursor.Emit(OpCodes.Stloc, 8);
+                cursor.Emit(OpCodes.Ldloca, 8);
+                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
+                cursor.Emit(OpCodes.Ldind_U2);
+                cursor.EmitDelegate(() =>
+                {
+                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                    {
+                        return ModContent.TileType<HallowedJungleGrass>();
+                    }
+                    return -1;
+                });
+                cursor.Emit(OpCodes.Beq, label);
+            }
+
+            label = cursor.DefineLabel();
+            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.CrimsonGrass), i => i.MatchBeq(out label)))
+            {
+                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
+                cursor.Emit(OpCodes.Ldloc_0);
+                cursor.Emit(OpCodes.Ldloc_1);
+                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
+                cursor.Emit(OpCodes.Stloc, 8);
+                cursor.Emit(OpCodes.Ldloca, 8);
+                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
+                cursor.Emit(OpCodes.Ldind_U2);
+                cursor.Emit(OpCodes.Ldc_I4, TileID.CorruptIce);
+                cursor.Emit(OpCodes.Beq, label);
+
+                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
+                cursor.Emit(OpCodes.Ldloc_0);
+                cursor.Emit(OpCodes.Ldloc_1);
+                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
+                cursor.Emit(OpCodes.Stloc, 8);
+                cursor.Emit(OpCodes.Ldloca, 8);
+                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
+                cursor.Emit(OpCodes.Ldind_U2);
+                cursor.EmitDelegate(() =>
+                {
+                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                    {
+                        return ModContent.TileType<CorruptSnow>();
+                    }
+                    return -1;
+                });
+                cursor.Emit(OpCodes.Beq, label);
+
+                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
+                cursor.Emit(OpCodes.Ldloc_0);
+                cursor.Emit(OpCodes.Ldloc_1);
+                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
+                cursor.Emit(OpCodes.Stloc, 8);
+                cursor.Emit(OpCodes.Ldloca, 8);
+                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
+                cursor.Emit(OpCodes.Ldind_U2);
+                cursor.Emit(OpCodes.Ldc_I4, TileID.FleshIce);
+                cursor.Emit(OpCodes.Beq, label);
+
+                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
+                cursor.Emit(OpCodes.Ldloc_0);
+                cursor.Emit(OpCodes.Ldloc_1);
+                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
+                cursor.Emit(OpCodes.Stloc, 8);
+                cursor.Emit(OpCodes.Ldloca, 8);
+                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
+                cursor.Emit(OpCodes.Ldind_U2);
+                cursor.EmitDelegate(() =>
+                {
+                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                    {
+                        return ModContent.TileType<CrimsonSnow>();
+                    }
+                    return -1;
+                });
+                cursor.Emit(OpCodes.Beq, label);
+            }
+
+            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.CorruptIce)))
+            {
+                cursor.Emit(OpCodes.Pop);
+                cursor.Emit(OpCodes.Ldc_I4_M1);
+            }
+
+            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.FleshIce)))
+            {
+                cursor.Emit(OpCodes.Pop);
+                cursor.EmitDelegate(() =>
+                {
+                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                    {
+                        return ModContent.TileType<HallowedSnow>();
                     }
                     return -1;
                 });
