@@ -1,4 +1,5 @@
-﻿using InfectedQualities.Content.Tiles;
+﻿using InfectedQualities.Content.Extras;
+using InfectedQualities.Content.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -87,9 +88,9 @@ namespace InfectedQualities.Common
                 if (planteraType != null)
                 {
                     TextureAssets.Npc[NPCID.PlanterasHook] = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/" + planteraType + "Plantera_Hook");
-                    TextureAssets.Chain26 = ModContent.Request<Texture2D>("InfectedQualities/Content/" + planteraType + "Plantera_Hook_Vine");
+                    TextureAssets.Chain26 = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/" + planteraType + "Plantera_Hook_Vine");
                     TextureAssets.Npc[NPCID.PlanterasTentacle] = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/" + planteraType + "Plantera_Tentacle");
-                    TextureAssets.Chain27 = ModContent.Request<Texture2D>("InfectedQualities/Content/" + planteraType + "Plantera_Tentacle_Vine");
+                    TextureAssets.Chain27 = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/" + planteraType + "Plantera_Tentacle_Vine");
                     TextureAssets.Npc[NPCID.Spore] = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/" + planteraType + "Plantera_Spore");
                     TextureAssets.Projectile[ProjectileID.SeedPlantera] = ModContent.Request<Texture2D>("InfectedQualities/Content/Projectiles/" + planteraType + "Plantera_Seed");
                 }
@@ -104,7 +105,7 @@ namespace InfectedQualities.Common
                 if(planteraType != null)
                 {
                     int phaseIndex = npc.life > npc.lifeMax / 2 ? 1 : 2;
-                    index = ModContent.GetModBossHeadSlot("InfectedQualities/Content/" + planteraType + "Plantera_MapIcon_" + phaseIndex);
+                    index = ModContent.GetModBossHeadSlot("InfectedQualities/Content/Extras/MapIcons/" + planteraType + "Plantera_MapIcon_" + phaseIndex);
                 }
             }
         }

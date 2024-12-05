@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 using InfectedQualities.Core;
-using InfectedQualities.Common;
+using InfectedQualities.Content.Extras;
 
 namespace InfectedQualities.Content.Tiles
 {

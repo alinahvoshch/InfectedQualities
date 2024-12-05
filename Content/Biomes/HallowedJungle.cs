@@ -14,7 +14,7 @@ namespace InfectedQualities.Content.Biomes
 
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Jungle;
 
-        public override string BestiaryIcon => "InfectedQualities/Content/Biomes/HallowedJungle";
+        public override string BestiaryIcon => "InfectedQualities/Content/Extras/BestiaryIcons/HallowedJungle";
 
         public override string BackgroundPath => "Terraria/Images/MapBG22";
 

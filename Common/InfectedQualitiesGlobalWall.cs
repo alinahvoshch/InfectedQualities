@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using InfectedQualities.Content.Extras;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;

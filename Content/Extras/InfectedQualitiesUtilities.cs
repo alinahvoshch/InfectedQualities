@@ -9,9 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Microsoft.Xna.Framework;
 using System;
-using MonoMod.Cil;
+using InfectedQualities.Common;
 
-namespace InfectedQualities.Common
+namespace InfectedQualities.Content.Extras
 {
     public static class InfectedQualitiesUtilities
     {
@@ -127,7 +127,7 @@ namespace InfectedQualities.Common
                                 WorldGen.SquareTileFrame(x, y);
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
-                            else if(ConvertMoss(x, y, infectionType))
+                            else if (ConvertMoss(x, y, infectionType))
                             {
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
@@ -263,8 +263,8 @@ namespace InfectedQualities.Common
                 y = j + WorldGen.genRand.Next(-2, 3);
 
                 ushort[] convertedWalls = [
-                    WallID.EbonstoneUnsafe, 
-                    WallID.CrimstoneUnsafe, 
+                    WallID.EbonstoneUnsafe,
+                    WallID.CrimstoneUnsafe,
                     WallID.PearlstoneBrickUnsafe
                 ];
 
@@ -344,7 +344,7 @@ namespace InfectedQualities.Common
         {
             if (RefectionMethod(i, j, "nearbyChlorophyte"))
             {
-                if(WorldGen.AllowedToSpreadInfections && Main.remixWorld)
+                if (WorldGen.AllowedToSpreadInfections && Main.remixWorld)
                 {
                     if (Main.tile[i, j].WallType is WallID.CorruptGrassUnsafe or WallID.CrimsonGrassUnsafe or WallID.HallowedGrassUnsafe)
                     {
@@ -378,9 +378,9 @@ namespace InfectedQualities.Common
             }
         }
 
-        public static bool ConvertMoss(int i, int j, InfectionType? infectionType , bool safe = true)
+        public static bool ConvertMoss(int i, int j, InfectionType? infectionType, bool safe = true)
         {
-            if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
             {
                 foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
                 {
@@ -403,7 +403,7 @@ namespace InfectedQualities.Common
 
         public static ushort GetMossType(InfectionType? infectionType, MossType mossType)
         {
-            if(!infectionType.HasValue)
+            if (!infectionType.HasValue)
             {
                 return mossType switch
                 {

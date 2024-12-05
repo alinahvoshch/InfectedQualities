@@ -10,7 +10,7 @@ using Terraria.Map;
 using ReLogic.Content;
 using Terraria.Localization;
 using InfectedQualities.Core;
-using InfectedQualities.Common;
+using InfectedQualities.Content.Extras;
 
 namespace InfectedQualities.Content.Tiles
 {
@@ -42,7 +42,7 @@ namespace InfectedQualities.Content.Tiles
             AddMapEntry(PylonColor, Language.GetText("Mods.InfectedQualities.Items.Placables.PylonOfNight.DisplayName"));
 
             PylonCrystalTexture = ModContent.Request<Texture2D>(Texture + "_Crystal");
-            PylonMapIcon = ModContent.Request<Texture2D>("InfectedQualities/Content/" + Name + "_MapIcon");
+            PylonMapIcon = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/MapIcons/" + Name + "_MapIcon");
         }
 
         public override NPCShop.Entry GetNPCShopEntry() => null;

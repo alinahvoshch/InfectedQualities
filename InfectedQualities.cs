@@ -1,5 +1,5 @@
-using InfectedQualities.Common;
 using InfectedQualities.Content.Biomes;
+using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
@@ -22,15 +22,15 @@ namespace InfectedQualities
                 }
             }
 
-            InfectedQualitiesUtilities.PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Pylon_CrystalHighlight");
+            InfectedQualitiesUtilities.PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
 
             if (ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
             {
                 for (int i = 1; i < 3; i++)
                 {
-                    AddBossHeadTexture("InfectedQualities/Content/CorruptPlantera_MapIcon_" + i);
-                    AddBossHeadTexture("InfectedQualities/Content/CrimsonPlantera_MapIcon_" + i);
-                    AddBossHeadTexture("InfectedQualities/Content/HallowedPlantera_MapIcon_" + i);
+                    AddBossHeadTexture("InfectedQualities/Content/Extras/MapIcons/CorruptPlantera_MapIcon_" + i);
+                    AddBossHeadTexture("InfectedQualities/Content/Extras/MapIcons/CrimsonPlantera_MapIcon_" + i);
+                    AddBossHeadTexture("InfectedQualities/Content/Extras/MapIcons/HallowedPlantera_MapIcon_" + i);
                 }
             }
         }

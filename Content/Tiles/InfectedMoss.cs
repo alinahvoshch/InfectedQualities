@@ -1,4 +1,4 @@
-﻿using InfectedQualities.Common;
+﻿using InfectedQualities.Content.Extras;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -118,7 +118,7 @@ namespace InfectedQualities.Content.Tiles
                     break;
             }
 
-            MossTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/" + mossType.ToString() + "_Moss");
+            MossTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/" + mossType.ToString() + "_Moss");
         }
 
         public override ushort GetMapOption(int i, int j)

@@ -1,4 +1,4 @@
-﻿using InfectedQualities.Common;
+﻿using InfectedQualities.Content.Extras;
 using InfectedQualities.Core;
 using Terraria;
 using Terraria.ID;

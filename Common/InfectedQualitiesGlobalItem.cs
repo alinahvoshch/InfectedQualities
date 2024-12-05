@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using InfectedQualities.Content.Tiles;
 using InfectedQualities.Core;
+using InfectedQualities.Content.Extras;
 
 namespace InfectedQualities.Common
 {

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using InfectedQualities.Core;
 using System;
+using InfectedQualities.Content.Extras;
 
 namespace InfectedQualities.Common
 {
