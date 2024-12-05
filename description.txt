@@ -15,6 +15,9 @@ The addition of these blocks fixes this ''issue''.
 INFECTED JUNGLE BIOMES --> Comes with hallowed jungle grass, meaning the hallow can now spread into the jungle. Hallowed thorns are added as well, but they only spawn in the Hallowed Jungle.
 Corrupt and crimson jungle grass blocks now count as jungle blocks, meaning spawn rates are increased, and plantera doesn't engrage.
 
+INFECTED MOSS BLOCKS --> Moss can now grow on ebonstone, crimsstone, and pearlstone. The stone part of the tiles are supported by resource packs.
+Over here at Infected Qualities we highly discourage acts of terrorism against mosses.
+
 BIOME SIGHT WALL HIGHLIGHTING --> The biome sight potion now highlights all infected walls. Was designed to be compatible with other mods.
 
 BIOME SPREAD CHANGES --> Infected walls can now spread infections themselves, this is why I made biome sight potions highlight them.

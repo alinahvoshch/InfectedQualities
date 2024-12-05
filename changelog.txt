@@ -11,6 +11,7 @@
 -Added mod compat with 'Terraria Origins' and 'AltLibrary'.
 -Chlorophyte infection preventation now goes back to normal if 'InfectedBiomes' config is turned off.
 -Added an experimental config option to bring back demon altars spawning in infected blocks.
+-Added infected variants of moss blocks, and a config option to disable it.
 
 0.7.1
 =====
