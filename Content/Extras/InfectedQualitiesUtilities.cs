@@ -421,7 +421,7 @@ namespace InfectedQualities.Content.Extras
                     _ => TileID.Stone
                 };
             }
-            return ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.ToString() + "_" + mossType.ToString() + "_Moss").Type;
+            return ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.ToString() + mossType.ToString() + "Moss").Type;
         }
 
         /// <summary>

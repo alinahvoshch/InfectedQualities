@@ -312,7 +312,7 @@ namespace InfectedQualities.Content.Tiles
                 NetMessage.SendTileSquare(-1, i, j);
             }
         }
-        public override string Name => infectionType.ToString() + "_" + mossType.ToString() + "_" + "Moss";
+        public override string Name => infectionType.ToString() + mossType.ToString() + "Moss";
 
         public override string Texture => $"Terraria/Images/Tiles_{InfectedStoneType}";
 

@@ -17,7 +17,7 @@ namespace InfectedQualities.Content.Biomes
 
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Corrupt;
 
-        public override string BestiaryIcon => "InfectedQualities/Content/Extras/BestiaryIcons/CorruptJungle";
+        public override string BestiaryIcon => "InfectedQualities/Content/Extras/BestiaryIcons/Corrupt_Jungle";
 
         public override string BackgroundPath => "Terraria/Images/MapBG23";
 
