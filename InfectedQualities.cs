@@ -1,5 +1,6 @@
 using InfectedQualities.Common;
 using InfectedQualities.Content.Biomes;
+using InfectedQualities.Content.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,6 +14,14 @@ namespace InfectedQualities
 	{
         public override void Load()
         {
+            foreach(InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
+            {
+                foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
+                {
+                    AddContent(new InfectedMoss(infectionType, mossType));
+                }
+            }
+
             InfectedQualitiesUtilities.PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Pylon_CrystalHighlight");
 
             if (ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)

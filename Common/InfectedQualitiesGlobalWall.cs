@@ -22,7 +22,7 @@ namespace InfectedQualities.Common
         {
             if (WallID.Sets.Corrupt[type] && !(Main.tile[i, j].HasTile && TileID.Sets.Corrupt[Main.tile[i, j].TileType]))
             {
-                InfectedQualitiesUtilities.WallSpread(i, j, InfectionType.Corruption);
+                InfectedQualitiesUtilities.WallSpread(i, j, InfectionType.Corrupt);
             }
             else if (WallID.Sets.Crimson[type] && !(Main.tile[i, j].HasTile && TileID.Sets.Crimson[Main.tile[i, j].TileType]))
             {
@@ -30,7 +30,7 @@ namespace InfectedQualities.Common
             }
             else if (WallID.Sets.Hallow[type] && !(Main.tile[i, j].HasTile && TileID.Sets.Hallow[Main.tile[i, j].TileType]))
             {
-                InfectedQualitiesUtilities.WallSpread(i, j, InfectionType.Hallow);
+                InfectedQualitiesUtilities.WallSpread(i, j, InfectionType.Hallowed);
             }
         }
 

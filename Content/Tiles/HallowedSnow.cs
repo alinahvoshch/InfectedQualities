@@ -46,7 +46,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 
-        public override void RandomUpdate(int i, int j) => InfectedQualitiesUtilities.DefaultInfectionSpread(i, j, InfectionType.Hallow, TileID.SnowBlock);
+        public override void RandomUpdate(int i, int j) => InfectedQualitiesUtilities.DefaultInfectionSpread(i, j, InfectionType.Hallowed, TileID.SnowBlock);
 
         public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)
         {

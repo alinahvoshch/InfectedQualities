@@ -48,7 +48,7 @@ namespace InfectedQualities.Content.Tiles.Plants
             }
             else
             {
-                InfectedQualitiesUtilities.SpreadInfection(i, j, InfectionType.Hallow);
+                InfectedQualitiesUtilities.SpreadInfection(i, j, InfectionType.Hallowed);
             }
         }
 

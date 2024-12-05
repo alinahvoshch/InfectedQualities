@@ -8,6 +8,8 @@ using InfectedQualities.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Microsoft.Xna.Framework;
+using System;
+using MonoMod.Cil;
 
 namespace InfectedQualities.Common
 {
@@ -123,6 +125,10 @@ namespace InfectedQualities.Common
                             {
                                 Main.tile[x, y].TileType = (ushort)convertedTiles[tile][(short)infectionType];
                                 WorldGen.SquareTileFrame(x, y);
+                                NetMessage.SendTileSquare(-1, x, y);
+                            }
+                            else if(ConvertMoss(x, y, infectionType))
+                            {
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
                         }
@@ -243,6 +249,10 @@ namespace InfectedQualities.Common
                                 WorldGen.SquareTileFrame(x, y);
                                 NetMessage.SendTileSquare(-1, x, y);
                                 break;
+                            }
+                            else if (ConvertMoss(x, y, infectionType))
+                            {
+                                NetMessage.SendTileSquare(-1, x, y);
                             }
                         }
                     }
@@ -368,6 +378,52 @@ namespace InfectedQualities.Common
             }
         }
 
+        public static bool ConvertMoss(int i, int j, InfectionType? infectionType , bool safe = true)
+        {
+            if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
+            {
+                foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
+                {
+                    if (safe && Main.tileMoss[Main.tile[i, j].TileType])
+                    {
+                        Main.tile[i, j].TileType = GetMossType(infectionType, mossType);
+                        WorldGen.SquareTileFrame(i, j);
+                        return true;
+                    }
+                    else if (!safe && TileID.Sets.Conversion.Moss[Main.tile[i, j].TileType] && Main.tile[i, j].TileType != GetMossType(infectionType, mossType))
+                    {
+                        Main.tile[i, j].TileType = GetMossType(infectionType, mossType);
+                        WorldGen.SquareTileFrame(i, j);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static ushort GetMossType(InfectionType? infectionType, MossType mossType)
+        {
+            if(!infectionType.HasValue)
+            {
+                return mossType switch
+                {
+                    MossType.Green => TileID.GreenMoss,
+                    MossType.Brown => TileID.BrownMoss,
+                    MossType.Red => TileID.RedMoss,
+                    MossType.Blue => TileID.BlueMoss,
+                    MossType.Purple => TileID.PurpleMoss,
+                    MossType.Lava => TileID.LavaMoss,
+                    MossType.Krypton => TileID.KryptonMoss,
+                    MossType.Xenon => TileID.XenonMoss,
+                    MossType.Argon => TileID.ArgonMoss,
+                    MossType.Neon => TileID.VioletMoss,
+                    MossType.Helium => TileID.RainbowMoss,
+                    _ => TileID.Stone
+                };
+            }
+            return ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.ToString() + "_" + mossType.ToString() + "_Moss").Type;
+        }
+
         /// <summary>
         /// This is temporary, I have to use refection until the methods get public for the stable release.
         /// </summary>
@@ -375,12 +431,28 @@ namespace InfectedQualities.Common
         {
             return (bool)typeof(WorldGen).GetMethod(name, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static).Invoke(null, [x, y]);
         }
+
     }
 
     public enum InfectionType
     {
-        Corruption,
+        Corrupt,
         Crimson,
-        Hallow
+        Hallowed
+    }
+
+    public enum MossType
+    {
+        Green,
+        Brown,
+        Red,
+        Blue,
+        Purple,
+        Lava,
+        Krypton,
+        Xenon,
+        Argon,
+        Neon,
+        Helium
     }
 }

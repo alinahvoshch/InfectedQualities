@@ -38,6 +38,12 @@ namespace InfectedQualities.Core
         [ReloadRequired]
         public bool InfectedBiomes { get; set; }
 
+        [LabelKey("$Mods.InfectedQualities.Config.InfectedMosses.Label"), TooltipKey("$Mods.InfectedQualities.Config.InfectedMosses.Tooltip")]
+        [BackgroundColor(135, 54, 206)]
+        [DefaultValue(true)]
+        [ReloadRequired]
+        public bool InfectedMosses { get; set; }
+
         [LabelKey("$Mods.InfectedQualities.Config.PylonOfNight.Label"), TooltipKey("$Mods.InfectedQualities.Config.PylonOfNight.Tooltip")]
         [BackgroundColor(135, 54, 206)]
         [DefaultValue(true)]

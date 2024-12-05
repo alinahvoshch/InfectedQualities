@@ -84,6 +84,15 @@ Mods: {
 					'''
 			}
 
+			InfectedMosses: {
+				Label: "[i:5127] Infected Mosses"
+				Tooltip:
+					'''
+					Corruption, crimson, and Hallow no longer break moss blocks, instead converting their stone to it's own counterpart.
+					Partially compatible with texture packs, the moss part will not change but the stone part of the blocks will.
+					'''
+			}
+
 			PylonOfNight: {
 				Label: "[i:InfectedQualities/PylonOfNight] Pylon of Night"
 				Tooltip: Enables pylon of night, allowing the player to teleport to corruption or crimson through the pylon system

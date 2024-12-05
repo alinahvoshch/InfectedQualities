@@ -56,7 +56,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override void RandomUpdate(int i, int j)
         {
-            InfectedQualitiesUtilities.DefaultInfectionSpread(i, j, InfectionType.Hallow, TileID.JungleGrass);
+            InfectedQualitiesUtilities.DefaultInfectionSpread(i, j, InfectionType.Hallowed, TileID.JungleGrass);
 
             Tile currentTile = Main.tile[i, j];
             Tile aboveTile = Main.tile[i, j - 1];
