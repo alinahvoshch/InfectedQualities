@@ -46,7 +46,6 @@ namespace InfectedQualities.Core
             IL_WorldGen.CheckCatTail += WorldGen_CheckCatTail;
             On_WorldGen.GetDesiredStalagtiteStyle += WorldGen_GetDesiredStalagtiteStyle;
         }
-        
 
         private static int Gore_NewGore(On_Gore.orig_NewGore_IEntitySource_Vector2_Vector2_int_float orig, IEntitySource source, Vector2 Position, Vector2 Velocity, int Type, float Scale)
         {
@@ -144,7 +143,7 @@ namespace InfectedQualities.Core
                                 }
                                 else if (Main.tile[m, n].TileType == TileID.SnowBlock)
                                 {
-                                    Main.tile[m, n].TileType = (ushort)ModContent.TileType<HallowedSnow>();
+                                    Main.tile[m, n].TileType = InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed);
                                     WorldGen.SquareTileFrame(m, n);
                                 }
                                 else if (Main.tile[m, n].TileType == TileID.JungleThorns)
@@ -179,7 +178,7 @@ namespace InfectedQualities.Core
 
                                 if (Main.tile[m, n].TileType == TileID.SnowBlock)
                                 {
-                                    Main.tile[m, n].TileType = (ushort)ModContent.TileType<CrimsonSnow>();
+                                    Main.tile[m, n].TileType = InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson);
                                     WorldGen.SquareTileFrame(m, n);
                                 }
                                 else if (Main.tile[m, n].TileType == ModContent.TileType<HallowedThorns>())
@@ -215,7 +214,7 @@ namespace InfectedQualities.Core
 
                                 if (Main.tile[m, n].TileType == TileID.SnowBlock)
                                 {
-                                    Main.tile[m, n].TileType = (ushort)ModContent.TileType<CorruptSnow>();
+                                    Main.tile[m, n].TileType = InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt);
                                     WorldGen.SquareTileFrame(m, n);
                                 }
                                 else if (Main.tile[m, n].TileType == ModContent.TileType<HallowedThorns>())
@@ -280,10 +279,10 @@ namespace InfectedQualities.Core
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                         {
-                            if (TileID.Sets.Conversion.Snow[Main.tile[k, l].TileType] && Main.tile[k, l].TileType != ModContent.TileType<CorruptSnow>())
+                            if (TileID.Sets.Conversion.Snow[Main.tile[k, l].TileType] && Main.tile[k, l].TileType != InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt))
                             {
-                                WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<CorruptSnow>());
-                                Main.tile[k, l].TileType = (ushort)ModContent.TileType<CorruptSnow>();
+                                WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt));
+                                Main.tile[k, l].TileType = InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt);
                                 WorldGen.SquareTileFrame(k, l);
                                 NetMessage.SendTileSquare(-1, k, l);
                             }
@@ -297,10 +296,10 @@ namespace InfectedQualities.Core
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                         {
-                            if (TileID.Sets.Conversion.Snow[Main.tile[k, l].TileType] && Main.tile[k, l].TileType != ModContent.TileType<CrimsonSnow>())
+                            if (TileID.Sets.Conversion.Snow[Main.tile[k, l].TileType] && Main.tile[k, l].TileType != InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson))
                             {
-                                WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<CrimsonSnow>());
-                                Main.tile[k, l].TileType = (ushort)ModContent.TileType<CrimsonSnow>();
+                                WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson));
+                                Main.tile[k, l].TileType = InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson);
                                 WorldGen.SquareTileFrame(k, l);
                                 NetMessage.SendTileSquare(-1, k, l);
                             }
@@ -317,10 +316,10 @@ namespace InfectedQualities.Core
                             //Shitty workaround for blue solution destroying any kind of thorn it comes across, I am NOT going to make a seperate IL edit just to prevent hallowed thorns from breaking.
                             TileID.Sets.Conversion.Thorn[ModContent.TileType<HallowedThorns>()] = false;
 
-                            if (TileID.Sets.Conversion.Snow[Main.tile[k, l].TileType] && Main.tile[k, l].TileType != ModContent.TileType<HallowedSnow>())
+                            if (TileID.Sets.Conversion.Snow[Main.tile[k, l].TileType] && Main.tile[k, l].TileType != InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed))
                             {
-                                WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, ModContent.TileType<HallowedSnow>());
-                                Main.tile[k, l].TileType = (ushort)ModContent.TileType<HallowedSnow>();
+                                WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed));
+                                Main.tile[k, l].TileType = InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed);
                                 WorldGen.SquareTileFrame(k, l);
                                 NetMessage.SendTileSquare(-1, k, l);
                             }
@@ -351,15 +350,15 @@ namespace InfectedQualities.Core
         {
             if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
             {
-                if (Main.tile[x, y].TileType == ModContent.TileType<CorruptSnow>())
+                if (Main.tile[x, y].TileType == InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt))
                 {
                     return 0;
                 }
-                else if (Main.tile[x, y].TileType == ModContent.TileType<CrimsonSnow>())
+                else if (Main.tile[x, y].TileType == InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson))
                 {
                     return 4;
                 }
-                else if (Main.tile[x, y].TileType == ModContent.TileType<HallowedJungleGrass>() || Main.tile[x, y].TileType == ModContent.TileType<HallowedSnow>())
+                else if (Main.tile[x, y].TileType == ModContent.TileType<HallowedJungleGrass>() || Main.tile[x, y].TileType == InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed))
                 {
                     return 2;
                 }
@@ -369,7 +368,7 @@ namespace InfectedQualities.Core
 
         private static void WorldGen_GetTreeLeaf(On_WorldGen.orig_GetTreeLeaf orig, int x, Tile topTile, Tile t, ref int treeHeight, out int treeFrame, out int passStyle)
         {
-            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && (t.TileType == ModContent.TileType<HallowedJungleGrass>() || t.TileType == ModContent.TileType<HallowedSnow>()))
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && (t.TileType == ModContent.TileType<HallowedJungleGrass>() || t.TileType == InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed)))
             {
                 treeFrame = 0;
                 passStyle = 917;
@@ -474,7 +473,7 @@ namespace InfectedQualities.Core
                 {
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
-                        return ModContent.TileType<HallowedSnow>();
+                        return InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed);
                     }
                     return -1;
                 });
@@ -540,7 +539,7 @@ namespace InfectedQualities.Core
                 {
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
-                        return ModContent.TileType<CorruptSnow>();
+                        return InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt);
                     }
                     return -1;
                 });
@@ -573,7 +572,7 @@ namespace InfectedQualities.Core
                 {
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
-                        return ModContent.TileType<CrimsonSnow>();
+                        return InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson);
                     }
                     return -1;
                 });
@@ -593,7 +592,7 @@ namespace InfectedQualities.Core
                 {
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
-                        return ModContent.TileType<HallowedSnow>();
+                        return InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed);
                     }
                     return -1;
                 });
@@ -657,7 +656,7 @@ namespace InfectedQualities.Core
                 {
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
-                        return ModContent.TileType<CorruptSnow>();
+                        return InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt);
                     }
                     return -1;
                 });
@@ -690,7 +689,7 @@ namespace InfectedQualities.Core
                 {
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
-                        return ModContent.TileType<CrimsonSnow>();
+                        return InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson);
                     }
                     return -1;
                 });
@@ -769,7 +768,7 @@ namespace InfectedQualities.Core
                 {
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
-                        return ModContent.TileType<CorruptSnow>();
+                        return InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt);
                     }
                     return -1;
                 });
@@ -798,7 +797,7 @@ namespace InfectedQualities.Core
                 {
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
-                        return ModContent.TileType<CrimsonSnow>();
+                        return InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson);
                     }
                     return -1;
                 });
@@ -818,7 +817,7 @@ namespace InfectedQualities.Core
                 {
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
-                        return ModContent.TileType<HallowedSnow>();
+                        return InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed);
                     }
                     return -1;
                 });
@@ -866,7 +865,7 @@ namespace InfectedQualities.Core
                     extra += tileTypeCounts[TileID.CorruptJungleGrass];
                     if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
-                        extra += tileTypeCounts[ModContent.TileType<CorruptSnow>()];
+                        extra += tileTypeCounts[InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt)];
                     }
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
                     {
@@ -882,7 +881,7 @@ namespace InfectedQualities.Core
                     extra += tileTypeCounts[TileID.CrimsonJungleGrass];
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
-                        extra += tileTypeCounts[ModContent.TileType<CrimsonSnow>()];
+                        extra += tileTypeCounts[InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson)];
                     }
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
                     {
@@ -898,7 +897,7 @@ namespace InfectedQualities.Core
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
                         extra += tileTypeCounts[ModContent.TileType<HallowedThorns>()];
-                        extra += tileTypeCounts[ModContent.TileType<HallowedSnow>()];
+                        extra += tileTypeCounts[InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed)];
                         extra += tileTypeCounts[ModContent.TileType<HallowedJungleGrass>()];
                     }
                     if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
@@ -1185,19 +1184,19 @@ namespace InfectedQualities.Core
 
             if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
             {
-                if (desiredStyle == ModContent.TileType<CorruptSnow>())
+                if (desiredStyle == InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt))
                 {
                     desiredStyle = 9;
                     fail = false;
                     return;
                 }
-                else if (desiredStyle == ModContent.TileType<CrimsonSnow>())
+                else if (desiredStyle == InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson))
                 {
                     desiredStyle = 10;
                     fail = false;
                     return;
                 }
-                else if (desiredStyle == ModContent.TileType<HallowedSnow>())
+                else if (desiredStyle == InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed))
                 {
                     desiredStyle = 8;
                     fail = false;

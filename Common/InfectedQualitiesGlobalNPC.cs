@@ -177,7 +177,7 @@ namespace InfectedQualities.Common
                 }
                 else if (spawnInfo.Player.ZoneSnow)
                 {
-                    if (spawnInfo.SpawnTileType == ModContent.TileType<CorruptSnow>() && spawnInfo.Player.ZoneCorrupt)
+                    if (spawnInfo.SpawnTileType == InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt) && spawnInfo.Player.ZoneCorrupt)
                     {
                         pool.Remove(0);
                         pool.Add(NPCID.EaterofSouls, hardmodeSpawnChance);
@@ -234,7 +234,7 @@ namespace InfectedQualities.Common
                             if (!Main.dayTime || spawnInfo.Player.ZoneCavern()) pool.Add(NPCID.IceElemental, 1.0f);
                         }
                     }
-                    else if (spawnInfo.SpawnTileType == ModContent.TileType<CrimsonSnow>() && spawnInfo.Player.ZoneCrimson)
+                    else if (spawnInfo.SpawnTileType == InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson) && spawnInfo.Player.ZoneCrimson)
                     {
                         pool.Remove(0);
                         pool.Add(NPCID.BloodCrawler, hardmodeSpawnChance);
@@ -292,7 +292,7 @@ namespace InfectedQualities.Common
                             if (!Main.dayTime || spawnInfo.Player.ZoneCavern()) pool.Add(NPCID.IceElemental, 1.0f);
                         }
                     }
-                    else if (spawnInfo.SpawnTileType == ModContent.TileType<HallowedSnow>() && spawnInfo.Player.ZoneHallow)
+                    else if (spawnInfo.SpawnTileType == InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed) && spawnInfo.Player.ZoneHallow)
                     {
                         pool.Remove(0);
                         if (spawnInfo.Player.ZoneSurface() || spawnInfo.Player.ZoneDirtLayerHeight)

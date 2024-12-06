@@ -240,16 +240,22 @@ namespace InfectedQualities.Common
                                 WorldGen.SquareTileFrame(x, y);
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
-                            else if (Main.tile[x, y].TileType == ModContent.TileType<CorruptSnow>() || Main.tile[x, y].TileType == ModContent.TileType<CrimsonSnow>() || Main.tile[x, y].TileType == ModContent.TileType<HallowedSnow>())
-                            {
-                                Main.tile[x, y].TileType = TileID.SnowBlock;
-                                WorldGen.SquareTileFrame(x, y);
-                                NetMessage.SendTileSquare(-1, x, y);
-                            }
                             else if (Main.tile[x, y].TileType == ModContent.TileType<HallowedThorns>())
                             {
                                 WorldGen.KillTile(x, y);
                                 NetMessage.SendTileSquare(-1, x, y);
+                            }
+                            else
+                            {
+                                foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
+                                {
+                                    if(Main.tile[x, y].TileType == InfectedQualitiesUtilities.GetSnowType(infectionType))
+                                    {
+                                        Main.tile[x, y].TileType = TileID.SnowBlock;
+                                        WorldGen.SquareTileFrame(x, y);
+                                        NetMessage.SendTileSquare(-1, x, y);
+                                    }
+                                }
                             }
                         }
                     }

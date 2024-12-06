@@ -107,7 +107,7 @@ namespace InfectedQualities.Content.Extras
                     [TileID.Ebonsand, TileID.Crimsand, TileID.Pearlsand],
                     [TileID.CorruptSandstone, TileID.CrimsonSandstone, TileID.HallowSandstone],
                     [TileID.CorruptHardenedSand, TileID.CrimsonHardenedSand, TileID.HallowHardenedSand],
-                    [ModContent.TileType<CorruptSnow>(), ModContent.TileType<CrimsonSnow>(), ModContent.TileType<HallowedSnow>()],
+                    [GetSnowType(InfectionType.Corrupt), GetSnowType(InfectionType.Crimson), GetSnowType(InfectionType.Hallowed)],
                     [TileID.CorruptIce, TileID.FleshIce, TileID.HallowedIce],
                     [TileID.CorruptThorns, TileID.CrimsonThorns, ModContent.TileType<HallowedThorns>()]
                 ];
@@ -237,7 +237,7 @@ namespace InfectedQualities.Content.Extras
 
                         int[][] convertedTiles = [
                             [-1, -1,  ModContent.TileType<HallowedJungleGrass>()],
-                            [ModContent.TileType<CorruptSnow>(), ModContent.TileType<CrimsonSnow>(), ModContent.TileType<HallowedSnow>()],
+                    [GetSnowType(InfectionType.Corrupt), GetSnowType(InfectionType.Crimson), GetSnowType(InfectionType.Hallowed)],
                             [-1, -1, ModContent.TileType<HallowedThorns>()]
                         ];
 
@@ -423,6 +423,8 @@ namespace InfectedQualities.Content.Extras
             }
             return ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.ToString() + mossType.ToString() + "Moss").Type;
         }
+
+        public static ushort GetSnowType(InfectionType infectionType) => ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.ToString() + "Snow").Type;
 
         /// <summary>
         /// This is temporary, I have to use refection until the methods get public for the stable release.

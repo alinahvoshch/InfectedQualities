@@ -1,4 +1,5 @@
-﻿using InfectedQualities.Core;
+﻿using InfectedQualities.Content.Extras;
+using InfectedQualities.Core;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.Metadata;
@@ -23,7 +24,7 @@ namespace InfectedQualities.Content.Tiles.Plants
             TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
 
             TileObjectData.newTile.FullCopyFrom(TileObjectData.GetTileData(TileID.Saplings, 0));
-            TileObjectData.newTile.AnchorValidTiles = [ModContent.TileType<CorruptSnow>(), ModContent.TileType<CrimsonSnow>(), ModContent.TileType<HallowedSnow>(), ModContent.TileType<HallowedJungleGrass>()];
+            TileObjectData.newTile.AnchorValidTiles = [InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt), InfectedQualitiesUtilities.GetSnowType(InfectionType.Crimson), InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed), ModContent.TileType<HallowedJungleGrass>()];
             TileObjectData.addTile(Type);
             
 

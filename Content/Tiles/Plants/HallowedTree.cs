@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.Enums;
 using InfectedQualities.Core;
+using InfectedQualities.Content.Extras;
 
 namespace InfectedQualities.Content.Tiles.Plants
 {
@@ -22,7 +23,7 @@ namespace InfectedQualities.Content.Tiles.Plants
             SpecialGroupMaximumSaturationValue = 1f
         };
 
-        public override void SetStaticDefaults() => GrowsOnTileId = [ModContent.TileType<HallowedJungleGrass>(), ModContent.TileType<HallowedSnow>()];
+        public override void SetStaticDefaults() => GrowsOnTileId = [ModContent.TileType<HallowedJungleGrass>(), InfectedQualitiesUtilities.GetSnowType(InfectionType.Hallowed)];
 
         public override int DropWood() => ItemID.Pearlwood;
 

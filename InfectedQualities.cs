@@ -16,6 +16,8 @@ namespace InfectedQualities
         {
             foreach(InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
             {
+                AddContent(new InfectedSnow(infectionType));
+
                 foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
                 {
                     AddContent(new InfectedMoss(infectionType, mossType));
