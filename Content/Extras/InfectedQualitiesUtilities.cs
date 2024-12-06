@@ -127,7 +127,7 @@ namespace InfectedQualities.Content.Extras
                                 WorldGen.SquareTileFrame(x, y);
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
-                            else if (ConvertMoss(x, y, infectionType))
+                            else if (ConvertMoss(x, y, infectionType, true))
                             {
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
@@ -237,7 +237,7 @@ namespace InfectedQualities.Content.Extras
 
                         int[][] convertedTiles = [
                             [-1, -1,  ModContent.TileType<HallowedJungleGrass>()],
-                    [GetSnowType(InfectionType.Corrupt), GetSnowType(InfectionType.Crimson), GetSnowType(InfectionType.Hallowed)],
+                            [GetSnowType(InfectionType.Corrupt), GetSnowType(InfectionType.Crimson), GetSnowType(InfectionType.Hallowed)],
                             [-1, -1, ModContent.TileType<HallowedThorns>()]
                         ];
 
@@ -250,7 +250,7 @@ namespace InfectedQualities.Content.Extras
                                 NetMessage.SendTileSquare(-1, x, y);
                                 break;
                             }
-                            else if (ConvertMoss(x, y, infectionType))
+                            else if (ConvertMoss(x, y, infectionType, true))
                             {
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
@@ -378,7 +378,7 @@ namespace InfectedQualities.Content.Extras
             }
         }
 
-        public static bool ConvertMoss(int i, int j, InfectionType? infectionType)
+        public static bool ConvertMoss(int i, int j, InfectionType? infectionType, bool safe = false)
         {
             if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[i, j].TileType])
             {
@@ -390,7 +390,7 @@ namespace InfectedQualities.Content.Extras
                         WorldGen.SquareTileFrame(i, j);
                         return true;
                     }
-                    else
+                    else if(!safe)
                     {
                         foreach (InfectionType cycledInfection in Enum.GetValues(typeof(InfectionType)))
                         {

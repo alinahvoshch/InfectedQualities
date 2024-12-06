@@ -286,10 +286,11 @@ namespace InfectedQualities.Content.Tiles
 
                     int slopeOffset = (Main.tile[i, j].Slope <= SlopeType.SlopeDownRight) ? 14 : 0;
                     frame = new(Main.tile[i, j].TileFrameX, Main.tile[i, j].TileFrameY + slopeOffset, 16, 2);
-                    Main.spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(0, slopeOffset), frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(0, slopeOffset), frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                 }
             }
         }
+
         public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)
         {
             if (down == TileID.Stalactite && Main.tile[i, j + 1].TileFrameY is 0 or 72)
@@ -301,7 +302,9 @@ namespace InfectedQualities.Content.Tiles
                 up = Type;
             }
         }
+
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : mossType == MossType.Helium ? 5 : 3;
+
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             if(fail && !effectOnly)

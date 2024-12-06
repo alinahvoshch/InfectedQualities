@@ -14,7 +14,9 @@ namespace InfectedQualities
 	{
         public override void Load()
         {
-            foreach(InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
+            InfectedQualitiesUtilities.PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
+
+            foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
             {
                 AddContent(new InfectedSnow(infectionType));
 
@@ -23,8 +25,6 @@ namespace InfectedQualities
                     AddContent(new InfectedMoss(infectionType, mossType));
                 }
             }
-
-            InfectedQualitiesUtilities.PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
 
             if (ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
             {

@@ -164,7 +164,7 @@ namespace InfectedQualities.Core
                             }
                             else
                             {
-                                InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Hallowed);
+                                InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Hallowed, true);
                             }
                         }
                         else if (WorldGen.crimson)
@@ -200,7 +200,7 @@ namespace InfectedQualities.Core
                             }
                             else
                             {
-                                InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Crimson);
+                                InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Crimson, true);
                             }
                         }
                         else
@@ -236,7 +236,7 @@ namespace InfectedQualities.Core
                             }
                             else
                             {
-                                InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Corrupt);
+                                InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Corrupt, true);
                             }
                         }
                     }
