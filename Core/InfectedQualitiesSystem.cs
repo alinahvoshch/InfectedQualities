@@ -14,6 +14,7 @@ namespace InfectedQualities.Core
         {
             Recipe.Create(ItemID.Leather)
                 .AddIngredient(ItemID.Vertebrae, 5)
+                .AddTile(TileID.WorkBenches)
                 .AddDecraftCondition(Condition.CrimsonWorld)
                 .Register();
 

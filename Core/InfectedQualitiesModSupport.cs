@@ -1,5 +1,4 @@
-﻿using InfectedQualities.Content.Extras;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Reflection;
 using Terraria;
