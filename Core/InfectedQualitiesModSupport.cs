@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using InfectedQualities.Content.Extras;
+using Microsoft.Xna.Framework;
 using System;
 using System.Reflection;
 using Terraria;
@@ -17,7 +18,7 @@ namespace InfectedQualities.Core
 
         internal static Color[] ModWallBiomeSight = WallID.Sets.Factory.CreateCustomSet(default(Color));
 
-        private static readonly string[][] EvilBlocks =
+        private static readonly string[][] ModBlocks =
         [
             ["AstralGrassWall", "HardenedAstralSandWall", "AstralSandstoneWall", "AstralStoneWall", "AstralDirtWall", "AstralSnowWall", "CelestialRemainsWall", "AstralIceWall", "AstralMonolithWall"],
             ["CreamGrassWall", "HardenedCreamsandWall", "CreamsandstoneWall", "CreamstoneWall", "Creamstone2Wall", "Creamstone3Wall", "Creamstone4Wall", "Creamstone5Wall", "CookieWall", "CookieStonedWall", "PinkFairyFlossWall", "BlueIceWall", "CreamWall"],
@@ -26,14 +27,15 @@ namespace InfectedQualities.Core
             ["Defiled_Stone", "Defiled_Grass", "Defiled_Sand", "Defiled_Sandstone", "Hardened_Defiled_Sand", "Defiled_Ice", "Defiled_Jungle_Grass"],
             ["Defiled_Stone_Wall", "Defiled_Sandstone_Wall", "Hardened_Defiled_Sand_Wall", "Defiled_Grass_Wall_Natural"],
             ["Riven_Flesh", "Riven_Grass", "Silica", "Brittle_Quartz", "Quartz", "Primordial_Permafrost", "Riven_Jungle_Grass"],
-            ["Riven_Flesh_Wall", "Quartz_Wall", "Brittle_Quartz_Wall", "Riven_Grass_Wall_Natural"]
+            ["Riven_Flesh_Wall", "Quartz_Wall", "Brittle_Quartz_Wall", "Riven_Grass_Wall_Natural"],
+            ["GreenCreamMoss", "BrownCreamMoss", "RedCreamMoss", "BlueCreamMoss", "PurpleCreamMoss", "LavaCreamMoss", "KryptonCreamMoss", "XenomCreamMoss"]
         ];
 
         public static void PostSetupContent()
         {
             if (CalamityMod != null)
             {
-                foreach (string wallName in EvilBlocks[0])
+                foreach (string wallName in ModBlocks[0])
                 {
                     ModWallBiomeSight[CalamityMod.Find<ModWall>(wallName).Type] = Color.Cyan;
                 }
@@ -42,7 +44,7 @@ namespace InfectedQualities.Core
             if (ConfectionRebaked != null)
             {
                 Color confectionGlow = new(210, 196, 145);
-                foreach (string wallName in EvilBlocks[1])
+                foreach (string wallName in ModBlocks[1])
                 {
                     ModWallBiomeSight[ConfectionRebaked.Find<ModWall>(wallName).Type] = confectionGlow;
                 }
@@ -51,7 +53,7 @@ namespace InfectedQualities.Core
             if (ExxoAvalon != null)
             {
                 Color contagionGlow = new(170, 255, 0);
-                foreach (string wallName in EvilBlocks[3])
+                foreach (string wallName in ModBlocks[3])
                 {
                     ModWallBiomeSight[ExxoAvalon.Find<ModWall>(wallName).Type] = contagionGlow;
                 }
@@ -59,12 +61,12 @@ namespace InfectedQualities.Core
 
             if(TerrariaOrigins != null)
             {
-                foreach(string wallName in EvilBlocks[5])
+                foreach(string wallName in ModBlocks[5])
                 {
                     ModWallBiomeSight[TerrariaOrigins.Find<ModWall>(wallName).Type] = Color.White;
                 }
 
-                foreach (string wallName in EvilBlocks[7])
+                foreach (string wallName in ModBlocks[7])
                 {
                     ModWallBiomeSight[TerrariaOrigins.Find<ModWall>(wallName).Type] = Color.Cyan;
                 }
@@ -97,7 +99,7 @@ namespace InfectedQualities.Core
             if (ExxoAvalon != null)
             {
                 int contagionTileCount = 0;
-                foreach (string tileName in EvilBlocks[2])
+                foreach (string tileName in ModBlocks[2])
                 {
                     contagionTileCount += sceneMetrics.GetTileCount(ExxoAvalon.Find<ModTile>(tileName).Type);
                 }
@@ -111,7 +113,7 @@ namespace InfectedQualities.Core
             if (TerrariaOrigins != null)
             {
                 int defiledTiles = 0;
-                foreach (string tileName in EvilBlocks[4])
+                foreach (string tileName in ModBlocks[4])
                 {
                     defiledTiles += sceneMetrics.GetTileCount(TerrariaOrigins.Find<ModTile>(tileName).Type);
                 }
@@ -122,7 +124,7 @@ namespace InfectedQualities.Core
                 }
 
                 int rivenTiles = 0;
-                foreach (string tileName in EvilBlocks[6])
+                foreach (string tileName in ModBlocks[6])
                 {
                     rivenTiles += sceneMetrics.GetTileCount(TerrariaOrigins.Find<ModTile>(tileName).Type);
                 }
@@ -139,7 +141,7 @@ namespace InfectedQualities.Core
         {
             if (ExxoAvalon != null)
             {
-                foreach (string wallName in EvilBlocks[3])
+                foreach (string wallName in ModBlocks[3])
                 {
                     if (Main.tile[i, j].WallType == ExxoAvalon.Find<ModWall>(wallName).Type)
                     {
@@ -147,7 +149,7 @@ namespace InfectedQualities.Core
                     }
                 }
 
-                foreach (string tileName in EvilBlocks[2])
+                foreach (string tileName in ModBlocks[2])
                 {
                     if (Main.tile[i, j].TileType == ExxoAvalon.Find<ModTile>(tileName).Type)
                     {
@@ -158,7 +160,7 @@ namespace InfectedQualities.Core
 
             if (TerrariaOrigins != null)
             {
-                foreach (string wallName in EvilBlocks[5])
+                foreach (string wallName in ModBlocks[5])
                 {
                     if (Main.tile[i, j].WallType == TerrariaOrigins.Find<ModWall>(wallName).Type)
                     {
@@ -166,7 +168,7 @@ namespace InfectedQualities.Core
                     }
                 }
 
-                foreach (string tileName in EvilBlocks[4])
+                foreach (string tileName in ModBlocks[4])
                 {
                     if (Main.tile[i, j].TileType == TerrariaOrigins.Find<ModTile>(tileName).Type)
                     {
@@ -174,7 +176,7 @@ namespace InfectedQualities.Core
                     }
                 }
 
-                foreach (string wallName in EvilBlocks[7])
+                foreach (string wallName in ModBlocks[7])
                 {
                     if (Main.tile[i, j].WallType == TerrariaOrigins.Find<ModWall>(wallName).Type)
                     {
@@ -182,9 +184,24 @@ namespace InfectedQualities.Core
                     }
                 }
 
-                foreach (string tileName in EvilBlocks[6])
+                foreach (string tileName in ModBlocks[6])
                 {
                     if (Main.tile[i, j].TileType == TerrariaOrigins.Find<ModTile>(tileName).Type)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static bool IsAltMoss(int i, int j, MossType mossType)
+        {
+            if(ConfectionRebaked != null && mossType < MossType.Neon)
+            {
+                foreach (string tileName in ModBlocks[8])
+                {
+                    if (Main.tile[i, j].TileType == ConfectionRebaked.Find<ModTile>(tileName).Type)
                     {
                         return true;
                     }
