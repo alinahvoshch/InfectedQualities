@@ -27,8 +27,7 @@ namespace InfectedQualities.Core
             ["Defiled_Stone", "Defiled_Grass", "Defiled_Sand", "Defiled_Sandstone", "Hardened_Defiled_Sand", "Defiled_Ice", "Defiled_Jungle_Grass"],
             ["Defiled_Stone_Wall", "Defiled_Sandstone_Wall", "Hardened_Defiled_Sand_Wall", "Defiled_Grass_Wall_Natural"],
             ["Riven_Flesh", "Riven_Grass", "Silica", "Brittle_Quartz", "Quartz", "Primordial_Permafrost", "Riven_Jungle_Grass"],
-            ["Riven_Flesh_Wall", "Quartz_Wall", "Brittle_Quartz_Wall", "Riven_Grass_Wall_Natural"],
-            ["GreenCreamMoss", "BrownCreamMoss", "RedCreamMoss", "BlueCreamMoss", "PurpleCreamMoss", "LavaCreamMoss", "KryptonCreamMoss", "XenomCreamMoss"]
+            ["Riven_Flesh_Wall", "Quartz_Wall", "Brittle_Quartz_Wall", "Riven_Grass_Wall_Natural"]
         ];
 
         public static void PostSetupContent()
@@ -187,21 +186,6 @@ namespace InfectedQualities.Core
                 foreach (string tileName in ModBlocks[6])
                 {
                     if (Main.tile[i, j].TileType == TerrariaOrigins.Find<ModTile>(tileName).Type)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public static bool IsAltMoss(int i, int j, MossType mossType)
-        {
-            if(ConfectionRebaked != null && mossType < MossType.Neon)
-            {
-                foreach (string tileName in ModBlocks[8])
-                {
-                    if (Main.tile[i, j].TileType == ConfectionRebaked.Find<ModTile>(tileName).Type)
                     {
                         return true;
                     }

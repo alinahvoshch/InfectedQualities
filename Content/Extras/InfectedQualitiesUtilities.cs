@@ -384,7 +384,7 @@ namespace InfectedQualities.Content.Extras
             {
                 foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
                 {
-                    if ((infectionType.HasValue && Main.tile[i, j].TileType == GetMossType(null, mossType)) || InfectedQualitiesModSupport.IsAltMoss(i, j, mossType))
+                    if (infectionType.HasValue && Main.tile[i, j].TileType == GetMossType(null, mossType))
                     {
                         Main.tile[i, j].TileType = GetMossType(infectionType, mossType);
                         WorldGen.SquareTileFrame(i, j);

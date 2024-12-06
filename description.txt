@@ -71,7 +71,7 @@ Additionally, Calamity's system for handling the conversion between normal plant
 Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 You can use Calamity pylons to craft a 'PYLON OF NIGHT'.
 
-CONFECTION REBAKED -->	Added solution interactions for 'INFECTED MOSS BLOCKS'.
+CONFECTION REBAKED -->	Conversions between this mods' moss blocks and Confections' mosses don't work properly.
 Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 
 SPIRIT MOD --> You can use the spirit mod pylons to craft a 'PYLON OF NIGHT'.
