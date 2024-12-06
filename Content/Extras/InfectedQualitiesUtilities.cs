@@ -378,23 +378,29 @@ namespace InfectedQualities.Content.Extras
             }
         }
 
-        public static bool ConvertMoss(int i, int j, InfectionType? infectionType, bool safe = true)
+        public static bool ConvertMoss(int i, int j, InfectionType? infectionType)
         {
-            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[i, j].TileType])
             {
                 foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
                 {
-                    if (safe && Main.tileMoss[Main.tile[i, j].TileType])
+                    if (infectionType.HasValue && Main.tile[i, j].TileType == GetMossType(null, mossType))
                     {
                         Main.tile[i, j].TileType = GetMossType(infectionType, mossType);
                         WorldGen.SquareTileFrame(i, j);
                         return true;
                     }
-                    else if (!safe && TileID.Sets.Conversion.Moss[Main.tile[i, j].TileType] && Main.tile[i, j].TileType != GetMossType(infectionType, mossType))
+                    else
                     {
-                        Main.tile[i, j].TileType = GetMossType(infectionType, mossType);
-                        WorldGen.SquareTileFrame(i, j);
-                        return true;
+                        foreach (InfectionType cycledInfection in Enum.GetValues(typeof(InfectionType)))
+                        {
+                            if(!infectionType.Equals(cycledInfection) && Main.tile[i, j].TileType == GetMossType(cycledInfection, mossType))
+                            {
+                                Main.tile[i, j].TileType = GetMossType(infectionType, mossType);
+                                WorldGen.SquareTileFrame(i, j);
+                                return true;
+                            }
+                        }
                     }
                 }
             }
@@ -421,7 +427,7 @@ namespace InfectedQualities.Content.Extras
                     _ => TileID.Stone
                 };
             }
-            return ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.ToString() + mossType.ToString() + "Moss").Type;
+            return ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.Value.ToString() + mossType.ToString() + "Moss").Type;
         }
 
         public static ushort GetSnowType(InfectionType infectionType) => ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.ToString() + "Snow").Type;

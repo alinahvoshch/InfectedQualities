@@ -162,7 +162,7 @@ namespace InfectedQualities.Core
                             {
                                 WorldGen.KillTile(m, n);
                             }
-                            else if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
+                            else
                             {
                                 InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Hallowed);
                             }
@@ -198,7 +198,7 @@ namespace InfectedQualities.Core
                                 Main.tile[m, n].TileType = TileID.CrimsonThorns;
                                 WorldGen.SquareTileFrame(m, n);
                             }
-                            else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
+                            else
                             {
                                 InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Crimson);
                             }
@@ -234,7 +234,7 @@ namespace InfectedQualities.Core
                                 Main.tile[m, n].TileType = TileID.CorruptThorns;
                                 WorldGen.SquareTileFrame(m, n);
                             }
-                            else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
+                            else
                             {
                                 InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Corrupt);
                             }
@@ -257,7 +257,7 @@ namespace InfectedQualities.Core
 
                     if (conversionType == BiomeConversionID.Purity)
                     {
-                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, null, false))
+                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, null))
                         {
                             NetMessage.SendTileSquare(-1, k, l);
                         }
@@ -273,7 +273,7 @@ namespace InfectedQualities.Core
                     }
                     else if (conversionType == BiomeConversionID.Corruption)
                     {
-                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Corrupt, false))
+                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Corrupt))
                         {
                             NetMessage.SendTileSquare(-1, k, l);
                         }
@@ -290,7 +290,7 @@ namespace InfectedQualities.Core
                     }
                     else if (conversionType == BiomeConversionID.Crimson)
                     {
-                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Crimson, false))
+                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Crimson))
                         {
                             NetMessage.SendTileSquare(-1, k, l);
                         }
@@ -307,7 +307,7 @@ namespace InfectedQualities.Core
                     }
                     else if (conversionType == BiomeConversionID.Hallow)
                     {
-                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Hallowed, false))
+                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Hallowed))
                         {
                             NetMessage.SendTileSquare(-1, k, l);
                         }
