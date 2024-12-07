@@ -58,6 +58,7 @@ namespace InfectedQualities.Content.Tiles
                     TileID.Sets.HallowBiome[Type] = 1;
                     TileID.Sets.HallowBiomeSight[Type] = true;
                     TileID.Sets.HallowCountCollection.Add(Type);
+                    TileID.Sets.CanGrowCrystalShards[Type] = true;
                     InfectedQualitiesUtilities.TileMerge(Type, TileID.HallowedIce);
                     RegisterItemDrop(ModContent.ItemType<Items.Placables.HallowedSnow>());
                     AddMapEntry(new(247, 228, 233));

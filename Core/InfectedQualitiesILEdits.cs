@@ -269,6 +269,18 @@ namespace InfectedQualities.Core
                                 WorldGen.SquareTileFrame(k, l);
                                 NetMessage.SendTileSquare(-1, k, l);
                             }
+                            else
+                            {
+                                foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
+                                {
+                                    if (Main.tile[k, l].TileType == InfectedQualitiesUtilities.GetSnowType(infectionType))
+                                    {
+                                        Main.tile[k, l].TileType = TileID.SnowBlock;
+                                        WorldGen.SquareTileFrame(k, l);
+                                        NetMessage.SendTileSquare(-1, k, l);
+                                    }
+                                }
+                            }
                         }
                     }
                     else if (conversionType == BiomeConversionID.Corruption)
@@ -919,7 +931,7 @@ namespace InfectedQualities.Core
             {
                 cursor.EmitDelegate(() =>
                 {
-                    if (WorldGen.AllowedToSpreadInfections && (ModContent.GetInstance<InfectedQualitiesServerConfig>().DisableInfectionSpread || WorldGen.IsGeneratingHardMode || Main.hardMode))
+                    if (WorldGen.AllowedToSpreadInfections && (ModContent.GetInstance<InfectedQualitiesServerConfig>().DisableInfectionSpread || WorldGen.IsGeneratingHardMode || !Main.hardMode))
                     {
                         WorldGen.AllowedToSpreadInfections = false;
                     }
