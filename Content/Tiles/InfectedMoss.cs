@@ -32,7 +32,7 @@ namespace InfectedQualities.Content.Tiles
             TileID.Sets.Conversion.Moss[Type] = true;
 
             InfectedQualitiesUtilities.TileMerge(Type, TileID.Dirt);
-            Main.tileMerge[InfectedStoneType][Type] = true;
+            InfectedQualitiesUtilities.TileMerge(Type, InfectedStoneType);
 
             MinPick = 65;
             MineResist = 2;
