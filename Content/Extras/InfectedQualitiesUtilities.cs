@@ -10,6 +10,7 @@ using ReLogic.Content;
 using Microsoft.Xna.Framework;
 using System;
 using InfectedQualities.Common;
+using System.Reflection;
 
 namespace InfectedQualities.Content.Extras
 {
@@ -33,6 +34,19 @@ namespace InfectedQualities.Content.Extras
                 return player.ZoneOverworldHeight;
             }
             return player.ZoneRockLayerHeight;
+        }
+
+        public static bool MusicUnderground(this Player player)
+        {
+            if(player.position.Y >= Main.worldSurface * 16.0 + (Main.screenHeight / 2) && (Main.remixWorld || !WorldGen.oceanDepths((int)(Main.screenPosition.X + (Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (Main.screenHeight / 2)) / 16)))
+            {
+                if(Main.remixWorld)
+                {
+                    return player.position.Y >= Main.rockLayer * 16.0 + (Main.screenHeight / 2);
+                }
+                return true;
+            }
+            return false;
         }
 
         public static void TileMerge(ushort tileFrom, ushort tileTo)
@@ -432,12 +446,19 @@ namespace InfectedQualities.Content.Extras
 
         public static ushort GetSnowType(InfectionType infectionType) => ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.ToString() + "Snow").Type;
 
+        public static bool OtherworldMusic()
+        {
+            FieldInfo swapMusic = typeof(Main).GetField("swapMusic", BindingFlags.NonPublic | BindingFlags.Static);
+            return Main.drunkWorld ^ (bool)swapMusic.GetValue(null);
+
+        }
+
         /// <summary>
         /// This is temporary, I have to use refection until the methods get public for the stable release.
         /// </summary>
         public static bool RefectionMethod(int x, int y, string name)
         {
-            return (bool)typeof(WorldGen).GetMethod(name, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static).Invoke(null, [x, y]);
+            return (bool)typeof(WorldGen).GetMethod(name, BindingFlags.NonPublic | BindingFlags.Static).Invoke(null, [x, y]);
         }
 
     }

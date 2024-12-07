@@ -72,6 +72,7 @@ Mods: {
 				Content: Content Configuration
 				Experimental: Experimental Configuration
 				Visual: Visual Configuration
+				Audio: Audio Configuration
 			}
 
 			InfectedBiomes: {
@@ -163,6 +164,11 @@ Mods: {
 			BiomeSightWallHighlighting: {
 				Label: "[i:5211] Biome Sight Wall Highlighting"
 				Tooltip: Biome sight potion will highlight infection walls. Compatible with other mods.
+			}
+
+			HallowedJungleMusic: {
+				Label: "[i:573] Hallow Music in Jungle"
+				Tooltip: Hallow music will play in the Hallowed Jungle. May be incompatible with other mods that change music.
 			}
 		}
 

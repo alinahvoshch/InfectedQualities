@@ -4,6 +4,7 @@ using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
 
 namespace InfectedQualities.Core
 {
@@ -207,6 +208,16 @@ namespace InfectedQualities.Core
                 {
                     return (string)biomeManager.GetField("worldEvilName", flags).GetValue(null) != "";
                 }
+            }
+            return false;
+        }
+
+        public static bool HallowNightMusic()
+        {
+            if(SpiritMod != null)
+            {
+                Type musicConfig = SpiritMod.Code.GetType("SpiritMod.Utilities.SpiritMusicConfig");
+                return (bool)musicConfig.GetProperty("HallowNightMusic").GetValue(ModContent.Find<ModConfig>(SpiritMod.Name, "SpiritMusicConfig"));
             }
             return false;
         }
