@@ -55,6 +55,7 @@ namespace InfectedQualities.Content.Tiles
                     RegisterItemDrop(ItemID.CrimstoneBlock);
                     break;
                 case InfectionType.Hallowed:
+                    Main.tileShine[Type] = 9000;
                     TileID.Sets.Hallow[Type] = true;
                     TileID.Sets.HallowBiome[Type] = 1;
                     TileID.Sets.HallowBiomeSight[Type] = true;

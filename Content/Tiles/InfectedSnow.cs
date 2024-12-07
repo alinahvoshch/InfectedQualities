@@ -53,6 +53,7 @@ namespace InfectedQualities.Content.Tiles
                     AddMapEntry(new(234, 210, 205));
                     break;
                 case InfectionType.Hallowed:
+                    Main.tileShine[Type] = 9000;
                     TileID.Sets.Hallow[Type] = true;
                     TileID.Sets.HallowBiome[Type] = 1;
                     TileID.Sets.HallowBiomeSight[Type] = true;
