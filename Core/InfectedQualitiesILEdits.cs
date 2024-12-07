@@ -919,7 +919,7 @@ namespace InfectedQualities.Core
             {
                 cursor.EmitDelegate(() =>
                 {
-                    if (WorldGen.AllowedToSpreadInfections && (ModContent.GetInstance<InfectedQualitiesServerConfig>().DisableInfectionSpread || WorldGen.IsGeneratingHardMode))
+                    if (WorldGen.AllowedToSpreadInfections && (ModContent.GetInstance<InfectedQualitiesServerConfig>().DisableInfectionSpread || WorldGen.IsGeneratingHardMode || Main.hardMode))
                     {
                         WorldGen.AllowedToSpreadInfections = false;
                     }

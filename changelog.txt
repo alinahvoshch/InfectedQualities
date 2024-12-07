@@ -13,6 +13,7 @@
 -Added an experimental config option to bring back demon altars spawning in infected blocks.
 -Added infected variants of moss blocks, and a config option to disable it.
 -Hallow theme now plays in the Hallowed jungle, can be disabled in the config.
+-Disabled infected grass spread pre-hardmode.
 
 0.7.1
 =====
