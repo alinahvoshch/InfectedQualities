@@ -24,15 +24,13 @@ namespace InfectedQualities
                 {
                     AddContent(new InfectedMoss(infectionType, mossType));
                 }
-            }
 
-            if (ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
-            {
-                for (int i = 1; i < 3; i++)
+                if (ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
                 {
-                    AddBossHeadTexture("InfectedQualities/Content/Extras/MapIcons/CorruptPlantera_MapIcon_" + i);
-                    AddBossHeadTexture("InfectedQualities/Content/Extras/MapIcons/CrimsonPlantera_MapIcon_" + i);
-                    AddBossHeadTexture("InfectedQualities/Content/Extras/MapIcons/HallowedPlantera_MapIcon_" + i);
+                    for (int i = 1; i < 3; i++)
+                    {
+                        AddBossHeadTexture("InfectedQualities/Content/Extras/MapIcons/" + infectionType.ToString() + "Plantera_MapIcon_" + i);
+                    }
                 }
             }
         }
