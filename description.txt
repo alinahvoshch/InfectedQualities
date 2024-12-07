@@ -7,23 +7,23 @@ The main idea of the mod was to fuse the infection biomes with whatever biome th
 If you have any bugs or suggestions, you can report to me via GitHub: https://github.com/Mellohi138/InfectedQualities
 
 |MAIN FEATURES|
-===============
-INFECTED SNOW BLOCKS --> Natrually, comes with corrupt, crimson, and hallowed variants. 
-Normally, snow biome doesn't spread properly on the surface, and a snow biome might actually block off a part of the corruption.
+===============	
+INFECTED SNOW BLOCKS --> Corrupt, Crimson, and Hallowed snow blocks. 
+Normally, snow biome doesn't spread properly on the surface, because snow blocks have no infected variant. This results in the snow biome blocking infections off.
 The addition of these blocks fixes this ''issue''.
 
-INFECTED JUNGLE BIOMES --> Comes with hallowed jungle grass, meaning the hallow can now spread into the jungle. Hallowed thorns are added as well, but they only spawn in the Hallowed Jungle.
-Corrupt and crimson jungle grass blocks now count as jungle blocks, meaning spawn rates are increased, and plantera doesn't engrage.
+INFECTED JUNGLE BIOMES --> Hallowed jungle grass, and hallowed thorns that only spawn on hallowed jungle grass.
+Corrupt and crimson jungles now count as actual jungle biomes. This results in increased spawn rates, and jungle bosses (Such as Plantera and Queen Bee) not getting enraged in the biomes.
 
-INFECTED MOSS BLOCKS --> Moss can now grow on ebonstone, crimsstone, and pearlstone. The stone part of the tiles are supported by resource packs.
-Over here at Infected Qualities we highly discourage acts of terrorism against mosses.
+INFECTED MOSS BLOCKS --> Moss can now grow on ebonstone, crimsstone, and pearlstone. The stone part of the tiles are compatible with resource packs. 
 
-BIOME SIGHT WALL HIGHLIGHTING --> The biome sight potion now highlights all infected walls. Was designed to be compatible with other mods.
+BIOME SIGHT WALL HIGHLIGHTING --> The biome sight potion now highlights all infected walls.
 
-BIOME SPREAD CHANGES --> Infected walls can now spread infections themselves, this is why I made biome sight potions highlight them.
-And if the world is pre-plantera, and infected jungle and snow biomes are enabled, chlorophyte is powerless against stopping infections from spreading. Additionally, chlorophyte now prevents hallow from spreading as well.
+BIOME SPREAD CHANGES --> Infected walls now spread infections.
+If Plantera has not yet been defeated, chlorophyte is powerless against stopping infections from spreading, this means the jungle more easily taken over by the infections.
+Chlorophyte now prevents hallow from spreading.
 
-DIVINE POWDER --> Acts like a normal powder, spreads hallow. Also purification powder now purifies hallow.
+DIVINE POWDER --> Acts like a normal powder, spreads hallow. Enabling it makes purification powder purify hallow.
 
 PYLON OF NIGHT --> My own take on the 'corruption pylon' idea. Instead of making seperate pylons for both corruption and crimson, I made a singular pylon that can teleport to both corruption AND crimson. 
 Unlike other pylons, this one does not require villagers to function, nor is it sold by them. Instead, it is crafted.
@@ -33,7 +33,7 @@ This also disables the normal key of night recipe when inside a graveyard.
 
 INFECTED PLANTERA BULB & LIFE FRUIT --> Pretty self-explanatory, these tiles get their own custom texture when their jungle grass is infected.
 
-INFECTED PLANTERA --> Purely visual, plantera now gets her own custom textures when spawned in an infected biome. If you are in an infected jungle biome, plantera should not enrage.
+INFECTED PLANTERA --> Purely visual, plantera now gets her own custom texture when spawned in an infected biome.
 
 |SMALL CHANGES|
 ===============
@@ -42,13 +42,13 @@ INFECTED PLANTERA --> Purely visual, plantera now gets her own custom textures w
 -Infected vines now count towards their respective biome blocks.
 -Infected plants, vines, and thorns no longer count towards the Dryad world status calcuations, to fix the precentage being off.
 -Infection powders now spread to walls.
--Leather can now be crafted out of 5 vertebrae. In crimson world, leather gets shimmered into 5 vertebrae, and in corruption worlds vice versa. Also, they are now interchangable in a graveyard biome.
+-Leather can now be crafted out of 5 vertebrae. In crimson worlds, leather gets shimmered into 5 vertebrae, and in corruption worlds vice versa. They are also now interchangable in a graveyard biome.
 -Corrupt jungle grass now emits corruption particles like the other corruption tiles.
 -Hallowed grass and hallowed golf grass can now grow crystal shards.
 -Corrupt and Crimson ice now grows deathweed instead of shiverthorn.
 -Hardmode V-Generation now affects moss blocks and thorns.
 -Unused corrupt and crimson lily pads and cattails can now appear.
--Infected grass no longer spreads on grass pre-hardmode.
+-Infected grass no longer spreads on normal grass pre-hardmode.
 
 |EXPERIMENTAL FEATURES|
 =======================
@@ -57,7 +57,7 @@ These features are normally disabled, and can be turned on in the config file.
 CHASM PURIFICATION UPON HARDMODE --> After the wall of flesh gets defeated and before the 'ancient spirits of light and dark' get released, the entire world gets purified. 
 This results in chasms being cleaned but the infections still remaining in the form of that V-shape. Might help you with biome management.
 
-DISABLING INFECTION SPREADING --> Self explanatory, just enable it in the config and you're good to go.
+DISABLING INFECTION SPREADING --> Self explanatory, just enable it in the config and you're good to go. Should not have an effect in Journey mode.
 
 NPCS BEING ABLE TO LIVE IN EVIL BIOMES --> Again, self explanatory. Should save you the annoyance of having to build new houses.
 
@@ -66,13 +66,14 @@ DEMON ALTAR EVIL BLOCK SPAWNING --> Demon altars have a 66% chance to spawn an e
 |MOD COMPABILITY|
 =================
 The mod was designed with other mods in mind, and manual compability was added when it was needed to. But there might still be incompabilities.
+Unless outright stated, all mods in the list should be compatible. This list is just for potential issues that could arise when playing with the mods bellow.
 
-CALAMITY --> Astral infection does not convert infected snow blocks. Astral worldgen only looks for the normal snow block to convert instead of just using the snow block list.
-Additionally, Calamity's system for handling the conversion between normal plants and astral plants messes up the way infected plants and vines work in the jungle, as a result they are just gone.
+CALAMITY --> Astral infection worldgen doesn't replace infected snows with astral snow, creating a weird overlap. 
+Infected jungle fooliage is broken, plants and vines are just gone, so the biomes might end up feeling a bit empty.
 Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 You can use Calamity pylons to craft a 'PYLON OF NIGHT'.
 
-CONFECTION REBAKED -->	Conversions between this mods' moss blocks and Confections' mosses don't work properly.
+CONFECTION REBAKED -->	Conversions between this mods' moss blocks and Confections' moss blocks don't work properly.
 Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 
 SPIRIT MOD --> You can use the spirit mod pylons to craft a 'PYLON OF NIGHT'.
