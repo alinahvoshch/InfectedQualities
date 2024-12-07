@@ -4,7 +4,7 @@ using Terraria.ModLoader.Config;
 
 namespace InfectedQualities.Core
 {
-    [BackgroundColor(12, 39, 49, 200)]
+    [BackgroundColor(11, 36, 45, 200)]
     public class InfectedQualitiesClientConfig : ModConfig
     {
         public override LocalizedText DisplayName => Language.GetText("Mods.InfectedQualities.Config.Title.Main.Client");
