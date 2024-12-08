@@ -14,6 +14,7 @@
 -Added infected variants of moss blocks, and a config option to disable it.
 -Hallow theme now plays in the Hallowed jungle, can be disabled in the config.
 -Disabled infected grass spread pre-hardmode.
+-Fixed vertebrae --> leather recipe not needing workbench. Also fixed duplicate recipe when used with Thorium mod.
 
 0.7.1
 =====

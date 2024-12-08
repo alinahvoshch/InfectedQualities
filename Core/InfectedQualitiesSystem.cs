@@ -12,11 +12,14 @@ namespace InfectedQualities.Core
     {
         public override void AddRecipes()
         {
-            Recipe.Create(ItemID.Leather)
-                .AddIngredient(ItemID.Vertebrae, 5)
-                .AddTile(TileID.WorkBenches)
-                .AddDecraftCondition(Condition.CrimsonWorld)
-                .Register();
+            if(!ModLoader.HasMod("ThoriumMod"))
+            {
+                Recipe.Create(ItemID.Leather)
+                    .AddIngredient(ItemID.Vertebrae, 5)
+                    .AddTile(TileID.WorkBenches)
+                    .AddDecraftCondition(Condition.CrimsonWorld)
+                    .Register();
+            }
 
             Recipe.Create(ItemID.Vertebrae)
                 .AddIngredient(ItemID.RottenChunk)
