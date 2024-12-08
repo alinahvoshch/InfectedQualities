@@ -162,9 +162,13 @@ namespace InfectedQualities.Core
                             {
                                 WorldGen.KillTile(m, n);
                             }
-                            else
+                            else if (!InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Hallowed, true))
                             {
-                                InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Hallowed, true);
+                                if (Main.tileMoss[Main.tile[m, n].TileType])
+                                {
+                                    Main.tile[m, n].TileType = TileID.Pearlstone;
+                                    WorldGen.SquareTileFrame(m, n);
+                                }
                             }
                         }
                         else if (WorldGen.crimson)
@@ -198,9 +202,13 @@ namespace InfectedQualities.Core
                                 Main.tile[m, n].TileType = TileID.CrimsonThorns;
                                 WorldGen.SquareTileFrame(m, n);
                             }
-                            else
+                            else if (!InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Crimson, true))
                             {
-                                InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Crimson, true);
+                                if (Main.tileMoss[Main.tile[m, n].TileType])
+                                {
+                                    Main.tile[m, n].TileType = TileID.Crimstone;
+                                    WorldGen.SquareTileFrame(m, n);
+                                }
                             }
                         }
                         else
@@ -234,9 +242,13 @@ namespace InfectedQualities.Core
                                 Main.tile[m, n].TileType = TileID.CorruptThorns;
                                 WorldGen.SquareTileFrame(m, n);
                             }
-                            else
+                            else if(!InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Corrupt, true))
                             {
-                                InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Corrupt, true);
+                                if (Main.tileMoss[Main.tile[m, n].TileType])
+                                {
+                                    Main.tile[m, n].TileType = TileID.Ebonstone;
+                                    WorldGen.SquareTileFrame(m, n);
+                                }
                             }
                         }
                     }
@@ -838,13 +850,16 @@ namespace InfectedQualities.Core
 
         private static int WorldGen_GetTileMossColor(On_WorldGen.orig_GetTileMossColor orig, int tileType)
         {
-            foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
+            if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
             {
-                foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
+                foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
                 {
-                    if (tileType == InfectedQualitiesUtilities.GetMossType(infectionType, mossType))
+                    foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
                     {
-                        return (int)mossType;
+                        if (tileType == InfectedQualitiesUtilities.GetMossType(infectionType, mossType))
+                        {
+                            return (int)mossType;
+                        }
                     }
                 }
             }
@@ -994,16 +1009,6 @@ namespace InfectedQualities.Core
             ILLabel label = cursor.DefineLabel();
             ILLabel nextLabel = cursor.DefineLabel();
 
-            cursor.Emit(OpCodes.Ldarg_0);
-            cursor.Emit(OpCodes.Ldarg_1);
-            cursor.EmitDelegate<Action<int, int>>((i, j) =>
-            {
-                if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && Main.tileMoss[Main.tile[i, j].TileType])
-                {
-                    return;
-                }
-            });
-
             if (cursor.TryGotoNext(i => i.MatchLdcI4(1), i => i.MatchStloc(15), i => i.MatchBr(out label)))
             {
                 cursor.EmitDelegate(() => NPC.downedPlantBoss);
@@ -1021,8 +1026,52 @@ namespace InfectedQualities.Core
             }
 
             label = cursor.DefineLabel();
+            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdloc(17), i => i.MatchBrfalse(out label)))
+            {
+                cursor.Emit(OpCodes.Ldloc, 17);
+                cursor.Emit(OpCodes.Ldloc, 18);
+                cursor.EmitDelegate<Func<int, int, bool>>((m, n) =>
+                {
+                    if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && Main.tileMoss[Main.tile[m, n].TileType])
+                    {
+                        return false;
+                    }
+                    return true;
+                });
+                cursor.Emit(OpCodes.Brfalse, label);
+            }
+
+            label = cursor.DefineLabel();
+            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.CrimsonJungleGrass), i => i.MatchLdloc(20), i => i.MatchBrfalse(out label)))
+            {
+                cursor.Emit(OpCodes.Ldloc, 20);
+                cursor.Emit(OpCodes.Ldloc, 21);
+                cursor.EmitDelegate<Func<int, int, bool>>((m, n) =>
+                {
+                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && Main.tileMoss[Main.tile[m, n].TileType])
+                    {
+                        return false;
+                    }
+                    return true;
+                });
+                cursor.Emit(OpCodes.Brfalse, label);
+            }
+
+            label = cursor.DefineLabel();
             if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdloc(22), i => i.MatchLdloc(23), i => i.MatchLdcI4(10), i => i.MatchCall(typeof(WorldGen).GetMethod("InWorld")), i => i.MatchBrfalse(out label)))
             {
+                cursor.Emit(OpCodes.Ldloc, 22);
+                cursor.Emit(OpCodes.Ldloc, 23);
+                cursor.EmitDelegate<Func<int, int, bool>>((m, n) =>
+                {
+                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && Main.tileMoss[Main.tile[m, n].TileType])
+                    {
+                        return false;
+                    }
+                    return true;
+                });
+                cursor.Emit(OpCodes.Brfalse, label);
+
                 cursor.Emit(OpCodes.Ldloc, 22);
                 cursor.Emit(OpCodes.Ldloc, 23);
                 cursor.Emit(OpCodes.Call, typeof(WorldGen).GetMethod("nearbyChlorophyte", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static, [typeof(int), typeof(int)]));
