@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,7 +13,9 @@ namespace InfectedQualities.Content.Tiles
     [Autoload(false)]
     public class InfectedMoss(InfectionType infectionType, MossType mossType) : ModTile
     {
-        private Asset<Texture2D> MossTexture { get; set; } = null;
+        private Asset<Texture2D> MossTexture { get; set; } = TextureAssets.GlowMask[GlowMaskID.RainbowMoss];
+
+        private Color MossColor { get; set; }
 
         private ushort InfectedStoneType => infectionType switch
         {
@@ -30,7 +33,7 @@ namespace InfectedQualities.Content.Tiles
 
             TileID.Sets.ResetsHalfBrickPlacementAttempt[Type] = false;
             TileID.Sets.Conversion.Moss[Type] = true;
-
+            TileID.Sets.NeedsGrassFramingDirt[Type] = InfectedStoneType;
             InfectedQualitiesUtilities.TileMerge(Type, TileID.Dirt);
             InfectedQualitiesUtilities.TileMerge(Type, InfectedStoneType);
 
@@ -64,49 +67,65 @@ namespace InfectedQualities.Content.Tiles
                     break;
             }
 
-            switch(mossType)
+            switch (mossType)
             {
                 case MossType.Green:
-                    AddMapEntry(new(49, 134, 114));
+                    MossColor = new (49, 134, 114);
+                    AddMapEntry(MossColor);
                     DustType = DustID.GreenMoss;
                     break;
                 case MossType.Brown:
-                    AddMapEntry(new(126, 134, 49));
+                    MossColor = new (126, 134, 49);
+                    AddMapEntry(MossColor);
                     DustType = DustID.BrownMoss;
                     break;
                 case MossType.Red:
-                    AddMapEntry(new(134, 59, 49));
+                    MossColor = new (134, 59, 49);
+                    AddMapEntry(MossColor);
                     DustType = DustID.RedMoss;
                     break;
                 case MossType.Blue:
-                    AddMapEntry(new(43, 86, 140));
+                    MossColor = new (43, 86, 140);
+                    AddMapEntry(MossColor);
                     DustType = DustID.BlueMoss;
                     break;
                 case MossType.Purple:
-                    AddMapEntry(new(121, 49, 134));
+                    MossColor = new (121, 49, 134);
+                    AddMapEntry(MossColor);
                     DustType = DustID.PurpleMoss;
                     break;
                 case MossType.Lava:
+                    MossColor = new(150, 100, 50, 0);
+                    MossTexture = TextureAssets.GlowMask[GlowMaskID.LavaMoss];
                     AddMapEntry(new(254, 121, 2));
                     DustType = DustID.LavaMoss;
                     break;
                 case MossType.Krypton:
+                    MossColor = new (0, 200, 0, 0);
+                    MossTexture = TextureAssets.GlowMask[GlowMaskID.KryptonMoss];
                     AddMapEntry(new(114, 254, 2));
                     DustType = DustID.KryptonMoss;
                     break;
                 case MossType.Xenon:
+                    MossColor = new (0, 180, 250, 0);
+                    MossTexture = TextureAssets.GlowMask[GlowMaskID.XenonMoss];
                     AddMapEntry(new(0, 197, 208));
                     DustType = DustID.XenonMoss;
                     break;
                 case MossType.Argon:
+                    MossColor = new (225, 0, 125, 0);
+                    MossTexture = TextureAssets.GlowMask[GlowMaskID.ArgonMoss];
                     AddMapEntry(new(208, 0, 126));
                     DustType = DustID.ArgonMoss;
                     break;
                 case MossType.Neon:
+                    MossColor = new (150, 0, 250, 0);
+                    MossTexture = TextureAssets.GlowMask[GlowMaskID.VioletMoss];
                     AddMapEntry(new(220, 12, 237));
                     DustType = DustID.VioletMoss;
                     break;
                 case MossType.Helium:
+                    MossColor = Main.DiscoColor;
                     AddMapEntry(new(255, 76, 76));
                     AddMapEntry(new(255, 195, 76));
                     AddMapEntry(new(195, 255, 76));
@@ -118,8 +137,6 @@ namespace InfectedQualities.Content.Tiles
                     AddMapEntry(new(255, 76, 195));
                     break;
             }
-
-            MossTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/" + mossType.ToString() + "_Moss");
         }
 
         public override ushort GetMapOption(int i, int j)
@@ -217,39 +234,33 @@ namespace InfectedQualities.Content.Tiles
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (Main.tile[i, j].TileFrameY == 18 && Main.tile[i, j].TileFrameX is 18 or 36 or 54)
-            {
-                if (WorldGen.TileType(i, j - 1) == Type || WorldGen.TileType(i, j + 1) == Type || WorldGen.TileType(i - 1, j) == Type || WorldGen.TileType(i + 1, j) == Type)
-                {
-                    return;
-                }
-            }
-
             if (!Main.tile[i, j].IsTileInvisible)
             {
+                if (Main.tile[i, j].TileFrameY == 18 && Main.tile[i, j].TileFrameX is 18 or 36 or 54)
+                {
+                    if (WorldGen.TileType(i, j - 1) == Type || WorldGen.TileType(i, j + 1) == Type || WorldGen.TileType(i - 1, j) == Type || WorldGen.TileType(i + 1, j) == Type)
+                    {
+                        return;
+                    }
+                }
+
+                Color mossColor;
+                if (mossType < MossType.Lava) mossColor = Lighting.GetColorClamped(i, j, MossColor);
+                else mossColor = MossColor;
+
                 Vector2 offscreenVector = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
                 Vector2 drawVector = new Vector2(i * 16, j * 16) + offscreenVector - Main.screenPosition;
                 Rectangle frame = new(Main.tile[i, j].TileFrameX, Main.tile[i, j].TileFrameY, 16, 16);
-                Color drawColor = mossType switch
-                {
-                    MossType.Lava => new(150, 100, 50, 0),
-                    MossType.Krypton => new(0, 200, 0, 0),
-                    MossType.Xenon => new(0, 180, 250, 0),
-                    MossType.Argon => new(225, 0, 125, 0),
-                    MossType.Neon => new(150, 0, 250, 0),
-                    MossType.Helium => Main.DiscoColor,
-                    _ => Lighting.GetColor(i, j)
-                };
 
                 if (Main.tile[i, j].Slope == SlopeType.Solid && !Main.tile[i, j].IsHalfBlock)
                 {
-                    spriteBatch.Draw(MossTexture.Value, drawVector, frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(MossTexture.Value, drawVector, frame, mossColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                 }
                 else if(Main.tile[i, j].IsHalfBlock)
                 {
                     drawVector += new Vector2(0, 8);
                     frame.Height = 8;
-                    spriteBatch.Draw(MossTexture.Value, drawVector, frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(MossTexture.Value, drawVector, frame, mossColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                 }
                 else
                 {
@@ -282,12 +293,12 @@ namespace InfectedQualities.Content.Tiles
                                 break;
                         }
                         frame = new(Main.tile[i, j].TileFrameX + xOffset, Main.tile[i, j].TileFrameY + yOffset, width, height);
-                        Main.spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(xOffset, q * width + num), frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                        spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(xOffset, q * width + num), frame, mossColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                     }
 
                     int slopeOffset = (Main.tile[i, j].Slope <= SlopeType.SlopeDownRight) ? 14 : 0;
                     frame = new(Main.tile[i, j].TileFrameX, Main.tile[i, j].TileFrameY + slopeOffset, 16, 2);
-                    spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(0, slopeOffset), frame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(0, slopeOffset), frame, mossColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                 }
             }
         }
