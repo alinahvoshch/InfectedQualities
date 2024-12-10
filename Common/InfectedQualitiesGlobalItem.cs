@@ -4,6 +4,8 @@ using Terraria.ModLoader;
 using InfectedQualities.Content.Tiles;
 using InfectedQualities.Core;
 using InfectedQualities.Content.Extras;
+using Terraria.Audio;
+using Terraria.DataStructures;
 
 namespace InfectedQualities.Common
 {
@@ -11,9 +13,11 @@ namespace InfectedQualities.Common
     {
         public override bool? UseItem(Item item, Player player)
         {
-            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && item.type == ItemID.HallowedSeeds && player.IsTargetTileInItemRange(item) && WorldGen.TileType(Player.tileTargetX, Player.tileTargetY) == TileID.Mud && WorldGen.PlaceTile(Player.tileTargetX, Player.tileTargetY, ModContent.TileType<HallowedJungleGrass>(), forced: true))
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && item.type == ItemID.HallowedSeeds && player.IsInTileInteractionRange(Player.tileTargetX, Player.tileTargetY, TileReachCheckSettings.Simple) && WorldGen.TileType(Player.tileTargetX, Player.tileTargetY) == TileID.Mud)
             {
-                NetMessage.SendTileSquare(-1, Player.tileTargetX, Player.tileTargetY);
+                Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = (ushort)ModContent.TileType<HallowedJungleGrass>();
+                WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
+                SoundEngine.PlaySound(SoundID.Dig, player.position);
                 player.ConsumeItem(item.type);
                 return true;
             }
@@ -34,7 +38,7 @@ namespace InfectedQualities.Common
                     _ => null
                 };
                 
-                if(mossType.HasValue)
+                if(mossType.HasValue && player.IsInTileInteractionRange(Player.tileTargetX, Player.tileTargetY, TileReachCheckSettings.Simple))
                 {
                     InfectionType? infectionType = WorldGen.TileType(Player.tileTargetX, Player.tileTargetY) switch
                     {
@@ -44,14 +48,15 @@ namespace InfectedQualities.Common
                         _ => null
                     };
 
-                    if (infectionType.HasValue && WorldGen.PlaceTile(Player.tileTargetX, Player.tileTargetY, InfectedQualitiesUtilities.GetMossType(infectionType, mossType.Value), forced: true))
+                    if (infectionType.HasValue)
                     {
-                        NetMessage.SendTileSquare(-1, Player.tileTargetX, Player.tileTargetY);
+                        Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = InfectedQualitiesUtilities.GetMossType(infectionType, mossType.Value);
+                        WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
+                        SoundEngine.PlaySound(SoundID.Dig, player.position);
                         player.ConsumeItem(item.type);
                         return true;
                     }
                 }
-
             }
             return null;
         }
