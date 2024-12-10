@@ -14,7 +14,10 @@ namespace InfectedQualities
 	{
         public override void Load()
         {
-            InfectedQualitiesUtilities.PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().PylonOfNight)
+            {
+                InfectedQualitiesUtilities.PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
+            }
 
             foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
             {
