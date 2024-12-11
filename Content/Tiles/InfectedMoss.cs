@@ -15,7 +15,7 @@ namespace InfectedQualities.Content.Tiles
     {
         private Asset<Texture2D> MossTexture { get; set; } = TextureAssets.GlowMask[GlowMaskID.RainbowMoss];
 
-        private Color MossColor { get; set; }
+        private Color MossColor { get; set; } = default;
 
         private ushort InfectedStoneType => infectionType switch
         {
@@ -30,12 +30,12 @@ namespace InfectedQualities.Content.Tiles
             Main.tileBrick[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
+            Main.tileMerge[InfectedStoneType][Type] = true;
 
+            TileID.Sets.NeedsGrassFraming[Type] = true;
+            TileID.Sets.NeedsGrassFramingDirt[Type] = InfectedStoneType;
             TileID.Sets.ResetsHalfBrickPlacementAttempt[Type] = false;
             TileID.Sets.Conversion.Moss[Type] = true;
-            TileID.Sets.NeedsGrassFramingDirt[Type] = InfectedStoneType;
-            InfectedQualitiesUtilities.TileMerge(Type, TileID.Dirt);
-            InfectedQualitiesUtilities.TileMerge(Type, InfectedStoneType);
 
             MinPick = 65;
             MineResist = 2;
@@ -97,44 +97,43 @@ namespace InfectedQualities.Content.Tiles
                 case MossType.Lava:
                     MossColor = new(150, 100, 50, 0);
                     MossTexture = TextureAssets.GlowMask[GlowMaskID.LavaMoss];
-                    AddMapEntry(new(254, 121, 2));
+                    AddMapEntry(new (254, 121, 2));
                     DustType = DustID.LavaMoss;
                     break;
                 case MossType.Krypton:
                     MossColor = new (0, 200, 0, 0);
                     MossTexture = TextureAssets.GlowMask[GlowMaskID.KryptonMoss];
-                    AddMapEntry(new(114, 254, 2));
+                    AddMapEntry(new (114, 254, 2));
                     DustType = DustID.KryptonMoss;
                     break;
                 case MossType.Xenon:
                     MossColor = new (0, 180, 250, 0);
                     MossTexture = TextureAssets.GlowMask[GlowMaskID.XenonMoss];
-                    AddMapEntry(new(0, 197, 208));
+                    AddMapEntry(new (0, 197, 208));
                     DustType = DustID.XenonMoss;
                     break;
                 case MossType.Argon:
                     MossColor = new (225, 0, 125, 0);
                     MossTexture = TextureAssets.GlowMask[GlowMaskID.ArgonMoss];
-                    AddMapEntry(new(208, 0, 126));
+                    AddMapEntry(new (208, 0, 126));
                     DustType = DustID.ArgonMoss;
                     break;
                 case MossType.Neon:
                     MossColor = new (150, 0, 250, 0);
                     MossTexture = TextureAssets.GlowMask[GlowMaskID.VioletMoss];
-                    AddMapEntry(new(220, 12, 237));
+                    AddMapEntry(new (220, 12, 237));
                     DustType = DustID.VioletMoss;
                     break;
                 case MossType.Helium:
-                    MossColor = Main.DiscoColor;
-                    AddMapEntry(new(255, 76, 76));
-                    AddMapEntry(new(255, 195, 76));
-                    AddMapEntry(new(195, 255, 76));
-                    AddMapEntry(new(76, 255, 76));
-                    AddMapEntry(new(76, 255, 195));
-                    AddMapEntry(new(76, 195, 255));
-                    AddMapEntry(new(77, 76, 255));
-                    AddMapEntry(new(196, 76, 255));
-                    AddMapEntry(new(255, 76, 195));
+                    AddMapEntry(new (255, 76, 76));
+                    AddMapEntry(new (255, 195, 76));
+                    AddMapEntry(new (195, 255, 76));
+                    AddMapEntry(new (76, 255, 76));
+                    AddMapEntry(new (76, 255, 195));
+                    AddMapEntry(new (76, 195, 255));
+                    AddMapEntry(new (77, 76, 255));
+                    AddMapEntry(new (196, 76, 255));
+                    AddMapEntry(new (255, 76, 195));
                     break;
             }
         }
@@ -232,35 +231,300 @@ namespace InfectedQualities.Content.Tiles
             return true;
         }
 
-        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!Main.tile[i, j].IsTileInvisible)
+            if(Main.tile[i, j].TileFrameX > 216 || Main.tile[i, j].TileFrameY > 72)
             {
-                if (Main.tile[i, j].TileFrameY == 18 && Main.tile[i, j].TileFrameX is 18 or 36 or 54)
+                short frameX = Main.tile[i, j].TileFrameX;
+                short frameY = Main.tile[i, j].TileFrameY;
+
+                if (frameX is 0 or 18 && frameY is 270 or 288 or 306)
                 {
-                    if (WorldGen.TileType(i, j - 1) == Type || WorldGen.TileType(i, j + 1) == Type || WorldGen.TileType(i - 1, j) == Type || WorldGen.TileType(i + 1, j) == Type)
+                    frameX = (short)(frameX == 18 ? 72 : 0);
+                    frameY -= 270;
+                }
+                else if (frameX is 36 or 54)
+                {
+                    if (frameY is 90 or 108)
                     {
-                        return;
+                        frameX = 18;
+                        frameY = 18;
+                    }
+                    else if (frameY is 126 or 144)
+                    {
+                        frameX = 36;
+                        frameY = 18;
+                    }
+                    else if (frameY is 162 or 180)
+                    {
+                        frameX = 54;
+                        frameY = 18;
+                    }
+                }
+                else if (frameX is 72 or 90)
+                {
+                    if (frameY is 90 or 144)
+                    {
+                        frameX = (short)(frameX == 90 ? 72 : 0);
+                        frameY = 0;
+                    }
+                    else if (frameY is 108 or 162)
+                    {
+                        frameX = (short)(frameX == 90 ? 72 : 0);
+                        frameY = 18;
+                    }
+                    else if (frameY is 126 or 180)
+                    {
+                        frameX = (short)(frameX == 90 ? 72 : 0);
+                        frameY = 36;
+                    }
+                }
+                else if (frameX == 108)
+                {
+                    if (frameY is 90 or 108 or 126)
+                    {
+                        frameX = (short)(frameY + 18);
+                        frameY = 0;
+                    }
+                    else if (frameY is 144 or 162 or 180)
+                    {
+                        frameX = (short)(frameY - 36);
+                        frameY = 54;
+                    }
+                    else if (frameY is 216 or 234 or 252)
+                    {
+                        frameX = 90;
+                        frameY -= 216;
+                    }
+                    else if (frameY > 306)
+                    {
+                        frameX = 18;
+                        frameY = 18;
+                    }
+                }
+                else if (frameX == 126)
+                {
+                    if (frameY is 90 or 144)
+                    {
+                        frameX = 90;
+                        frameY = 0;
+                    }
+                    else if (frameY is 108 or 162)
+                    {
+                        frameX = 90;
+                        frameY = 18;
+                    }
+                    else if (frameY is 126 or 180)
+                    {
+                        frameX = 90;
+                        frameY = 36;
+                    }
+                    else if (frameY > 306)
+                    {
+                        frameX = 36;
+                        frameY = 18;
+                    }
+                }
+                else if (frameX is 144 or 162 or 180)
+                {
+                    if (frameY is 126 or 144 or 162)
+                    {
+                        frameX = (short)(frameY - 108);
+                        frameY = 18;
+                    }
+                    else if (frameY is 90 or 108 or 180)
+                    {
+                        frameX -= 126;
+                        frameY = 18;
+                    }
+                    else if (frameX == 144 && frameY >= 324)
+                    {
+                        frameX = 54;
+                        frameY = 18;
                     }
                 }
 
-                Color mossColor;
-                if (mossType < MossType.Lava) mossColor = Lighting.GetColorClamped(i, j, MossColor);
-                else mossColor = MossColor;
+                if (frameY is 198 or 216)
+                {
+                    if (frameX is 0 or 54)
+                    {
+                        frameX = 18;
+                        frameY = (short)(frameY == 216 ? 36 : 0);
+                    }
+                    else if (frameX is 18 or 72)
+                    {
+                        frameX = 36;
+                        frameY = (short)(frameY == 216 ? 36 : 0);
+                    }
+                    else if (frameX is 36 or 90)
+                    {
+                        frameX = 54;
+                        frameY = (short)(frameY == 216 ? 36 : 0);
+                    }
 
+                    if (frameY == 198)
+                    {
+                        if (frameX is 108 or 126 or 144)
+                        {
+                            frameX -= 90;
+                            frameY = 18;
+                        }
+                        else if (frameX is 162 or 180 or 198)
+                        {
+                            frameX -= 54;
+                            frameY = 72;
+                        }
+                    }
+                    else
+                    {
+                        if (frameX is 126 or 180 or 234)
+                        {
+                            frameX = (short)(frameX == 234 ? 72 : frameX == 180 ? 36 : 0);
+                            frameY = 54;
+                        }
+                        else if (frameX is 144 or 198 or 252)
+                        {
+                            frameX = (short)(frameX == 252 ? 54 : frameX == 198 ? 36 : 18);
+                            frameY = 0;
+                        }
+                        else if (frameX is 162 or 216 or 270)
+                        {
+                            frameX = (short)(frameX == 270 ? 90 : frameX == 216 ? 54 : 18);
+                            frameY = 54;
+                        }
+                    }
+                }
+                else if (frameY == 234)
+                {
+                    if (frameX < 108)
+                    {
+                        if (frameX < 54)
+                        {
+                            frameY = frameX;
+                            frameX = 216;
+                        }
+                        else
+                        {
+                            frameY = (short)(frameX - 54);
+                            frameX = 162;
+                        }
+                    }
+                    else if (frameX is 126 or 180 or 234)
+                    {
+                        frameX = 0;
+                        frameY = (short)(frameX == 234 ? 36 : frameX == 180 ? 18 : 0);
+                    }
+                    else if (frameX is 144 or 198 or 252)
+                    {
+                        frameX = (short)(frameX == 252 ? 54 : frameX == 198 ? 36 : 18);
+                        frameY = 18;
+                    }
+                    else if (frameX is 162 or 216 or 270)
+                    {
+                        frameX = 72;
+                        frameY = (short)(frameX == 234 ? 36 : frameX == 180 ? 18 : 0);
+                    }
+                }
+                else if (frameY == 252)
+                {
+                    if (frameX < 108)
+                    {
+                        if (frameX > 36)
+                        {
+                            frameX -= 54;
+                        }
+                        frameX += 108;
+                        frameY = 72;
+                    }
+                    else if (frameX is 126 or 180 or 234)
+                    {
+                        frameX = (short)(frameX == 234 ? 72 : frameX == 180 ? 36 : 0);
+                        frameY = 72;
+                    }
+                    else if (frameX is 144 or 198 or 252)
+                    {
+                        frameX = (short)(frameX == 252 ? 54 : frameX == 198 ? 36 : 18);
+                        frameY = 36;
+                    }
+                    else if (frameX is 162 or 216 or 270)
+                    {
+                        frameX = (short)(frameX == 270 ? 90 : frameX == 216 ? 54 : 18);
+                        frameY = 72;
+                    }
+                }
+                else if (frameY is 270 or 288)
+                {
+                    if (frameX is 36 or 54 or 72)
+                    {
+                        frameX -= 18;
+                        frameY = (short)(frameY == 288 ? 36 : 0);
+                    }
+                    else if (frameX is 90 or 108 or 126)
+                    {
+                        frameX = (short)(frameX == 126 ? 72 : frameX == 108 ? 36 : 0);
+                        frameY = (short)(frameY == 288 ? 72 : 54);
+                    }
+                    else if (frameX is 144 or 162 or 180)
+                    {
+                        frameX = (short)(frameX == 126 ? 90 : frameX == 108 ? 54 : 18);
+                        frameY = (short)(frameY == 288 ? 72 : 54);
+                    }
+                    else if (frameX is 198 or 216 or 234)
+                    {
+                        frameX -= 180;
+                        frameY = 18;
+                    }
+                }
+                else if (frameY == 306)
+                {
+                    if (frameX >= 36 && frameX < 252)
+                    {
+                        while (frameX > 72) frameX -= 54;
+
+                        frameX -= 18;
+                        frameY = 18;
+                    }
+                }
+                else if (frameY is 324 or 342)
+                {
+                    if (frameX < 108)
+                    {
+                        if (frameX >= 54)
+                        {
+                            frameX -= 54;
+                        }
+                        frameX += 18;
+                        frameY = (short)(frameY == 342 ? 36 : 0);
+                    }
+                }
+                else if (frameY is 360 or 378)
+                {
+                    if (frameX < 108)
+                    {
+                        if (frameX > 36)
+                        {
+                            frameX -= 54;
+                        }
+                        short oldFrameY = frameY;
+                        frameY = frameX;
+                        frameX = (short)(oldFrameY == 360 ? 0 : 72);
+                    }
+                }
+
+                Color color = Lighting.GetColor(i, j);
+                if(Main.LocalPlayer.biomeSight) Main.IsTileBiomeSightable(i, j, ref color);
                 Vector2 offscreenVector = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
                 Vector2 drawVector = new Vector2(i * 16, j * 16) + offscreenVector - Main.screenPosition;
-                Rectangle frame = new(Main.tile[i, j].TileFrameX, Main.tile[i, j].TileFrameY, 16, 16);
-
+                Rectangle frame = new(frameX, frameY, 16, 16);
                 if (Main.tile[i, j].Slope == SlopeType.Solid && !Main.tile[i, j].IsHalfBlock)
                 {
-                    spriteBatch.Draw(MossTexture.Value, drawVector, frame, mossColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(TextureAssets.Tile[Type].Value, drawVector, frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
                 }
-                else if(Main.tile[i, j].IsHalfBlock)
+                else if (Main.tile[i, j].IsHalfBlock)
                 {
                     drawVector += new Vector2(0, 8);
                     frame.Height = 8;
-                    spriteBatch.Draw(MossTexture.Value, drawVector, frame, mossColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(TextureAssets.Tile[Type].Value, drawVector, frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
                 }
                 else
                 {
@@ -292,14 +556,93 @@ namespace InfectedQualities.Content.Tiles
                                 xOffset = 16 - q * 2 - 2;
                                 break;
                         }
-                        frame = new(Main.tile[i, j].TileFrameX + xOffset, Main.tile[i, j].TileFrameY + yOffset, width, height);
-                        spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(xOffset, q * width + num), frame, mossColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                        frame = new(frameX + xOffset, frameY + yOffset, width, height);
+                        spriteBatch.Draw(TextureAssets.Tile[Type].Value, drawVector + new Vector2(xOffset, q * width + num), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
                     }
 
                     int slopeOffset = (Main.tile[i, j].Slope <= SlopeType.SlopeDownRight) ? 14 : 0;
-                    frame = new(Main.tile[i, j].TileFrameX, Main.tile[i, j].TileFrameY + slopeOffset, 16, 2);
-                    spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(0, slopeOffset), frame, mossColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                    frame = new(frameX, frameY + slopeOffset, 16, 2);
+                    spriteBatch.Draw(TextureAssets.Tile[Type].Value, drawVector + new Vector2(0, slopeOffset), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
                 }
+                return false;
+            }
+            return true;
+        }
+
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            if (!Main.tile[i, j].IsTileInvisible)
+            {
+                short frameX = Main.tile[i, j].TileFrameX;
+                short frameY = Main.tile[i, j].TileFrameY;
+
+                Color mossColor = MossColor;
+                if (mossType < MossType.Lava) mossColor = Lighting.GetColorClamped(i, j, MossColor);
+                else if (mossType == MossType.Helium) mossColor = Main.DiscoColor;
+
+                Vector2 offscreenVector = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
+                Vector2 drawVector = new Vector2(i * 16, j * 16) + offscreenVector - Main.screenPosition;
+                Rectangle frame = new(frameX, frameY, 16, 16);
+                if (Main.tile[i, j].Slope == SlopeType.Solid && !Main.tile[i, j].IsHalfBlock)
+                {
+                    if(MossColor.A == 0) spriteBatch.Draw(MossTexture.Value, drawVector, frame, Lighting.GetColor(i, j), 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                    spriteBatch.Draw(MossTexture.Value, drawVector, frame, mossColor, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                }
+                else if(Main.tile[i, j].IsHalfBlock)
+                {
+                    drawVector += new Vector2(0, 8);
+                    frame.Height = 8;
+
+                    if (MossColor.A == 0) spriteBatch.Draw(MossTexture.Value, drawVector, frame, Lighting.GetColor(i, j), 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                    spriteBatch.Draw(MossTexture.Value, drawVector, frame, mossColor, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                }
+                else
+                {
+                    int width = 2;
+                    for (int q = 0; q < 8; q++)
+                    {
+                        int num = q * -2;
+                        int height = 16 - q * 2;
+                        int yOffset = 16 - height;
+                        int xOffset;
+                        switch (Main.tile[i, j].Slope)
+                        {
+                            case SlopeType.SlopeDownLeft:
+                                num = 0;
+                                xOffset = q * 2;
+                                height = 14 - q * 2;
+                                yOffset = 0;
+                                break;
+                            case SlopeType.SlopeDownRight:
+                                num = 0;
+                                xOffset = 16 - q * 2 - 2;
+                                height = 14 - q * 2;
+                                yOffset = 0;
+                                break;
+                            case SlopeType.SlopeUpLeft:
+                                xOffset = q * 2;
+                                break;
+                            default:
+                                xOffset = 16 - q * 2 - 2;
+                                break;
+                        }
+                        frame = new(frameX + xOffset, frameY + yOffset, width, height);
+
+                        if (MossColor.A == 0) spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(xOffset, q * width + num), frame, Lighting.GetColor(i, j), 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                        spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(xOffset, q * width + num), frame, mossColor, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                    }
+
+                    int slopeOffset = (Main.tile[i, j].Slope <= SlopeType.SlopeDownRight) ? 14 : 0;
+                    frame = new(frameX, frameY + slopeOffset, 16, 2);
+
+                    if (MossColor.A == 0) spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(0, slopeOffset), frame, Lighting.GetColor(i, j), 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                    spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(0, slopeOffset), frame, mossColor, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                }
+            }
+
+            if(infectionType == InfectionType.Corrupt && Main.rand.NextBool(500))
+            {
+                Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite);
             }
         }
 
