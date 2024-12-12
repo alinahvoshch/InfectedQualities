@@ -18,7 +18,7 @@ namespace InfectedQualities.Content.Biomes
                 {
                     if(Main.LocalPlayer.MusicUnderground())
                     {
-                        if(InfectedQualitiesUtilities.OtherworldMusic())
+                        if(WorldUtilities.OtherworldMusic())
                         {
                             if (Main.remixWorld)
                             {
@@ -35,7 +35,7 @@ namespace InfectedQualities.Content.Biomes
                     }
                     else if(!Main.raining)
                     {
-                        if (InfectedQualitiesUtilities.OtherworldMusic() && Main.dayTime)
+                        if (WorldUtilities.OtherworldMusic() && Main.dayTime)
                         {
                             return MusicID.OtherworldlyHallow;
                         }

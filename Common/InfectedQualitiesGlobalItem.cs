@@ -3,9 +3,9 @@ using Terraria;
 using Terraria.ModLoader;
 using InfectedQualities.Content.Tiles;
 using InfectedQualities.Core;
-using InfectedQualities.Content.Extras;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using InfectedQualities.Content.Extras.Tiles;
 
 namespace InfectedQualities.Common
 {
@@ -50,7 +50,7 @@ namespace InfectedQualities.Common
 
                     if (infectionType.HasValue)
                     {
-                        Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = InfectedQualitiesUtilities.GetMossType(infectionType, mossType.Value);
+                        Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = TileUtilities.GetEnumType(infectionType, mossType.Value);
                         WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
                         SoundEngine.PlaySound(SoundID.Dig, player.position);
                         player.ConsumeItem(item.type);

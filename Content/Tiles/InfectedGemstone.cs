@@ -1,4 +1,4 @@
-﻿using InfectedQualities.Content.Extras;
+﻿using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -89,7 +89,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override void RandomUpdate(int i, int j)
         {
-            InfectedQualitiesUtilities.DefaultInfectionSpread(i, j, infectionType, InfectedQualitiesUtilities.GetGemstoneType(null, gemType));
+            TileUtilities.DefaultInfectionSpread(i, j, infectionType, TileUtilities.GetEnumType(null, gemType));
         }
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)

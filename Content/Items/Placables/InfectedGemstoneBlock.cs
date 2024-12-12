@@ -1,11 +1,8 @@
-﻿using InfectedQualities.Content.Extras;
+﻿using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.GameContent.Tile_Entities;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -52,7 +49,7 @@ namespace InfectedQualities.Content.Items.Placables
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(InfectedQualitiesUtilities.GetGemstoneType(infectionType, gemType));
+            Item.DefaultToPlaceableTile(TileUtilities.GetEnumType(infectionType, gemType));
             ItemID.Sets.ExtractinatorMode[Type] = Type;
         }
 

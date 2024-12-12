@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace InfectedQualities.Content.Items.Placables
 {
-    public class PylonOfNight : ModItem
+    public class PylonOfNightBlock : ModItem
     {
         public override string LocalizationCategory => "Items.Placables";
 

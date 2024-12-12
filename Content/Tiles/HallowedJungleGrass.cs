@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using InfectedQualities.Content.Tiles.Plants;
 using InfectedQualities.Core;
 using InfectedQualities.Content.Extras;
+using InfectedQualities.Content.Extras.Tiles;
 
 namespace InfectedQualities.Content.Tiles
 {
@@ -42,7 +43,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
-            if (InfectedQualitiesUtilities.TileExposedToLava(i, j))
+            if (TileUtilities.TileExposedToLava(i, j))
             {
                 Main.tile[i, j].TileType = TileID.Mud;
                 WorldGen.SquareTileFrame(i, j);
@@ -56,7 +57,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override void RandomUpdate(int i, int j)
         {
-            InfectedQualitiesUtilities.DefaultInfectionSpread(i, j, InfectionType.Hallowed, TileID.JungleGrass);
+            TileUtilities.DefaultInfectionSpread(i, j, InfectionType.Hallowed, TileID.JungleGrass);
 
             Tile currentTile = Main.tile[i, j];
             Tile aboveTile = Main.tile[i, j - 1];
@@ -121,12 +122,12 @@ namespace InfectedQualities.Content.Tiles
 
             if(NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && WorldGen.genRand.NextBool(60))
             {
-                InfectedQualitiesUtilities.AttemptToPlaceInfectedPlant(i, j, ModContent.TileType<InfectedPlanteraBulb>(), TileID.PlanteraBulb, 150);
+                TileUtilities.AttemptToPlaceInfectedPlant(i, j, ModContent.TileType<InfectedPlanteraBulb>(), TileID.PlanteraBulb, 150);
             }
 
             if (NPC.downedMechBossAny && WorldGen.genRand.NextBool(Main.expertMode ? 30 : 40))
             {
-                InfectedQualitiesUtilities.AttemptToPlaceInfectedPlant(i, j, ModContent.TileType<InfectedLifeFruit>(), TileID.LifeFruit, Main.expertMode ? 50 : 60);
+                TileUtilities.AttemptToPlaceInfectedPlant(i, j, ModContent.TileType<InfectedLifeFruit>(), TileID.LifeFruit, Main.expertMode ? 50 : 60);
             }
         }
 

@@ -1,8 +1,9 @@
-﻿using InfectedQualities.Content.Extras;
-using Terraria.ID;
+﻿using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using InfectedQualities.Core;
+using InfectedQualities.Content.Items.Placables;
+using InfectedQualities.Content.Extras.Tiles;
 
 namespace InfectedQualities.Content.Tiles
 {
@@ -17,7 +18,7 @@ namespace InfectedQualities.Content.Tiles
 
             Main.tileMergeDirt[Type] = true;
             Main.tileMerge[TileID.Dirt][Type] = true;
-            InfectedQualitiesUtilities.TileMerge(Type, TileID.Slush);
+            TileUtilities.TileMerge(Type, TileID.Slush);
 
             TileID.Sets.CanBeDugByShovel[Type] = true;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
@@ -39,8 +40,8 @@ namespace InfectedQualities.Content.Tiles
                     TileID.Sets.AddCorruptionTile(Type);
                     TileID.Sets.CorruptBiomeSight[Type] = true;
                     TileID.Sets.CorruptCountCollection.Add(Type);
-                    InfectedQualitiesUtilities.TileMerge(Type, TileID.CorruptIce);
-                    RegisterItemDrop(ModContent.ItemType<Items.Placables.CorruptSnow>());
+                    TileUtilities.TileMerge(Type, TileID.CorruptIce);
+                    RegisterItemDrop(ModContent.ItemType<CorruptSnowBlock>());
                     AddMapEntry(new(214, 203, 236));
                     break;
                 case InfectionType.Crimson:
@@ -48,8 +49,8 @@ namespace InfectedQualities.Content.Tiles
                     TileID.Sets.AddCrimsonTile(Type);
                     TileID.Sets.CrimsonBiomeSight[Type] = true;
                     TileID.Sets.CrimsonCountCollection.Add(Type);
-                    InfectedQualitiesUtilities.TileMerge(Type, TileID.FleshIce);
-                    RegisterItemDrop(ModContent.ItemType<Items.Placables.CrimsonSnow>());
+                    TileUtilities.TileMerge(Type, TileID.FleshIce);
+                    RegisterItemDrop(ModContent.ItemType<CrimsonSnowBlock>());
                     AddMapEntry(new(234, 210, 205));
                     break;
                 case InfectionType.Hallowed:
@@ -59,8 +60,8 @@ namespace InfectedQualities.Content.Tiles
                     TileID.Sets.HallowBiomeSight[Type] = true;
                     TileID.Sets.HallowCountCollection.Add(Type);
                     TileID.Sets.CanGrowCrystalShards[Type] = true;
-                    InfectedQualitiesUtilities.TileMerge(Type, TileID.HallowedIce);
-                    RegisterItemDrop(ModContent.ItemType<Items.Placables.HallowedSnow>());
+                    TileUtilities.TileMerge(Type, TileID.HallowedIce);
+                    RegisterItemDrop(ModContent.ItemType<HallowedSnowBlock>());
                     AddMapEntry(new(247, 228, 233));
                     break;
             }
@@ -70,7 +71,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 
-        public override void RandomUpdate(int i, int j) => InfectedQualitiesUtilities.DefaultInfectionSpread(i, j, infectionType, TileID.SnowBlock);
+        public override void RandomUpdate(int i, int j) => TileUtilities.DefaultInfectionSpread(i, j, infectionType, TileID.SnowBlock);
 
         public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)
         {

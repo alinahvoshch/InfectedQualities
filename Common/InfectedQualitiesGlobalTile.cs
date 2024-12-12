@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using InfectedQualities.Core;
 using System;
 using InfectedQualities.Content.Extras;
+using InfectedQualities.Content.Extras.Tiles;
 
 namespace InfectedQualities.Common
 {
@@ -89,7 +90,7 @@ namespace InfectedQualities.Common
                 }
                 else if (type == TileID.PlanteraBulb)
                 {
-                    InfectedQualitiesUtilities.GetTopLeft(i, j, out int x, out int y, out short num);
+                    TileUtilities.GetTopLeft(i, j, out int x, out int y, out short num);
                     if (num != -1)
                     {
                         for (int m = x; m < x + 2; m++)
@@ -109,7 +110,7 @@ namespace InfectedQualities.Common
                 }
                 else if (type == TileID.LifeFruit)
                 {
-                    InfectedQualitiesUtilities.GetTopLeft(i, j, out int x, out int y, out short num);
+                    TileUtilities.GetTopLeft(i, j, out int x, out int y, out short num);
                     if (num != -1)
                     {
                         for (int m = x; m < x + 2; m++)
@@ -197,9 +198,20 @@ namespace InfectedQualities.Common
                             {
                                 foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
                                 {
-                                    if (Main.tile[x, y].TileType == InfectedQualitiesUtilities.GetMossType(infectionType, mossType))
+                                    if (Main.tile[x, y].TileType == TileUtilities.GetEnumType(infectionType, mossType))
                                     {
-                                        Main.tile[x, y].TileType = InfectedQualitiesUtilities.GetMossType(null, mossType);
+                                        Main.tile[x, y].TileType = TileUtilities.GetEnumType(null, mossType);
+                                        WorldGen.SquareTileFrame(x, y);
+                                        NetMessage.SendTileSquare(-1, x, y);
+                                        return;
+                                    }
+                                }
+
+                                foreach (GemType gemType in Enum.GetValues(typeof(GemType)))
+                                {
+                                    if (Main.tile[x, y].TileType == TileUtilities.GetEnumType(infectionType, gemType))
+                                    {
+                                        Main.tile[x, y].TileType = TileUtilities.GetEnumType(null, gemType);
                                         WorldGen.SquareTileFrame(x, y);
                                         NetMessage.SendTileSquare(-1, x, y);
                                         return;
@@ -249,7 +261,7 @@ namespace InfectedQualities.Common
                             {
                                 foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
                                 {
-                                    if(Main.tile[x, y].TileType == InfectedQualitiesUtilities.GetSnowType(infectionType))
+                                    if(Main.tile[x, y].TileType == TileUtilities.GetSnowType(infectionType))
                                     {
                                         Main.tile[x, y].TileType = TileID.SnowBlock;
                                         WorldGen.SquareTileFrame(x, y);
@@ -266,15 +278,15 @@ namespace InfectedQualities.Common
             {
                 if (type is TileID.CorruptGrass or TileID.Ebonstone or TileID.Ebonsand or TileID.CorruptSandstone or TileID.CorruptHardenedSand or TileID.CorruptIce or TileID.CorruptJungleGrass or TileID.CorruptVines or TileID.CorruptPlants or TileID.CorruptThorns)
                 {
-                    InfectedQualitiesUtilities.FixSpreadCompability(i, j, InfectionType.Corrupt);
+                    TileUtilities.FixSpreadCompability(i, j, InfectionType.Corrupt);
                 }
                 else if (type is TileID.CrimsonGrass or TileID.Crimstone or TileID.Crimsand or TileID.CrimsonSandstone or TileID.CrimsonHardenedSand or TileID.FleshIce or TileID.CrimsonJungleGrass or TileID.CrimsonVines or TileID.CrimsonPlants or TileID.CrimsonThorns)
                 {
-                    InfectedQualitiesUtilities.FixSpreadCompability(i, j, InfectionType.Crimson);
+                    TileUtilities.FixSpreadCompability(i, j, InfectionType.Crimson);
                 }
                 else if (type is TileID.HallowedGrass or TileID.Pearlstone or TileID.Pearlsand or TileID.HallowSandstone or TileID.HallowHardenedSand or TileID.HallowedIce or TileID.GolfGrassHallowed or TileID.HallowedVines or TileID.HallowedPlants or TileID.HallowedPlants2)
                 {
-                    InfectedQualitiesUtilities.FixSpreadCompability(i, j, InfectionType.Hallowed);
+                    TileUtilities.FixSpreadCompability(i, j, InfectionType.Hallowed);
                 }
 
                 if (type is TileID.CorruptJungleGrass or TileID.CrimsonJungleGrass)
@@ -293,12 +305,12 @@ namespace InfectedQualities.Common
 
                     if (NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 && WorldGen.genRand.NextBool(60))
                     {
-                        InfectedQualitiesUtilities.AttemptToPlaceInfectedPlant(i, j, ModContent.TileType<InfectedPlanteraBulb>(), TileID.PlanteraBulb, 150);
+                        TileUtilities.AttemptToPlaceInfectedPlant(i, j, ModContent.TileType<InfectedPlanteraBulb>(), TileID.PlanteraBulb, 150);
                     }
 
                     if (NPC.downedMechBossAny && WorldGen.genRand.NextBool(Main.expertMode ? 30 : 40))
                     {
-                        InfectedQualitiesUtilities.AttemptToPlaceInfectedPlant(i, j, ModContent.TileType<InfectedLifeFruit>(), TileID.LifeFruit, Main.expertMode ? 50 : 60);
+                        TileUtilities.AttemptToPlaceInfectedPlant(i, j, ModContent.TileType<InfectedLifeFruit>(), TileID.LifeFruit, Main.expertMode ? 50 : 60);
                     }
                 }
                 else if (type == TileID.HallowedVines && WorldGen.genRand.NextBool(20) && !Main.tile[i, j + 1].HasTile && Main.tile[i, j + 1].LiquidType != LiquidID.Lava && InfectedQualitiesUtilities.RefectionMethod(i, j, "GrowMoreVines"))

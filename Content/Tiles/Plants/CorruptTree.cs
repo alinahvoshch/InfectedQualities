@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria.Enums;
 using InfectedQualities.Core;
-using InfectedQualities.Content.Extras;
+using InfectedQualities.Content.Extras.Tiles;
 
 namespace InfectedQualities.Content.Tiles.Plants
 {
@@ -23,7 +23,7 @@ namespace InfectedQualities.Content.Tiles.Plants
             SpecialGroupMaximumSaturationValue = 1f
         };
 
-        public override void SetStaticDefaults() => GrowsOnTileId = [InfectedQualitiesUtilities.GetSnowType(InfectionType.Corrupt)];
+        public override void SetStaticDefaults() => GrowsOnTileId = [TileUtilities.GetSnowType(InfectionType.Corrupt)];
 
         public override int DropWood() => ItemID.Ebonwood;
 

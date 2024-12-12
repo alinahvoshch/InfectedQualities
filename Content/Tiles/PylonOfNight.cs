@@ -11,6 +11,7 @@ using ReLogic.Content;
 using Terraria.Localization;
 using InfectedQualities.Core;
 using InfectedQualities.Content.Extras;
+using InfectedQualities.Content.Items.Placables;
 
 namespace InfectedQualities.Content.Tiles
 {
@@ -39,7 +40,8 @@ namespace InfectedQualities.Content.Tiles
             TileObjectData.addTile(Type);
 
             AddToArray(ref TileID.Sets.CountsAsPylon);
-            AddMapEntry(PylonColor, Language.GetText("Mods.InfectedQualities.Items.Placables.PylonOfNight.DisplayName"));
+            AddMapEntry(PylonColor, Language.GetText("Mods.InfectedQualities.Items.Placables.PylonOfNightBlock.DisplayName"));
+            RegisterItemDrop(ModContent.ItemType<PylonOfNightBlock>());
 
             PylonCrystalTexture = ModContent.Request<Texture2D>(Texture + "_Crystal");
             PylonMapIcon = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/MapIcons/" + Name + "_MapIcon");
@@ -50,7 +52,7 @@ namespace InfectedQualities.Content.Tiles
         public override void MouseOver(int i, int j)
         {
             Main.LocalPlayer.cursorItemIconEnabled = true;
-            Main.LocalPlayer.cursorItemIconID = ModContent.ItemType<Items.Placables.PylonOfNight>();
+            Main.LocalPlayer.cursorItemIconID = ModContent.ItemType<Items.Placables.PylonOfNightBlock>();
         }
 
         public override void KillMultiTile(int i, int j, int frameX, int frameY) => ModContent.GetInstance<TileEntities.PylonTileEntity>().Kill(i, j);
@@ -66,12 +68,12 @@ namespace InfectedQualities.Content.Tiles
             b = PylonColor.B / 255f;
         }
 
-        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) => DefaultDrawPylonCrystal(spriteBatch, i, j, PylonCrystalTexture, InfectedQualitiesUtilities.PylonCrystalHighlightTexture, new Vector2(0f, -12f), PylonColor * 0.1f, PylonColor, 12, 8);
+        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) => DefaultDrawPylonCrystal(spriteBatch, i, j, PylonCrystalTexture, TextureUtilities.PylonCrystalHighlightTexture, new Vector2(0f, -12f), PylonColor * 0.1f, PylonColor, 12, 8);
 
         public override void DrawMapIcon(ref MapOverlayDrawContext context, ref string mouseOverText, TeleportPylonInfo pylonInfo, bool isNearPylon, Color drawColor, float deselectedScale, float selectedScale)
         {
             bool mouseOver = DefaultDrawMapIcon(ref context, PylonMapIcon, pylonInfo.PositionInTiles.ToVector2() + new Vector2(1.5f, 2f), drawColor, deselectedScale, selectedScale);
-            DefaultMapClickHandle(mouseOver, pylonInfo, ModContent.GetInstance<Items.Placables.PylonOfNight>().DisplayName.Key, ref mouseOverText);
+            DefaultMapClickHandle(mouseOver, pylonInfo, ModContent.GetInstance<Items.Placables.PylonOfNightBlock>().DisplayName.Key, ref mouseOverText);
         }
 
         public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<InfectedQualitiesServerConfig>().PylonOfNight;

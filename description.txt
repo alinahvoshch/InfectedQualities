@@ -15,7 +15,7 @@ The addition of these blocks fixes this ''issue''.
 INFECTED JUNGLE BIOMES --> Hallowed jungle grass, and hallowed thorns that only spawn on hallowed jungle grass.
 Corrupt and crimson jungles now count as actual jungle biomes. This results in increased spawn rates, and jungle bosses (Such as Plantera and Queen Bee) not getting enraged in the biomes.
 
-INFECTED MOSS BLOCKS --> Moss can now grow on ebonstone, crimsstone, and pearlstone. Mostly compatible with resource packs.
+INFECTED MOSS BLOCKS --> Moss can now grow on ebonstone, crimstone, and pearlstone. Mostly compatible with resource packs.
 
 INFECTED GEMSTONE BLOCKS --> Gemstone blocks(diamond, ruby, emerald, etc.) can now be infected, mostly for aesthetic purposes.
 

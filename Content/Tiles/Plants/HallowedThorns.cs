@@ -1,4 +1,5 @@
 ﻿using InfectedQualities.Content.Extras;
+using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Terraria;
 using Terraria.ID;
@@ -48,7 +49,7 @@ namespace InfectedQualities.Content.Tiles.Plants
             }
             else
             {
-                InfectedQualitiesUtilities.SpreadInfection(i, j, InfectionType.Hallowed);
+                TileUtilities.SpreadInfection(i, j, InfectionType.Hallowed);
             }
         }
 

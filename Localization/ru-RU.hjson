@@ -16,22 +16,11 @@ Mods: {
 			}
 
 			Placables: {
-				CorruptSnow: {
-					DisplayName: Нечестивый снег
-					Tooltip: ""
-				}
+				CorruptSnowBlock.DisplayName: Нечестивый снег
+				CrimsonSnowBlock.DisplayName: Свернувшаяся кровь
+				HallowedSnowBlock.DisplayName: Святой снег
 
-				CrimsonSnow: {
-					DisplayName: Свернувшаяся кровь
-					Tooltip: ""
-				}
-
-				HallowedSnow: {
-					DisplayName: Святой снег
-					Tooltip: ""
-				}
-
-				PylonOfNight: {
+				PylonOfNightBlock: {
 					DisplayName: Пилон ночи
 					Tooltip:
 						'''

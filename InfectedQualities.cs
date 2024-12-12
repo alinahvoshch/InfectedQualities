@@ -1,5 +1,6 @@
 using InfectedQualities.Content.Biomes;
 using InfectedQualities.Content.Extras;
+using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Content.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
@@ -16,7 +17,7 @@ namespace InfectedQualities
         {
             if (ModContent.GetInstance<InfectedQualitiesServerConfig>().PylonOfNight)
             {
-                InfectedQualitiesUtilities.PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
+                TextureUtilities.PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
             }
 
             foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
@@ -52,9 +53,9 @@ namespace InfectedQualities
         {
             return args switch
             {
-                ["ZoneCorruptJungle", Player player] => player.InModBiome<CorruptJungle>(),
-                ["ZoneCrimsonJungle", Player player] => player.InModBiome<CrimsonJungle>(),
-                ["ZoneHallowedJungle", Player player] => player.InModBiome<HallowedJungle>(),
+                ["ZoneCorruptJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CorruptJungle>(),
+                ["ZoneCrimsonJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CrimsonJungle>(),
+                ["ZoneHallowedJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<HallowedJungle>(),
                 ["GetWallBiomeSightColor", int type] => InfectedQualitiesModSupport.ModWallBiomeSight[type],
                 ["SetWallBiomeSightColor", int type, Color color] => InfectedQualitiesModSupport.ModWallBiomeSight[type] = color,
                 _ => throw new Exception("You buffoon, you failed to use InfectedQualities.Call")

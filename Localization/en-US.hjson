@@ -16,22 +16,11 @@ Mods: {
 			}
 
 			Placables: {
-				CorruptSnow: {
-					DisplayName: Unholy Snow
-					Tooltip: ""
-				}
+				CorruptSnowBlock.DisplayName: Unholy Snow
+				CrimsonSnowBlock.DisplayName: Clotted Blood
+				HallowedSnowBlock.DisplayName: Holy Snow
 
-				CrimsonSnow: {
-					DisplayName: Clotted Blood
-					Tooltip: ""
-				}
-
-				HallowedSnow: {
-					DisplayName: Holy Snow
-					Tooltip: ""
-				}
-
-				PylonOfNight: {
+				PylonOfNightBlock: {
 					DisplayName: Pylon of Night
 					Tooltip:
 						'''
@@ -126,7 +115,7 @@ Mods: {
 			}
 
 			PylonOfNight: {
-				Label: "[i:InfectedQualities/PylonOfNight] Pylon of Night"
+				Label: "[i:InfectedQualities/PylonOfNightBlock] Pylon of Night"
 				Tooltip: Enables pylon of night, allowing the player to teleport to corruption or crimson through the pylon system
 			}
 
