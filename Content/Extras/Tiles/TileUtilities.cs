@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System;
+using InfectedQualities.Core;
 
 namespace InfectedQualities.Content.Extras.Tiles
 {
@@ -101,8 +102,14 @@ namespace InfectedQualities.Content.Extras.Tiles
                                 WorldGen.SquareTileFrame(x, y);
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
-                            else if (ConvertEnum<MossType>(x, y, infectionType, true) || ConvertEnum<GemType>(x, y, infectionType, true))
+                            else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[i, j].TileType])
                             {
+                                ConvertEnum<MossType>(x, y, infectionType, true);
+                                NetMessage.SendTileSquare(-1, x, y);
+                            }
+                            else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[i, j].TileType])
+                            {
+                                ConvertEnum<GemType>(x, y, infectionType, true);
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
                         }
@@ -204,8 +211,14 @@ namespace InfectedQualities.Content.Extras.Tiles
                                 NetMessage.SendTileSquare(-1, x, y);
                                 break;
                             }
-                            else if (ConvertEnum<MossType>(x, y, infectionType, true) || ConvertEnum<GemType>(x, y, infectionType, true))
+                            else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[i, j].TileType])
                             {
+                                ConvertEnum<MossType>(x, y, infectionType, true);
+                                NetMessage.SendTileSquare(-1, x, y);
+                            }
+                            else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[i, j].TileType])
+                            {
+                                ConvertEnum<GemType>(x, y, infectionType, true);
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
                         }
@@ -265,7 +278,7 @@ namespace InfectedQualities.Content.Extras.Tiles
             }
         }
 
-        public static bool ConvertEnum<T>(int i, int j, InfectionType? infectionType, bool safe = false) where T : Enum
+        public static void ConvertEnum<T>(int i, int j, InfectionType? infectionType, bool safe = false) where T : Enum
         {
             foreach (T enumType in Enum.GetValues(typeof(T)))
             {
@@ -273,7 +286,6 @@ namespace InfectedQualities.Content.Extras.Tiles
                 {
                     Main.tile[i, j].TileType = GetEnumType(infectionType, enumType);
                     WorldGen.SquareTileFrame(i, j);
-                    return true;
                 }
                 else if (!safe)
                 {
@@ -283,12 +295,10 @@ namespace InfectedQualities.Content.Extras.Tiles
                         {
                             Main.tile[i, j].TileType = GetEnumType(infectionType, enumType);
                             WorldGen.SquareTileFrame(i, j);
-                            return true;
                         }
                     }
                 }
             }
-            return false;
         }
 
         public static ushort GetEnumType(InfectionType? infectionType, Enum enumType)
