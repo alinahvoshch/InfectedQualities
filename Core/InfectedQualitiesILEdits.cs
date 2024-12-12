@@ -171,6 +171,11 @@ namespace InfectedQualities.Core
                             {
                                 TileUtilities.ConvertEnum<GemType>(m, n, InfectionType.Hallowed, true);
                             }
+                            else if (Main.tileMoss[Main.tile[m, n].TileType])
+                            {
+                                Main.tile[m, n].TileType = TileID.Pearlstone;
+                                WorldGen.SquareTileFrame(m, n);
+                            }
                         }
                         else if (WorldGen.crimson)
                         {
@@ -210,6 +215,11 @@ namespace InfectedQualities.Core
                             else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[m, n].TileType])
                             {
                                 TileUtilities.ConvertEnum<GemType>(m, n, InfectionType.Crimson, true);
+                            }
+                            else if (Main.tileMoss[Main.tile[m, n].TileType])
+                            {
+                                Main.tile[m, n].TileType = TileID.Crimstone;
+                                WorldGen.SquareTileFrame(m, n);
                             }
                         }
                         else
@@ -251,6 +261,11 @@ namespace InfectedQualities.Core
                             {
                                 TileUtilities.ConvertEnum<GemType>(m, n, InfectionType.Corrupt, true);
                             }
+                            else if (Main.tileMoss[Main.tile[m, n].TileType])
+                            {
+                                Main.tile[m, n].TileType = TileID.Ebonstone;
+                                WorldGen.SquareTileFrame(m, n);
+                            }
                         }
                     }
                 });
@@ -272,12 +287,12 @@ namespace InfectedQualities.Core
                     {
                         if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[k, l].TileType])
                         {
-                            TileUtilities.ConvertEnum<MossType>(k, l, null, true);
+                            TileUtilities.ConvertEnum<MossType>(k, l, null);
                             NetMessage.SendTileSquare(-1, k, l);
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[k, l].TileType])
                         {
-                            TileUtilities.ConvertEnum<GemType>(k, l, null, true);
+                            TileUtilities.ConvertEnum<GemType>(k, l, null);
                             NetMessage.SendTileSquare(-1, k, l);
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
@@ -306,12 +321,12 @@ namespace InfectedQualities.Core
                     {
                         if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[k, l].TileType])
                         {
-                            TileUtilities.ConvertEnum<MossType>(k, l, InfectionType.Corrupt, true);
+                            TileUtilities.ConvertEnum<MossType>(k, l, InfectionType.Corrupt);
                             NetMessage.SendTileSquare(-1, k, l);
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[k, l].TileType])
                         {
-                            TileUtilities.ConvertEnum<GemType>(k, l, InfectionType.Corrupt, true);
+                            TileUtilities.ConvertEnum<GemType>(k, l, InfectionType.Corrupt);
                             NetMessage.SendTileSquare(-1, k, l);
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
@@ -329,12 +344,12 @@ namespace InfectedQualities.Core
                     {
                         if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[k, l].TileType])
                         {
-                            TileUtilities.ConvertEnum<MossType>(k, l, InfectionType.Crimson, true);
+                            TileUtilities.ConvertEnum<MossType>(k, l, InfectionType.Crimson);
                             NetMessage.SendTileSquare(-1, k, l);
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[k, l].TileType])
                         {
-                            TileUtilities.ConvertEnum<GemType>(k, l, InfectionType.Crimson, true);
+                            TileUtilities.ConvertEnum<GemType>(k, l, InfectionType.Crimson);
                             NetMessage.SendTileSquare(-1, k, l);
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
@@ -352,12 +367,12 @@ namespace InfectedQualities.Core
                     {
                         if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[k, l].TileType])
                         {
-                            TileUtilities.ConvertEnum<MossType>(k, l, InfectionType.Hallowed, true);
+                            TileUtilities.ConvertEnum<MossType>(k, l, InfectionType.Hallowed);
                             NetMessage.SendTileSquare(-1, k, l);
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[k, l].TileType])
                         {
-                            TileUtilities.ConvertEnum<GemType>(k, l, InfectionType.Hallowed, true);
+                            TileUtilities.ConvertEnum<GemType>(k, l, InfectionType.Hallowed);
                             NetMessage.SendTileSquare(-1, k, l);
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
