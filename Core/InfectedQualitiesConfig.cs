@@ -50,6 +50,12 @@ namespace InfectedQualities.Core
         [ReloadRequired]
         public bool InfectedMosses { get; set; }
 
+        [LabelKey("$Mods.InfectedQualities.Config.InfectedGemstones.Label"), TooltipKey("$Mods.InfectedQualities.Config.InfectedGemstones.Tooltip")]
+        [BackgroundColor(135, 54, 206)]
+        [DefaultValue(true)]
+        [ReloadRequired]
+        public bool InfectedGemstones { get; set; }
+
         [LabelKey("$Mods.InfectedQualities.Config.PylonOfNight.Label"), TooltipKey("$Mods.InfectedQualities.Config.PylonOfNight.Tooltip")]
         [BackgroundColor(135, 54, 206)]
         [DefaultValue(true)]

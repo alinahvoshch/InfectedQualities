@@ -23,6 +23,11 @@ namespace InfectedQualities
             {
                 AddContent(new InfectedSnow(infectionType));
 
+                foreach(GemType gemType in Enum.GetValues(typeof(GemType)))
+                {
+                    AddContent(new InfectedGemstone(infectionType, gemType));
+                }
+
                 foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
                 {
                     AddContent(new InfectedMoss(infectionType, mossType));

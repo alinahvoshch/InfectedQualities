@@ -17,6 +17,8 @@ Corrupt and crimson jungles now count as actual jungle biomes. This results in i
 
 INFECTED MOSS BLOCKS --> Moss can now grow on ebonstone, crimsstone, and pearlstone. Mostly compatible with resource packs.
 
+INFECTED GEMSTONE BLOCKS --> Gemstone blocks(diamond, ruby, emerald, etc.) can now be infected, mostly for aesthetic purposes.
+
 BIOME SIGHT WALL HIGHLIGHTING --> The biome sight potion now highlights all infected walls.
 
 BIOME SPREAD CHANGES --> Infected walls now spread infections.

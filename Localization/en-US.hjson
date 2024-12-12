@@ -40,6 +40,28 @@ Mods: {
 						You can only place one per type and in one of the matching biomes
 						'''
 				}
+
+				CorruptSapphireGemstoneBlock.DisplayName: "{$ItemName.Sapphire} {$ItemName.EbonstoneBlock}"
+				CorruptRubyGemstoneBlock.DisplayName: "{$ItemName.Ruby} {$ItemName.EbonstoneBlock}"
+				CorruptEmeraldGemstoneBlock.DisplayName: "{$ItemName.Emerald} {$ItemName.EbonstoneBlock}"
+				CorruptTopazGemstoneBlock.DisplayName: "{$ItemName.Topaz} {$ItemName.EbonstoneBlock}"
+				CorruptAmethystGemstoneBlock.DisplayName: "{$ItemName.Amethyst} {$ItemName.EbonstoneBlock}"
+				CorruptDiamondGemstoneBlock.DisplayName: "{$ItemName.Diamond} {$ItemName.EbonstoneBlock}"
+				CorruptAmberGemstoneBlock.DisplayName: "{$ItemName.Amber} {$ItemName.EbonstoneBlock}"
+				CrimsonSapphireGemstoneBlock.DisplayName: "{$ItemName.Sapphire} {$ItemName.CrimstoneBlock}"
+				CrimsonRubyGemstoneBlock.DisplayName: "{$ItemName.Ruby} {$ItemName.CrimstoneBlock}"
+				CrimsonEmeraldGemstoneBlock.DisplayName: "{$ItemName.Emerald} {$ItemName.CrimstoneBlock}"
+				CrimsonTopazGemstoneBlock.DisplayName: "{$ItemName.Topaz} {$ItemName.CrimstoneBlock}"
+				CrimsonAmethystGemstoneBlock.DisplayName: "{$ItemName.Amethyst} {$ItemName.CrimstoneBlock}"
+				CrimsonDiamondGemstoneBlock.DisplayName: "{$ItemName.Diamond} {$ItemName.CrimstoneBlock}"
+				CrimsonAmberGemstoneBlock.DisplayName: "{$ItemName.Amber} {$ItemName.CrimstoneBlock}"
+				HallowedSapphireGemstoneBlock.DisplayName: "{$ItemName.Sapphire} {$ItemName.PearlstoneBlock}"
+				HallowedRubyGemstoneBlock.DisplayName: "{$ItemName.Ruby} {$ItemName.PearlstoneBlock}"
+				HallowedEmeraldGemstoneBlock.DisplayName: "{$ItemName.Emerald} {$ItemName.PearlstoneBlock}"
+				HallowedTopazGemstoneBlock.DisplayName: "{$ItemName.Topaz} {$ItemName.PearlstoneBlock}"
+				HallowedAmethystGemstoneBlock.DisplayName: "{$ItemName.Amethyst} {$ItemName.PearlstoneBlock}"
+				HallowedDiamondGemstoneBlock.DisplayName: "{$ItemName.Diamond} {$ItemName.PearlstoneBlock}"
+				HallowedAmberGemstoneBlock.DisplayName: "{$ItemName.Amber} {$ItemName.PearlstoneBlock}"
 			}
 		}
 
@@ -90,7 +112,16 @@ Mods: {
 				Tooltip:
 					'''
 					Corruption, crimson, and Hallow no longer break moss blocks, instead converting their stone to it's own counterpart.
-					Partially compatible with texture packs, the moss part will not change but the stone part of the blocks will.
+					Partially compatible with texture packs, non-glowing mosses may be slightly inaccurate in their texture, but it should follow texture packs regardless.
+					'''
+			}
+
+			InfectedGemstones: {
+				Label: "[i:InfectedQualities/CorruptDiamondGemstoneBlock] Infected Gemstones"
+				Tooltip:
+					'''
+					Gem blocks embeded in stone blocks can now be converted into their infected variant.
+					Partially compatible with texture packs, the gem part will not change but the stone part of the blocks will.
 					'''
 			}
 

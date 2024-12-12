@@ -158,16 +158,19 @@ namespace InfectedQualities.Core
                                 Main.tile[m, n].WallType = WallID.PearlstoneBrickUnsafe;
                             }
 
-                            if (Main.tile[m, n].TileType is TileID.CorruptThorns or TileID.CrimsonThorns)
+                            if (!InfectedQualitiesUtilities.ConvertGemstones(m, n, InfectionType.Hallowed, true))
                             {
-                                WorldGen.KillTile(m, n);
-                            }
-                            else if (!InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Hallowed, true))
-                            {
-                                if (Main.tileMoss[Main.tile[m, n].TileType])
+                                if (Main.tile[m, n].TileType is TileID.CorruptThorns or TileID.CrimsonThorns)
                                 {
-                                    Main.tile[m, n].TileType = TileID.Pearlstone;
-                                    WorldGen.SquareTileFrame(m, n);
+                                    WorldGen.KillTile(m, n);
+                                }
+                                else if (!InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Hallowed, true))
+                                {
+                                    if (Main.tileMoss[Main.tile[m, n].TileType])
+                                    {
+                                        Main.tile[m, n].TileType = TileID.Pearlstone;
+                                        WorldGen.SquareTileFrame(m, n);
+                                    }
                                 }
                             }
                         }
@@ -197,17 +200,20 @@ namespace InfectedQualities.Core
                                 Main.tile[m, n].WallType = WallID.CrimstoneUnsafe;
                             }
 
-                            if (Main.tile[m, n].TileType is TileID.CorruptThorns or TileID.JungleThorns)
+                            if (!InfectedQualitiesUtilities.ConvertGemstones(m, n, InfectionType.Crimson, true))
                             {
-                                Main.tile[m, n].TileType = TileID.CrimsonThorns;
-                                WorldGen.SquareTileFrame(m, n);
-                            }
-                            else if (!InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Crimson, true))
-                            {
-                                if (Main.tileMoss[Main.tile[m, n].TileType])
+                                if (Main.tile[m, n].TileType is TileID.CorruptThorns or TileID.JungleThorns)
                                 {
-                                    Main.tile[m, n].TileType = TileID.Crimstone;
+                                    Main.tile[m, n].TileType = TileID.CrimsonThorns;
                                     WorldGen.SquareTileFrame(m, n);
+                                }
+                                else if (!InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Crimson, true))
+                                {
+                                    if (Main.tileMoss[Main.tile[m, n].TileType])
+                                    {
+                                        Main.tile[m, n].TileType = TileID.Crimstone;
+                                        WorldGen.SquareTileFrame(m, n);
+                                    }
                                 }
                             }
                         }
@@ -237,17 +243,20 @@ namespace InfectedQualities.Core
                                 Main.tile[m, n].WallType = WallID.EbonstoneUnsafe;
                             }
 
-                            if (Main.tile[m, n].TileType is TileID.CrimsonThorns or TileID.JungleThorns)
+                            if (!InfectedQualitiesUtilities.ConvertGemstones(m, n, InfectionType.Corrupt, true))
                             {
-                                Main.tile[m, n].TileType = TileID.CorruptThorns;
-                                WorldGen.SquareTileFrame(m, n);
-                            }
-                            else if(!InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Corrupt, true))
-                            {
-                                if (Main.tileMoss[Main.tile[m, n].TileType])
+                                if (Main.tile[m, n].TileType is TileID.CrimsonThorns or TileID.JungleThorns)
                                 {
-                                    Main.tile[m, n].TileType = TileID.Ebonstone;
+                                    Main.tile[m, n].TileType = TileID.CorruptThorns;
                                     WorldGen.SquareTileFrame(m, n);
+                                }
+                                else if (!InfectedQualitiesUtilities.ConvertMoss(m, n, InfectionType.Corrupt, true))
+                                {
+                                    if (Main.tileMoss[Main.tile[m, n].TileType])
+                                    {
+                                        Main.tile[m, n].TileType = TileID.Ebonstone;
+                                        WorldGen.SquareTileFrame(m, n);
+                                    }
                                 }
                             }
                         }
@@ -269,7 +278,7 @@ namespace InfectedQualities.Core
 
                     if (conversionType == BiomeConversionID.Purity)
                     {
-                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, null))
+                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, null) || InfectedQualitiesUtilities.ConvertGemstones(k, l, null))
                         {
                             NetMessage.SendTileSquare(-1, k, l);
                         }
@@ -297,7 +306,7 @@ namespace InfectedQualities.Core
                     }
                     else if (conversionType == BiomeConversionID.Corruption)
                     {
-                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Corrupt))
+                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Corrupt) || InfectedQualitiesUtilities.ConvertGemstones(k, l, InfectionType.Corrupt))
                         {
                             NetMessage.SendTileSquare(-1, k, l);
                         }
@@ -314,7 +323,7 @@ namespace InfectedQualities.Core
                     }
                     else if (conversionType == BiomeConversionID.Crimson)
                     {
-                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Crimson))
+                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Crimson) || InfectedQualitiesUtilities.ConvertGemstones(k, l, InfectionType.Crimson))
                         {
                             NetMessage.SendTileSquare(-1, k, l);
                         }
@@ -331,7 +340,7 @@ namespace InfectedQualities.Core
                     }
                     else if (conversionType == BiomeConversionID.Hallow)
                     {
-                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Hallowed))
+                        if (InfectedQualitiesUtilities.ConvertMoss(k, l, InfectionType.Hallowed) || InfectedQualitiesUtilities.ConvertGemstones(k, l, InfectionType.Hallowed))
                         {
                             NetMessage.SendTileSquare(-1, k, l);
                         }

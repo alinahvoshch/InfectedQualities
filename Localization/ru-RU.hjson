@@ -40,6 +40,28 @@ Mods: {
 						Можно установить только один тип, совпадающий с биомом
 						'''
 				}
+
+				CorruptSapphireGemstoneBlock.DisplayName: Сапфировый эбонит
+				CorruptRubyGemstoneBlock.DisplayName: Рубиновый эбонит
+				CorruptEmeraldGemstoneBlock.DisplayName: Изумрудный эбонит
+				CorruptTopazGemstoneBlock.DisplayName: Топазовый эбонит
+				CorruptAmethystGemstoneBlock.DisplayName: Аметистовый эбонит
+				CorruptDiamondGemstoneBlock.DisplayName: Алмазный эбонит
+				CorruptAmberGemstoneBlock.DisplayName: Янтарный эбонит
+				CrimsonSapphireGemstoneBlock.DisplayName: Сапфировый багряный камень
+				CrimsonRubyGemstoneBlock.DisplayName: Рубиновый багряный камень
+				CrimsonEmeraldGemstoneBlock.DisplayName: Изумрудный багряный камень
+				CrimsonTopazGemstoneBlock.DisplayName: Топазовый багряный камень
+				CrimsonAmethystGemstoneBlock.DisplayName: Аметистовый багряный камень
+				CrimsonDiamondGemstoneBlock.DisplayName: Алмазный багряный камень
+				CrimsonAmberGemstoneBlock.DisplayName: Янтарный багряный камень
+				HallowedSapphireGemstoneBlock.DisplayName: Сапфировый жемчужный камень
+				HallowedRubyGemstoneBlock.DisplayName: Рубиновый жемчужный камень
+				HallowedEmeraldGemstoneBlock.DisplayName: Изумрудный жемчужный камень
+				HallowedTopazGemstoneBlock.DisplayName: Топазовый жемчужный камень
+				HallowedAmethystGemstoneBlock.DisplayName: Аметистовый жемчужный камень
+				HallowedDiamondGemstoneBlock.DisplayName: Алмазный жемчужный камень
+				HallowedAmberGemstoneBlock.DisplayName: Янтарный жемчужный камень
 			}
 		}
 
@@ -86,11 +108,20 @@ Mods: {
 			}
 
 			InfectedMosses: {
-				Label: "[i:5127] Заражение мхов"
+				Label: "[i:5127] Заражения мхов"
 				Tooltip:
 					'''
-					Заражения больше не будут разрушать мох на блоках камня, создавая вместо этого заражённый камень, покрытый мхом
-					Частично совместимо с текстурпаками: часть со мхом не будет изменятся, однако остальной блок может
+					Искажение, багрянец больше не будут разрушать мох на блоках камня, создавая вместо этого заражённый камень, покрытый мхом
+					Частично совместимо с текстурпаками: несветящиеся мхи могут немного отличаться по своей текстуре, но в целом совместимы с текстурпаками
+					'''
+			}
+
+			InfectedGemstones: {
+				Label: "[i:InfectedQualities/CorruptDiamondGemstoneBlock] Заражение блоков самоцветов"
+				Tooltip:
+					'''
+					Блоки самоцветов в камне теперь также смогут заражаться искажением, багрянцем и освящением
+					Частично совместимо с текстурпаками: часть с самоцветом будет неизменяема, но спрайт самого камня будет изменятся
 					'''
 			}
 

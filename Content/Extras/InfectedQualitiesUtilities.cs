@@ -444,6 +444,45 @@ namespace InfectedQualities.Content.Extras
             return ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.Value.ToString() + mossType.ToString() + "Moss").Type;
         }
 
+        public static bool ConvertGemstones(int i, int j, InfectionType? infectionType, bool safe = false)
+        {
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[i, j].TileType])
+            {
+                foreach (GemType gemType in Enum.GetValues(typeof(GemType)))
+                {
+                    if (infectionType.HasValue && Main.tile[i, j].TileType == GetGemstoneType(null, gemType))
+                    {
+                        Main.tile[i, j].TileType = GetGemstoneType(infectionType, gemType);
+                        WorldGen.SquareTileFrame(i, j);
+                        return true;
+                    }
+                    else if (!safe)
+                    {
+                        foreach (InfectionType cycledInfection in Enum.GetValues(typeof(InfectionType)))
+                        {
+                            if (!infectionType.Equals(cycledInfection) && Main.tile[i, j].TileType == GetGemstoneType(cycledInfection, gemType))
+                            {
+                                Main.tile[i, j].TileType = GetGemstoneType(infectionType, gemType);
+                                WorldGen.SquareTileFrame(i, j);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        public static ushort GetGemstoneType(InfectionType? infectionType, GemType gemType)
+        {
+            if (!infectionType.HasValue)
+            {
+                if (gemType == GemType.Amber) return TileID.AmberStoneBlock;
+                return (ushort)TileID.Search.GetId(gemType.ToString());
+            }
+            return ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.Value.ToString() + gemType.ToString() + "Gemstone").Type;
+        }
+
         public static ushort GetSnowType(InfectionType infectionType) => ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.ToString() + "Snow").Type;
 
         public static bool OtherworldMusic()
@@ -483,5 +522,16 @@ namespace InfectedQualities.Content.Extras
         Argon,
         Neon,
         Helium
+    }
+
+    public enum GemType
+    {
+        Sapphire,
+        Ruby,
+        Emerald,
+        Topaz,
+        Amethyst,
+        Diamond,
+        Amber
     }
 }
