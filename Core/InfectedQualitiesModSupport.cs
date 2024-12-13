@@ -199,14 +199,22 @@ namespace InfectedQualities.Core
             if(ModLoader.TryGetMod("AltLibrary", out Mod altLib))
             {
                 Type biomeManager = altLib.Code.GetType("AltLibrary.Common.Systems.WorldBiomeManager");
-                BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Static;
                 if (good)
                 {
-                    return (string)biomeManager.GetField("worldHallowName", flags).GetValue(null) != "";
+                    return (string)biomeManager.GetProperty("WorldHallowName").GetValue(null) != "";
                 }
                 else
                 {
-                    return (string)biomeManager.GetField("worldEvilName", flags).GetValue(null) != "";
+                    if(Main.drunkWorld)
+                    {
+                        string drunkEviName = (string)biomeManager.GetField("drunkEvilName", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
+                        if((drunkEviName == "Terraria/Corruption" && !WorldGen.crimson) || (drunkEviName == "Terraria/Crimson" && WorldGen.crimson))
+                        {
+                            return false;
+                        }
+                        return true;
+                    }
+                    return (string)biomeManager.GetProperty("WorldEvilName").GetValue(null) != "";
                 }
             }
             return false;
