@@ -59,21 +59,17 @@ namespace InfectedQualities.Common
                     PlanteraSeed = TextureAssets.Projectile[ProjectileID.SeedPlantera];
                 }
 
-                string planteraType = null;
                 if (Main.LocalPlayer.ZoneCorrupt)
                 {
-                    TextureAssets.Npc[NPCID.Plantera] = CorruptPlantera;
-                    planteraType = "Corrupt";
+                    TextureUtilities.ReplacePlanteraType(InfectionType.Corrupt);
                 }
                 else if (Main.LocalPlayer.ZoneCrimson)
                 {
-                    TextureAssets.Npc[NPCID.Plantera] = CrimsonPlantera;
-                    planteraType = "Crimson";
+                    TextureUtilities.ReplacePlanteraType(InfectionType.Crimson);
                 }
                 else if (Main.LocalPlayer.ZoneHallow)
                 {
-                    TextureAssets.Npc[NPCID.Plantera] = HallowedPlantera;
-                    planteraType = "Hallowed";
+                    TextureUtilities.ReplacePlanteraType(InfectionType.Hallowed);
                 }
                 else
                 {
@@ -85,16 +81,6 @@ namespace InfectedQualities.Common
                     TextureAssets.Npc[NPCID.Spore] = PlanteraSpore;
                     TextureAssets.Projectile[ProjectileID.SeedPlantera] = PlanteraSeed;
                 }
-
-                if (planteraType != null)
-                {
-                    TextureAssets.Npc[NPCID.PlanterasHook] = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/" + planteraType + "Plantera_Hook");
-                    TextureAssets.Chain26 = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/" + planteraType + "Plantera_Hook_Vine");
-                    TextureAssets.Npc[NPCID.PlanterasTentacle] = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/" + planteraType + "Plantera_Tentacle");
-                    TextureAssets.Chain27 = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/" + planteraType + "Plantera_Tentacle_Vine");
-                    TextureAssets.Npc[NPCID.Spore] = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/" + planteraType + "Plantera_Spore");
-                    TextureAssets.Projectile[ProjectileID.SeedPlantera] = ModContent.Request<Texture2D>("InfectedQualities/Content/Projectiles/" + planteraType + "Plantera_Seed");
-                }
             }
         }
 
@@ -102,11 +88,11 @@ namespace InfectedQualities.Common
         {
             if (npc.type == NPCID.Plantera)
             {
-                string planteraType = TextureUtilities.GetPlanteraType();
-                if(planteraType != null)
+                InfectionType? planteraType = TextureUtilities.GetPlanteraType();
+                if(planteraType.HasValue)
                 {
                     int phaseIndex = npc.life > npc.lifeMax / 2 ? 1 : 2;
-                    index = ModContent.GetModBossHeadSlot("InfectedQualities/Content/Extras/MapIcons/" + planteraType + "Plantera_MapIcon_" + phaseIndex);
+                    index = ModContent.GetModBossHeadSlot("InfectedQualities/Content/Extras/MapIcons/" + planteraType.ToString() + "Plantera_MapIcon_" + phaseIndex);
                 }
             }
         }

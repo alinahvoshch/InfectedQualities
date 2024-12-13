@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 namespace InfectedQualities
 {
     public class InfectedQualities : Mod
-	{
+    {
         public override void Load()
         {
             if (ModContent.GetInstance<InfectedQualitiesServerConfig>().PylonOfNight)

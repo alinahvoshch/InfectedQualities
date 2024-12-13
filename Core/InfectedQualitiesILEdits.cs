@@ -50,24 +50,24 @@ namespace InfectedQualities.Core
 
         private static int Gore_NewGore(On_Gore.orig_NewGore_IEntitySource_Vector2_Vector2_int_float orig, IEntitySource source, Vector2 Position, Vector2 Velocity, int Type, float Scale)
         {
-            string planteraType = TextureUtilities.GetPlanteraType();
-            if (planteraType != null)
+            InfectionType? planteraType = TextureUtilities.GetPlanteraType();
+            if (planteraType.HasValue)
             {
                 if (Type >= 378 && Type <= 380)
                 {
-                    Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType + "Plantera_1_" + (Type - 378)).Type;
+                    Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType.ToString() + "Plantera_1_" + (Type - 378)).Type;
                 }
                 else if (Type >= 381 && Type <= 387)
                 {
-                    Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType + "Plantera_2_" + (Type - 381)).Type;
+                    Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType.ToString() + "Plantera_2_" + (Type - 381)).Type;
                 }
                 else if (Type >= 388 && Type <= 389)
                 {
-                    Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType + "Plantera_Tentacle_" + (Type - 388)).Type;
+                    Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType.ToString() + "Plantera_Tentacle_" + (Type - 388)).Type;
                 }
                 else if (Type >= 390 && Type <= 391)
                 {
-                    Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType + "Plantera_Hook_" + (Type - 390)).Type;
+                    Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType.ToString() + "Plantera_Hook_" + (Type - 390)).Type;
                 }
             }
             return orig(source, Position, Velocity, Type, Scale);
@@ -79,13 +79,13 @@ namespace InfectedQualities.Core
             {
                 switch (TextureUtilities.GetPlanteraType())
                 {
-                    case "Corrupt":
+                    case InfectionType.Corrupt:
                         Type = DustID.CorruptPlants;
                         break;
-                    case "Crimson":
+                    case InfectionType.Crimson:
                         Type = DustID.CrimsonPlants;
                         break;
-                    case "Hallowed":
+                    case InfectionType.Hallowed:
                         Type = DustID.HallowedPlants;
                         break;
                 }
@@ -94,13 +94,13 @@ namespace InfectedQualities.Core
             {
                 switch (TextureUtilities.GetPlanteraType())
                 {
-                    case "Corrupt":
+                    case InfectionType.Corrupt:
                         Type = DustID.Corruption;
                         break;
-                    case "Crimson":
+                    case InfectionType.Crimson:
                         Type = DustID.Crimson;
                         break;
-                    case "Hallowed":
+                    case InfectionType.Hallowed:
                         newColor.MultiplyRGB(Color.Magenta);
                         break;
                 }
