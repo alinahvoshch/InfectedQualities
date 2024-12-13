@@ -192,9 +192,9 @@ namespace InfectedQualities.Common
 
                     if (Main.tile[x, y].HasTile)
                     {
-                        if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
+                        foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
                         {
-                            foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
+                            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
                             {
                                 foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
                                 {
@@ -206,7 +206,10 @@ namespace InfectedQualities.Common
                                         return;
                                     }
                                 }
+                            }
 
+                            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones)
+                            {
                                 foreach (GemType gemType in Enum.GetValues(typeof(GemType)))
                                 {
                                     if (Main.tile[x, y].TileType == TileUtilities.GetEnumType(infectionType, gemType))
