@@ -9,29 +9,29 @@ using Terraria.ModLoader;
 
 namespace InfectedQualities.Content.Items.Placables
 {
-    public class SapphireEbonstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Sapphire);
-    public class RubyEbonstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Ruby);
-    public class EmeraldEbonstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Emerald);
-    public class TopazEbonstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Topaz);
-    public class AmethystEbonstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Amethyst);
-    public class DiamondEbonstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Diamond);
-    public class AmberEbonstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Amber);
+    public class CorruptSapphireGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Sapphire);
+    public class CorruptRubyGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Ruby);
+    public class CorruptEmeraldGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Emerald);
+    public class CorruptTopazGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Topaz);
+    public class CorruptAmethystGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Amethyst);
+    public class CorruptDiamondGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Diamond);
+    public class CorruptAmberGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Corrupt, GemType.Amber);
 
-    public class SapphireCrimstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Sapphire);
-    public class RubyCrimstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Ruby);
-    public class EmeraldCrimstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Emerald);
-    public class TopazCrimstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Topaz);
-    public class AmethystCrimstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Amethyst);
-    public class DiamondCrimstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Diamond);
-    public class AmberCrimstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Amber);
+    public class CrimsonSapphireGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Sapphire);
+    public class CrimsonRubyGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Ruby);
+    public class CrimsonEmeraldGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Emerald);
+    public class CrimsonTopazGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Topaz);
+    public class CrimsonAmethystGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Amethyst);
+    public class CrimsonDiamondGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Diamond);
+    public class CrimsonAmberGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Crimson, GemType.Amber);
 
-    public class SapphirePearlstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Sapphire);
-    public class RubyPearlstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Ruby);
-    public class EmeraldPearlstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Emerald);
-    public class TopazPearlstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Topaz);
-    public class AmethystPearlstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Amethyst);
-    public class DiamondPearlstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Diamond);
-    public class AmberPearlstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Amber);
+    public class HallowedSapphireGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Sapphire);
+    public class HallowedRubyGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Ruby);
+    public class HallowedEmeraldGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Emerald);
+    public class HallowedTopazGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Topaz);
+    public class HallowedAmethystGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Amethyst);
+    public class HallowedDiamondGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Diamond);
+    public class HallowedAmberGemstoneBlock() : InfectedGemstoneBlock(InfectionType.Hallowed, GemType.Amber);
 
     public abstract class InfectedGemstoneBlock(InfectionType infectionType, GemType gemType) : ModItem
     {
@@ -88,8 +88,6 @@ namespace InfectedQualities.Content.Items.Placables
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
         }
-
-        public override string Name => infectionType.ToString() + gemType.ToString() + "GemstoneBlock";
 
         public override string Texture => "InfectedQualities/Content/Extras/Items/" + gemType.ToString() + "_GemstoneBlock";
 
