@@ -27,7 +27,6 @@ namespace InfectedQualities.Content.Tiles.Plants
             TileObjectData.newTile.AnchorValidTiles = [TileUtilities.GetSnowType(InfectionType.Corrupt), TileUtilities.GetSnowType(InfectionType.Crimson), TileUtilities.GetSnowType(InfectionType.Hallowed), ModContent.TileType<HallowedJungleGrass>()];
             TileObjectData.addTile(Type);
             
-
             AdjTiles = [TileID.Saplings];
             AddMapEntry(new(151, 107, 75), Language.GetText("MapObject.Sapling"));
         }

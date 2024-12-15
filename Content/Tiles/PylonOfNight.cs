@@ -17,8 +17,8 @@ namespace InfectedQualities.Content.Tiles
 {
     public class PylonOfNight : ModPylon
     {
-        private static Asset<Texture2D> PylonCrystalTexture { get; set; } = null;
-        private static Asset<Texture2D> PylonMapIcon { get; set; } = null;
+        private Asset<Texture2D> PylonCrystalTexture { get; set; } = null;
+        private Asset<Texture2D> PylonMapIcon { get; set; } = null;
 
         private static Color PylonColor => new(162, 95, 234);
 
@@ -73,7 +73,7 @@ namespace InfectedQualities.Content.Tiles
         public override void DrawMapIcon(ref MapOverlayDrawContext context, ref string mouseOverText, TeleportPylonInfo pylonInfo, bool isNearPylon, Color drawColor, float deselectedScale, float selectedScale)
         {
             bool mouseOver = DefaultDrawMapIcon(ref context, PylonMapIcon, pylonInfo.PositionInTiles.ToVector2() + new Vector2(1.5f, 2f), drawColor, deselectedScale, selectedScale);
-            DefaultMapClickHandle(mouseOver, pylonInfo, ModContent.GetInstance<Items.Placables.PylonOfNightBlock>().DisplayName.Key, ref mouseOverText);
+            DefaultMapClickHandle(mouseOver, pylonInfo, ModContent.GetInstance<PylonOfNightBlock>().DisplayName.Key, ref mouseOverText);
         }
 
         public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<InfectedQualitiesServerConfig>().PylonOfNight;
