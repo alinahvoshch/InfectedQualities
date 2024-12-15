@@ -2,6 +2,7 @@ using InfectedQualities.Content.Biomes;
 using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Content.Tiles;
+using InfectedQualities.Content.Tiles.Plants;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,6 +24,7 @@ namespace InfectedQualities
             foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
             {
                 AddContent(new InfectedSnow(infectionType));
+                AddContent(new InfectedSnowTree(infectionType));
 
                 foreach(GemType gemType in Enum.GetValues(typeof(GemType)))
                 {

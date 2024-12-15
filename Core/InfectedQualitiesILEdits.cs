@@ -412,106 +412,100 @@ namespace InfectedQualities.Core
 
         private static int TileDrawing_GetTreeVariant(On_TileDrawing.orig_GetTreeVariant orig, int x, int y)
         {
-            if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+            if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && Main.tile[x, y].TileType == ModContent.TileType<HallowedJungleGrass>())
             {
-                if (Main.tile[x, y].TileType == TileUtilities.GetSnowType(InfectionType.Corrupt))
-                {
-                    return 0;
-                }
-                else if (Main.tile[x, y].TileType == TileUtilities.GetSnowType(InfectionType.Crimson))
-                {
-                    return 4;
-                }
-                else if (Main.tile[x, y].TileType == ModContent.TileType<HallowedJungleGrass>() || Main.tile[x, y].TileType == TileUtilities.GetSnowType(InfectionType.Hallowed))
-                {
-                    return 2;
-                }
+                return 2;
             }
             return orig(x, y);
         }
 
         private static void WorldGen_GetTreeLeaf(On_WorldGen.orig_GetTreeLeaf orig, int x, Tile topTile, Tile t, ref int treeHeight, out int treeFrame, out int passStyle)
         {
-            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && (t.TileType == ModContent.TileType<HallowedJungleGrass>() || t.TileType == TileUtilities.GetSnowType(InfectionType.Hallowed)))
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
             {
-                treeFrame = 0;
-                passStyle = 917;
-                if (WorldGen.GetHollowTreeFoliageStyle() != 20)
+                if(t.TileType == ModContent.TileType<HallowedJungleGrass>())
                 {
-                    treeFrame += x % 3 * 3;
-                    switch (treeFrame)
+                    treeFrame = 0;
+                    passStyle = 917;
+                    if (WorldGen.GetHollowTreeFoliageStyle() != 20)
                     {
-                        case 0:
-                            passStyle += 2;
-                            break;
-                        case 1:
-                            passStyle += 1;
-                            break;
-                        case 2:
-                            passStyle += 7;
-                            break;
-                        case 3:
-                            passStyle += 4;
-                            break;
-                        case 4:
-                            passStyle += 5;
-                            break;
-                        case 5:
-                            passStyle += 6;
-                            break;
-                        case 6:
-                            passStyle += 3;
-                            break;
-                        case 7:
-                            passStyle += 8;
-                            break;
+                        treeFrame += x % 3 * 3;
+                        switch (treeFrame)
+                        {
+                            case 0:
+                                passStyle += 2;
+                                break;
+                            case 1:
+                                passStyle += 1;
+                                break;
+                            case 2:
+                                passStyle += 7;
+                                break;
+                            case 3:
+                                passStyle += 4;
+                                break;
+                            case 4:
+                                passStyle += 5;
+                                break;
+                            case 5:
+                                passStyle += 6;
+                                break;
+                            case 6:
+                                passStyle += 3;
+                                break;
+                            case 7:
+                                passStyle += 8;
+                                break;
+                        }
                     }
+                    else
+                    {
+                        passStyle += 196;
+                        treeFrame += x % 6 * 3;
+                        switch (treeFrame)
+                        {
+                            case 3:
+                            case 5:
+                                passStyle += 1;
+                                break;
+                            case 4:
+                                passStyle += 2;
+                                break;
+                            case 6:
+                                passStyle += 3;
+                                break;
+                            case 7:
+                                passStyle += 4;
+                                break;
+                            case 8:
+                                passStyle += 5;
+                                break;
+                            case 9:
+                            case 10:
+                            case 11:
+                                passStyle += 6;
+                                break;
+                            case 12:
+                            case 13:
+                            case 14:
+                                passStyle += 7;
+                                break;
+                            case 15:
+                            case 16:
+                            case 17:
+                                passStyle += 8;
+                                break;
+                        }
+                    }
+                    treeHeight += 5;
+                    return;
                 }
-                else
+                else if (t.TileType == TileUtilities.GetSnowType(InfectionType.Hallowed))
                 {
-                    passStyle += 196;
-                    treeFrame += x % 6 * 3;
-                    switch (treeFrame)
-                    {
-                        case 3:
-                        case 5:
-                            passStyle += 1;
-                            break;
-                        case 4:
-                            passStyle += 2;
-                            break;
-                        case 6:
-                            passStyle += 3;
-                            break;
-                        case 7:
-                            passStyle += 4;
-                            break;
-                        case 8:
-                            passStyle += 5;
-                            break;
-                        case 9:
-                        case 10:
-                        case 11:
-                            passStyle += 6;
-                            break;
-                        case 12:
-                        case 13:
-                        case 14:
-                            passStyle += 7;
-                            break;
-                        case 15:
-                        case 16:
-                        case 17:
-                            passStyle += 8;
-                            break;
-                    }
+                    treeHeight += 5;
                 }
-                treeHeight += 5;
             }
-            else
-            {
-                orig(x, topTile, t, ref treeHeight, out treeFrame, out passStyle);
-            }
+            orig(x, topTile, t, ref treeHeight, out treeFrame, out passStyle);
         }
 
         private static void WorldGen_GetCommonTreeFoliageData(ILContext il)
@@ -527,17 +521,6 @@ namespace InfectedQualities.Core
                     if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                     {
                         return ModContent.TileType<HallowedJungleGrass>();
-                    }
-                    return -1;
-                });
-                cursor.Emit(OpCodes.Beq, label);
-
-                cursor.Emit(OpCodes.Ldloc, 5);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return TileUtilities.GetSnowType(InfectionType.Hallowed);
                     }
                     return -1;
                 });
