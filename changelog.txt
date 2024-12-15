@@ -1,6 +1,7 @@
 0.7.6
 =====.
 -File organization
+-RENAMED EVERY PLACABLE TILE FOR BETTER DISTINGUISMENT. THIS CHANGE WILL RESULT IN ALL PYLON OF NIGHT AND INFECTED SNOW ITEMS IN THE WORLD TO BE CONSIDERED INVALID. MANY APOLOGIES FOR THIS.
 
 -Added a config option to disable biome sight potion highlighting walls
 -Added mod compat with 'Terraria Origins' and 'AltLibrary'
@@ -9,6 +10,7 @@
 -Added a config header for client
 -Added a background color for client-side config
 -Added Russian translation. Credit goes to alinahvoshch
+-Added custom textures for infected snow trees.
 
 -Infected cave walls now get highlighted by biome sight potions and spread infections. However they won't convert other cave walls
 -Chlorophyte infection preventation now goes back to normal if 'InfectedBiomes' config is turned off
@@ -17,8 +19,6 @@
 
 -Fixed description typo, and added missing features to the description. Also removed comment about Radiance mod compat, since it had no point in existing
 -Fixed vertebrae --> leather recipe not needing workbench. Also fixed duplicate recipe when used with Thorium mod
-
--RENAMED EVERY PLACABLE TILE FOR BETTER DISTINGUISMENT. THIS CHANGE WILL RESULT IN ALL PYLON OF NIGHT AND INFECTED SNOW ITEMS IN THE WORLD TO BE CONSIDERED INVALID.
 
 0.7.1
 =====

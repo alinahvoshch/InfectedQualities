@@ -10,7 +10,8 @@ If you have any bugs or suggestions, you can report to me via GitHub: https://gi
 ===============	
 INFECTED SNOW BLOCKS --> Corrupt, Crimson, and Hallowed snow blocks. 
 Normally, snow biome doesn't spread properly on the surface, because snow blocks have no infected variant. This results in the snow biome blocking infections off.
-The addition of these blocks fixes this ''issue''.
+The addition of these blocks fixes this ''issue''. 
+Corrupt, crimson, and hallowed snow trees are added as well.
 
 INFECTED JUNGLE BIOMES --> Hallowed jungle grass, and hallowed thorns that only spawn on hallowed jungle grass.
 Corrupt and crimson jungles now count as actual jungle biomes. This results in increased spawn rates, and jungle bosses (Such as Plantera and Queen Bee) not getting enraged in the biomes.
