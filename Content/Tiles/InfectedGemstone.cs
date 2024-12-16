@@ -1,10 +1,12 @@
-﻿using InfectedQualities.Content.Extras.Tiles;
+﻿using InfectedQualities.Content.Extras;
+using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -87,76 +89,18 @@ namespace InfectedQualities.Content.Tiles
             GemTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/" + gemType.ToString() + "_Gemstone");
         }
 
-        public override void RandomUpdate(int i, int j)
-        {
-            TileUtilities.DefaultInfectionSpread(i, j, infectionType, TileUtilities.GetEnumType(null, gemType));
-        }
+        public override void RandomUpdate(int i, int j) => TileUtilities.DefaultInfectionSpread(i, j, infectionType, TileUtilities.GetEnumType(null, gemType));
 
-        public override IEnumerable<Item> GetItemDrops(int i, int j)
-        {
-            return [new Item(ItemID.Search.GetId(gemType.ToString()))];
-        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j) => [new Item(ItemID.Search.GetId(gemType.ToString()))];
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             if (!Main.tile[i, j].IsTileInvisible)
             {
-                Color color = Lighting.GetColor(i, j);
-                Vector2 offscreenVector = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
-                Vector2 drawVector = new Vector2(i * 16, j * 16) + offscreenVector - Main.screenPosition;
-                Rectangle frame = new(Main.tile[i, j].TileFrameX, Main.tile[i, j].TileFrameY, 16, 16);
-
-                if (Main.tile[i, j].Slope == SlopeType.Solid && !Main.tile[i, j].IsHalfBlock)
-                {
-                    spriteBatch.Draw(GemTexture.Value, drawVector, frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                }
-                else if (Main.tile[i, j].IsHalfBlock)
-                {
-                    drawVector += new Vector2(0, 8);
-                    frame.Height = 8;
-                    spriteBatch.Draw(GemTexture.Value, drawVector, frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                }
-                else
-                {
-                    int width = 2;
-                    for (int q = 0; q < 8; q++)
-                    {
-                        int num = q * -2;
-                        int height = 16 - q * 2;
-                        int yOffset = 16 - height;
-                        int xOffset;
-                        switch (Main.tile[i, j].Slope)
-                        {
-                            case SlopeType.SlopeDownLeft:
-                                num = 0;
-                                xOffset = q * 2;
-                                height = 14 - q * 2;
-                                yOffset = 0;
-                                break;
-                            case SlopeType.SlopeDownRight:
-                                num = 0;
-                                xOffset = 16 - q * 2 - 2;
-                                height = 14 - q * 2;
-                                yOffset = 0;
-                                break;
-                            case SlopeType.SlopeUpLeft:
-                                xOffset = q * 2;
-                                break;
-                            default:
-                                xOffset = 16 - q * 2 - 2;
-                                break;
-                        }
-                        frame = new(Main.tile[i, j].TileFrameX + xOffset, Main.tile[i, j].TileFrameY + yOffset, width, height);
-                        spriteBatch.Draw(GemTexture.Value, drawVector + new Vector2(xOffset, q * width + num), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                    }
-
-                    int slopeOffset = (Main.tile[i, j].Slope <= SlopeType.SlopeDownRight) ? 14 : 0;
-                    frame = new(Main.tile[i, j].TileFrameX, Main.tile[i, j].TileFrameY + slopeOffset, 16, 2);
-                    spriteBatch.Draw(GemTexture.Value, drawVector + new Vector2(0, slopeOffset), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                }
+                TextureUtilities.TileDraw(i, j, GemTexture, TextureUtilities.GetGlowColor(i, j), spriteBatch);
             }
 
-            if (infectionType == InfectionType.Corrupt && Main.rand.NextBool(500))
+            if (infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
             {
                 Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite);
             }

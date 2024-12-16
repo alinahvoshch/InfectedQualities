@@ -1,10 +1,12 @@
-﻿using InfectedQualities.Content.Extras.Tiles;
+﻿using InfectedQualities.Content.Extras;
+using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -511,59 +513,7 @@ namespace InfectedQualities.Content.Tiles
                     }
                 }
 
-                Color color = Lighting.GetColor(i, j);
-                if(Main.LocalPlayer.biomeSight) Main.IsTileBiomeSightable(i, j, ref color);
-                Vector2 offscreenVector = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
-                Vector2 drawVector = new Vector2(i * 16, j * 16) + offscreenVector - Main.screenPosition;
-                Rectangle frame = new(frameX, frameY, 16, 16);
-                if (Main.tile[i, j].Slope == SlopeType.Solid && !Main.tile[i, j].IsHalfBlock)
-                {
-                    spriteBatch.Draw(TextureAssets.Tile[Type].Value, drawVector, frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                }
-                else if (Main.tile[i, j].IsHalfBlock)
-                {
-                    drawVector += new Vector2(0, 8);
-                    frame.Height = 8;
-                    spriteBatch.Draw(TextureAssets.Tile[Type].Value, drawVector, frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                }
-                else
-                {
-                    int width = 2;
-                    for (int q = 0; q < 8; q++)
-                    {
-                        int num = q * -2;
-                        int height = 16 - q * 2;
-                        int yOffset = 16 - height;
-                        int xOffset;
-                        switch (Main.tile[i, j].Slope)
-                        {
-                            case SlopeType.SlopeDownLeft:
-                                num = 0;
-                                xOffset = q * 2;
-                                height = 14 - q * 2;
-                                yOffset = 0;
-                                break;
-                            case SlopeType.SlopeDownRight:
-                                num = 0;
-                                xOffset = 16 - q * 2 - 2;
-                                height = 14 - q * 2;
-                                yOffset = 0;
-                                break;
-                            case SlopeType.SlopeUpLeft:
-                                xOffset = q * 2;
-                                break;
-                            default:
-                                xOffset = 16 - q * 2 - 2;
-                                break;
-                        }
-                        frame = new(frameX + xOffset, frameY + yOffset, width, height);
-                        spriteBatch.Draw(TextureAssets.Tile[Type].Value, drawVector + new Vector2(xOffset, q * width + num), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                    }
-
-                    int slopeOffset = (Main.tile[i, j].Slope <= SlopeType.SlopeDownRight) ? 14 : 0;
-                    frame = new(frameX, frameY + slopeOffset, 16, 2);
-                    spriteBatch.Draw(TextureAssets.Tile[Type].Value, drawVector + new Vector2(0, slopeOffset), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                }
+                TextureUtilities.TileDraw(i, j, TextureAssets.Tile[Type], TextureUtilities.GetGlowColor(i, j), spriteBatch, new(frameX, frameY));
                 return false;
             }
             return true;
@@ -573,74 +523,15 @@ namespace InfectedQualities.Content.Tiles
         {
             if (!Main.tile[i, j].IsTileInvisible)
             {
-                short frameX = Main.tile[i, j].TileFrameX;
-                short frameY = Main.tile[i, j].TileFrameY;
-
                 Color mossColor = MossColor;
                 if (mossType < MossType.Lava) mossColor = Lighting.GetColorClamped(i, j, MossColor);
                 else if (mossType == MossType.Helium) mossColor = Main.DiscoColor;
 
-                Vector2 offscreenVector = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
-                Vector2 drawVector = new Vector2(i * 16, j * 16) + offscreenVector - Main.screenPosition;
-                Rectangle frame = new(frameX, frameY, 16, 16);
-                if (Main.tile[i, j].Slope == SlopeType.Solid && !Main.tile[i, j].IsHalfBlock)
-                {
-                    if(MossColor.A == 0) spriteBatch.Draw(MossTexture.Value, drawVector, frame, Lighting.GetColor(i, j), 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                    spriteBatch.Draw(MossTexture.Value, drawVector, frame, mossColor, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                }
-                else if(Main.tile[i, j].IsHalfBlock)
-                {
-                    drawVector += new Vector2(0, 8);
-                    frame.Height = 8;
-
-                    if (MossColor.A == 0) spriteBatch.Draw(MossTexture.Value, drawVector, frame, Lighting.GetColor(i, j), 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                    spriteBatch.Draw(MossTexture.Value, drawVector, frame, mossColor, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                }
-                else
-                {
-                    int width = 2;
-                    for (int q = 0; q < 8; q++)
-                    {
-                        int num = q * -2;
-                        int height = 16 - q * 2;
-                        int yOffset = 16 - height;
-                        int xOffset;
-                        switch (Main.tile[i, j].Slope)
-                        {
-                            case SlopeType.SlopeDownLeft:
-                                num = 0;
-                                xOffset = q * 2;
-                                height = 14 - q * 2;
-                                yOffset = 0;
-                                break;
-                            case SlopeType.SlopeDownRight:
-                                num = 0;
-                                xOffset = 16 - q * 2 - 2;
-                                height = 14 - q * 2;
-                                yOffset = 0;
-                                break;
-                            case SlopeType.SlopeUpLeft:
-                                xOffset = q * 2;
-                                break;
-                            default:
-                                xOffset = 16 - q * 2 - 2;
-                                break;
-                        }
-                        frame = new(frameX + xOffset, frameY + yOffset, width, height);
-
-                        if (MossColor.A == 0) spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(xOffset, q * width + num), frame, Lighting.GetColor(i, j), 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                        spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(xOffset, q * width + num), frame, mossColor, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                    }
-
-                    int slopeOffset = (Main.tile[i, j].Slope <= SlopeType.SlopeDownRight) ? 14 : 0;
-                    frame = new(frameX, frameY + slopeOffset, 16, 2);
-
-                    if (MossColor.A == 0) spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(0, slopeOffset), frame, Lighting.GetColor(i, j), 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                    spriteBatch.Draw(MossTexture.Value, drawVector + new Vector2(0, slopeOffset), frame, mossColor, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
-                }
+                if (MossColor.A == 0) TextureUtilities.TileDraw(i, j, MossTexture, Lighting.GetColor(i, j), spriteBatch);
+                TextureUtilities.TileDraw(i, j, MossTexture, mossColor, spriteBatch);
             }
 
-            if(infectionType == InfectionType.Corrupt && Main.rand.NextBool(500))
+            if(infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
             {
                 Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite);
             }
