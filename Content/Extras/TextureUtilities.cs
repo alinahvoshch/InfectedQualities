@@ -66,12 +66,23 @@ namespace InfectedQualities.Content.Extras
                 color.R = byte.MaxValue;
                 color.G = Math.Max((byte)50, color.G);
                 color.B = Math.Max((byte)50, color.B);
+
+                Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.RedTorch, 0f, 0f, 100, default, 0.3f)];
+                dust.fadeIn = 1;
+                dust.velocity *= 0.1f;
+                dust.noLight = true;
+                dust.noGravity = true;
             }
 
             if(Main.LocalPlayer.findTreasure && Main.IsTileSpelunkable(i, j))
             {
                 color.R = Math.Max((byte)200, color.R);
                 color.G = Math.Max((byte)170, color.G);
+
+                Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.TreasureSparkle, 0f, 0f, 150, default, 0.3f)];
+                dust.fadeIn = 1;
+                dust.velocity *= 0.1f;
+                dust.noLight = true;
             }
 
             if(Main.LocalPlayer.biomeSight)
@@ -82,6 +93,12 @@ namespace InfectedQualities.Content.Extras
                     color.R = Math.Max(sightColor.R, color.R);
                     color.G = Math.Max(sightColor.G, color.G);
                     color.B = Math.Max(sightColor.B, color.B);
+
+                    Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.RainbowMk2, 0f, 0f, 150, sightColor, 0.3f)];
+                    dust.noGravity = true;
+                    dust.fadeIn = 1f;
+                    dust.velocity *= 0.1f;
+                    dust.noLightEmittence = true;
                 }
             }
 
