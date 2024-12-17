@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -561,6 +560,7 @@ namespace InfectedQualities.Content.Tiles
                 NetMessage.SendTileSquare(-1, i, j);
             }
         }
+
         public override string Name => infectionType.ToString() + mossType.ToString() + "Moss";
 
         public override string Texture => $"Terraria/Images/Tiles_{InfectedStoneType}";
