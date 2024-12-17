@@ -49,7 +49,6 @@ namespace InfectedQualities.Content.Tiles
                 WorldGen.SquareTileFrame(i, j);
                 NetMessage.SendTileSquare(-1, i, j);
             }
-
             return true;
         }
 

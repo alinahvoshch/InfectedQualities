@@ -111,24 +111,24 @@ namespace InfectedQualities.Core
 
             if (TerrariaOrigins != null)
             {
-                int defiledTiles = 0;
+                int defiledTileCount = 0;
                 foreach (string tileName in ModBlocks[4])
                 {
-                    defiledTiles += sceneMetrics.GetTileCount(TerrariaOrigins.Find<ModTile>(tileName).Type);
+                    defiledTileCount += sceneMetrics.GetTileCount(TerrariaOrigins.Find<ModTile>(tileName).Type);
                 }
 
-                if(defiledTiles > 200)
+                if(defiledTileCount > 200)
                 {
                     return true;
                 }
 
-                int rivenTiles = 0;
+                int rivenTileCount = 0;
                 foreach (string tileName in ModBlocks[6])
                 {
-                    rivenTiles += sceneMetrics.GetTileCount(TerrariaOrigins.Find<ModTile>(tileName).Type);
+                    rivenTileCount += sceneMetrics.GetTileCount(TerrariaOrigins.Find<ModTile>(tileName).Type);
                 }
 
-                if (rivenTiles > 200)
+                if (rivenTileCount > 200)
                 {
                     return true;
                 }
@@ -207,12 +207,10 @@ namespace InfectedQualities.Core
                 {
                     if(Main.drunkWorld)
                     {
+                        if(WorldGen.crimson) return false;
+
                         string drunkEviName = (string)biomeManager.GetField("drunkEvilName", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null);
-                        if((drunkEviName == "Terraria/Corruption" && !WorldGen.crimson) || (drunkEviName == "Terraria/Crimson" && WorldGen.crimson))
-                        {
-                            return false;
-                        }
-                        return true;
+                        return drunkEviName != "Terraria/Corruption";
                     }
                     return (string)biomeManager.GetProperty("WorldEvilName").GetValue(null) != "";
                 }
