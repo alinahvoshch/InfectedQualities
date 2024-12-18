@@ -52,7 +52,7 @@ namespace InfectedQualities.Content.Extras.Tiles
 
         public static void SpreadInfection(int i, int j, InfectionType infectionType)
         {
-            if (Main.hardMode && WorldGen.AllowedToSpreadInfections)
+            if (Main.hardMode && WorldGen.AllowedToSpreadInfections && !InfectedQualitiesModSupport.PureglowRange(i))
             {
                 if (NPC.downedPlantBoss && WorldGen.genRand.NextBool(2))
                 {
@@ -173,7 +173,7 @@ namespace InfectedQualities.Content.Extras.Tiles
 
         public static void FixSpreadCompability(int i, int j, InfectionType infectionType)
         {
-            if (!InfectedQualitiesUtilities.RefectionMethod(i, j, "nearbyChlorophyte") && Main.hardMode && WorldGen.AllowedToSpreadInfections)
+            if (!InfectedQualitiesUtilities.RefectionMethod(i, j, "nearbyChlorophyte") && Main.hardMode && WorldGen.AllowedToSpreadInfections && !InfectedQualitiesModSupport.PureglowRange(i))
             {
                 if (NPC.downedPlantBoss && WorldGen.genRand.NextBool(2))
                 {

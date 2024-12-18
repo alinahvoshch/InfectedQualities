@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
@@ -91,6 +93,24 @@ namespace InfectedQualities.Core
                     RecipeGroup.recipeGroups[pylonIndex].ValidItems.Add(SpiritMod.Find<ModItem>("SpiritPylonItem").Type);
                 }
             }
+        }
+
+        public static bool PureglowRange(int i)
+        {
+            if(SpiritMod != null)
+            {
+                HashSet<Point16> superSunflowerPositions = (HashSet<Point16>)SpiritMod.Code.GetType("SpiritMod.MyWorld").GetField("superSunFlowerPositions").GetValue(null);
+                int superSunflowerRange = (int)SpiritMod.Code.GetType("SpiritMod.Tiles.SuperSunFlower").GetField("Range").GetValue(null);
+
+                foreach (Point16 point in superSunflowerPositions)
+                {
+                    if (Math.Abs(point.X - i) < superSunflowerRange * 2)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         public static bool EnoughTilesForAltEvilBiome(SceneMetrics sceneMetrics)
