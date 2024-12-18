@@ -5,7 +5,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System;
 using InfectedQualities.Core;
-using Microsoft.Xna.Framework;
 
 namespace InfectedQualities.Content.Extras.Tiles
 {
@@ -333,35 +332,6 @@ namespace InfectedQualities.Content.Extras.Tiles
         }
 
         public static ushort GetSnowType(InfectionType infectionType) => ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.ToString() + "Snow").Type;
-
-        public static bool WallBiomeColor(int i, int j, int type, out Color sightColor)
-        {
-            sightColor = InfectedQualitiesModSupport.ModWallBiomeSight[type];
-            if (ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlighting && Main.LocalPlayer.biomeSight && !WorldGen.SolidTile(i, j, true) && (Main.tile[i, j].LiquidAmount == 0 || Main.tile[i, j].LiquidType == LiquidID.Water))
-            {
-                if (sightColor == default)
-                {
-                    if (WallID.Sets.Corrupt[type])
-                    {
-                        sightColor = new(200, 100, 240);
-                        return true;
-                    }
-                    else if (WallID.Sets.Crimson[type])
-                    {
-                        sightColor = new(255, 100, 100);
-                        return true;
-                    }
-                    else if (WallID.Sets.Hallow[type])
-                    {
-                        sightColor = new(255, 160, 240);
-                        return true;
-                    }
-                    return false;
-                }
-                return true;
-            }
-            return false;
-        }
 
         public static void WallSpread(int i, int j, InfectionType infectionType)
         {

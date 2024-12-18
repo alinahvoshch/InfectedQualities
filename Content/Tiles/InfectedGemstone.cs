@@ -96,7 +96,7 @@ namespace InfectedQualities.Content.Tiles
         {
             if (!Main.tile[i, j].IsTileInvisible)
             {
-                TextureUtilities.TileDraw(i, j, GemTexture, TextureUtilities.GetGlowColor(i, j), spriteBatch);
+                TextureUtilities.TileDraw(i, j, GemTexture, TextureUtilities.TileGlowColor(i, j), spriteBatch);
             }
 
             if (infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))

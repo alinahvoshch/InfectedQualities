@@ -56,7 +56,7 @@ namespace InfectedQualities.Content.Extras
             return null;
         }
 
-        public static Color GetGlowColor(int i, int j, bool emitDust = false)
+        public static Color TileGlowColor(int i, int j, bool emitDust = false)
         {
             Color color = Lighting.GetColor(i, j);
             if(TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer))
@@ -170,6 +170,35 @@ namespace InfectedQualities.Content.Extras
                 frame = new(frames.Value.X, frames.Value.Y + slopeOffset, 16, 2);
                 spriteBatch.Draw(texture.Value, drawVector + new Vector2(0, slopeOffset), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             }
+        }
+
+        public static bool WallBiomeColor(int i, int j, int type, out Color sightColor)
+        {
+            sightColor = InfectedQualitiesModSupport.ModWallBiomeSight[type];
+            if (ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlighting && Main.LocalPlayer.biomeSight && !WorldGen.SolidTile(i, j, true) && (Main.tile[i, j].LiquidAmount == 0 || Main.tile[i, j].LiquidType == LiquidID.Water))
+            {
+                if (sightColor == default)
+                {
+                    if (WallID.Sets.Corrupt[type])
+                    {
+                        sightColor = new(200, 100, 240);
+                        return true;
+                    }
+                    else if (WallID.Sets.Crimson[type])
+                    {
+                        sightColor = new(255, 100, 100);
+                        return true;
+                    }
+                    else if (WallID.Sets.Hallow[type])
+                    {
+                        sightColor = new(255, 160, 240);
+                        return true;
+                    }
+                    return false;
+                }
+                return true;
+            }
+            return false;
         }
     }
 }

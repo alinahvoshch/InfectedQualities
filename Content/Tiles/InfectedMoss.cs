@@ -512,7 +512,7 @@ namespace InfectedQualities.Content.Tiles
                     }
                 }
 
-                TextureUtilities.TileDraw(i, j, TextureAssets.Tile[Type], TextureUtilities.GetGlowColor(i, j, true), spriteBatch, new(frameX, frameY));
+                TextureUtilities.TileDraw(i, j, TextureAssets.Tile[Type], TextureUtilities.TileGlowColor(i, j, true), spriteBatch, new(frameX, frameY));
                 return false;
             }
             return true;
