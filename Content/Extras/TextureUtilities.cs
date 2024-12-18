@@ -59,13 +59,13 @@ namespace InfectedQualities.Content.Extras
         public static Color TileGlowColor(int i, int j, bool emitDust = false)
         {
             Color color = Lighting.GetColor(i, j);
-            if(TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer))
+            if(Main.LocalPlayer.dangerSense && TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer))
             {
                 color.R = byte.MaxValue;
                 color.G = Math.Max((byte)50, color.G);
                 color.B = Math.Max((byte)50, color.B);
 
-                if(emitDust)
+                if(emitDust && Main.rand.NextBool(30))
                 {
                     Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.RedTorch, 0f, 0f, 100, default, 0.3f)];
                     dust.fadeIn = 1;
@@ -80,7 +80,7 @@ namespace InfectedQualities.Content.Extras
                 color.R = Math.Max((byte)200, color.R);
                 color.G = Math.Max((byte)170, color.G);
 
-                if(emitDust)
+                if(emitDust && Main.rand.NextBool(60))
                 {
                     Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.TreasureSparkle, 0f, 0f, 150, default, 0.3f)];
                     dust.fadeIn = 1;
@@ -98,7 +98,7 @@ namespace InfectedQualities.Content.Extras
                     color.G = Math.Max(sightColor.G, color.G);
                     color.B = Math.Max(sightColor.B, color.B);
 
-                    if(emitDust)
+                    if(emitDust && Main.rand.NextBool(480))
                     {
                         Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.RainbowMk2, 0f, 0f, 150, sightColor, 0.3f)];
                         dust.noGravity = true;
