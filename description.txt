@@ -51,7 +51,6 @@ INFECTED PLANTERA --> Purely visual, plantera now gets her own custom texture wh
 -Corrupt and Crimson ice now grows deathweed instead of shiverthorn.
 -Hardmode V-Generation now affects moss blocks and thorns.
 -Unused corrupt and crimson lily pads and cattails can now appear.
--Infected grass no longer spreads on normal grass pre-hardmode.
 
 |EXPERIMENTAL FEATURES|
 =======================

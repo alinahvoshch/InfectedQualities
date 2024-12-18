@@ -15,7 +15,6 @@
 -Infected cave walls now get highlighted by biome sight potions and spread infections. However they won't convert other cave walls
 -Chlorophyte infection preventation now goes back to normal if 'InfectedBiomes' config is turned off
 -Hallow theme now plays in the Hallowed jungle, can be disabled in the config
--Disabled infected grass spread pre-hardmode
 
 -Fixed description typo, and added missing features to the description. Also removed comment about Radiance mod compat, since it had no point in existing
 -Fixed vertebrae --> leather recipe not needing workbench. Also fixed duplicate recipe when used with Thorium mod
