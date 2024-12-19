@@ -76,16 +76,19 @@ namespace InfectedQualities.Content.Tiles
                 WorldGen.SquareTileFrame(i, j + 1);
             }
 
-            for (int num21 = i - 1; num21 < i + 2; num21++)
+            if(!InfectedQualitiesModSupport.PureglowRange(i))
             {
-                for (int num22 = j - 1; num22 < j + 2; num22++)
+                for (int x = i - 1; x < i + 2; x++)
                 {
-                    Tile tile = Main.tile[num21, num22];
-                    if (tile.TileType == TileID.Mud || (WorldGen.AllowedToSpreadInfections && WorldGen.CountNearBlocksTypes(num21, num22, 2, 1, [TileID.Sunflower]) == 0 && tile.TileType == TileID.JungleGrass && !InfectedQualitiesModSupport.PureglowRange(i)))
+                    for (int y = j - 1; y < j + 2; y++)
                     {
-                        WorldGen.SpreadGrass(num21, num22, tile.TileType, Type, false, Main.tile[i, j].BlockColorAndCoating());
-                        WorldGen.SquareTileFrame(num21, num22);
-                        NetMessage.SendTileSquare(-1, i, j);
+                        ushort tileType = Main.tile[x, y].TileType;
+                        if (tileType == TileID.Mud || (WorldGen.AllowedToSpreadInfections && WorldGen.CountNearBlocksTypes(x, y, 2, 1, [TileID.Sunflower]) == 0 && tileType == TileID.JungleGrass))
+                        {
+                            WorldGen.SpreadGrass(x, y, tileType, Type, false, Main.tile[i, j].BlockColorAndCoating());
+                            WorldGen.SquareTileFrame(x, y);
+                            NetMessage.SendTileSquare(-1, i, j);
+                        }
                     }
                 }
             }
