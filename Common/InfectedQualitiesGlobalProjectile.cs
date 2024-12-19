@@ -14,21 +14,27 @@ namespace InfectedQualities.Common
             int top = (int)(projectile.position.Y / 16f) - 1;
             int bottom = (int)((projectile.position.Y + projectile.height) / 16f) + 2;
 
-            int conversionID = projectile.type == ProjectileID.PurificationPowder ? BiomeConversionID.Purity : projectile.type == ProjectileID.VilePowder ? BiomeConversionID.Corruption : BiomeConversionID.Crimson;
+            int conversionID = projectile.type switch
+            {
+                ProjectileID.PurificationPowder => BiomeConversionID.Purity,
+                ProjectileID.VilePowder => BiomeConversionID.Corruption,
+                ProjectileID.ViciousPowder => BiomeConversionID.Crimson,
+                _ => -1
+            };
 
             for (int j = left; j < right; j++)
             {
                 for (int k = top; k < bottom; k++)
                 {
-                    if (projectile.position.X + projectile.width > j * 16 && projectile.position.X < j * 16 + 16f && projectile.position.Y + projectile.height > k * 16 && projectile.position.Y < k * 16 + 16f)
+                    if (projectile.position.X + projectile.width > j * 16 && projectile.position.X < j * 16 && projectile.position.Y + projectile.height > k * 16 && projectile.position.Y < k * 16 + 16f)
                     {
                         if (!TileID.Sets.Conversion.MushroomGrass[Main.tile[j, k].TileType] && Main.tile[j, k].WallType != WallID.MushroomUnsafe)
                         {
-                            if (projectile.type == ProjectileID.PurificationPowder && !ModContent.GetInstance<InfectedQualitiesServerConfig>().DivinePowder && TileID.Sets.Hallow[Main.tile[j, k].TileType])
+                            if (conversionID == BiomeConversionID.Purity && TileID.Sets.Hallow[Main.tile[j, k].TileType] && !ModContent.GetInstance<InfectedQualitiesServerConfig>().DivinePowder)
                             {
-                                return;
+                                continue;
                             }
-                            WorldGen.Convert(j, k, conversionID, 0);
+                            WorldGen.Convert(j, k, conversionID, 1);
                         }
                     }
                 }
