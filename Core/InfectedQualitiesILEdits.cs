@@ -33,6 +33,7 @@ namespace InfectedQualities.Core
             IL_WorldGen.PlaceAlch += WorldGen_PlaceAlch;
             IL_WorldGen.PlantAlch += WorldGen_PlantAlch;
             On_WorldGen.GetTileMossColor += WorldGen_GetTileMossColor;
+            IL_WorldGen.IsFitToPlaceFlowerIn += WorldGen_IsFitToPlaceFlowerIn;
 
             IL_WorldGen.ScoreRoom += WorldGen_ScoreRoom;
             On_WorldGen.GetTileTypeCountByCategory += WorldGen_GetTileTypeCountByCategory;
@@ -274,6 +275,9 @@ namespace InfectedQualities.Core
 
         private static void WorldGen_Convert(On_WorldGen.orig_Convert orig, int i, int j, int conversionType, int size)
         {
+            //Shitty workaround for blue solution destroying any kind of thorn it comes across, I am NOT going to make a seperate IL edit just to prevent hallowed thorns from breaking.
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && conversionType == BiomeConversionID.Hallow) TileID.Sets.Conversion.Thorn[ModContent.TileType<HallowedThorns>()] = false;
+
             for (int k = i - size; k <= i + size; k++)
             {
                 for (int l = j - size; l <= j + size; l++)
@@ -377,9 +381,6 @@ namespace InfectedQualities.Core
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                         {
-                            //Shitty workaround for blue solution destroying any kind of thorn it comes across, I am NOT going to make a seperate IL edit just to prevent hallowed thorns from breaking.
-                            TileID.Sets.Conversion.Thorn[ModContent.TileType<HallowedThorns>()] = false;
-
                             if (TileID.Sets.Conversion.Snow[Main.tile[k, l].TileType] && Main.tile[k, l].TileType != TileUtilities.GetSnowType(InfectionType.Hallowed))
                             {
                                 WorldGen.TryKillingTreesAboveIfTheyWouldBecomeInvalid(k, l, TileUtilities.GetSnowType(InfectionType.Hallowed));
@@ -887,6 +888,28 @@ namespace InfectedQualities.Core
                 }
             }
             return orig(tileType);
+        }
+
+        private static void WorldGen_IsFitToPlaceFlowerIn(ILContext il)
+        {
+            ILCursor cursor = new(il);
+            ILLabel label = cursor.DefineLabel();
+            
+            if(cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.HallowedGrass), i => i.MatchBeq(out label)))
+            {
+                cursor.Emit(OpCodes.Ldloca, 0);
+                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
+                cursor.Emit(OpCodes.Ldind_U2);
+                cursor.EmitDelegate(() =>
+                {
+                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                    {
+                        return ModContent.TileType<HallowedJungleGrass>();
+                    }
+                    return -1;
+                });
+                cursor.Emit(OpCodes.Beq, label);
+            }
         }
 
         private static void WorldGen_ScoreRoom(ILContext il)

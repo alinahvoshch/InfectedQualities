@@ -58,45 +58,21 @@ namespace InfectedQualities.Content.Tiles
         {
             TileUtilities.DefaultInfectionSpread(i, j, InfectionType.Hallowed, TileID.JungleGrass);
 
-            Tile currentTile = Main.tile[i, j];
-            Tile aboveTile = Main.tile[i, j - 1];
-            Tile bellowTile = Main.tile[i, j + 1];
-
-            if (WorldGen.genRand.NextBool(10) && !aboveTile.HasTile && !currentTile.IsHalfBlock && currentTile.Slope == SlopeType.Solid)
+            if (WorldGen.genRand.NextBool(10) && WorldGen.PlaceTile(i, j - 1, TileID.HallowedPlants, true))
             {
-                if (WallID.Sets.AllowsPlantsToGrow[aboveTile.WallType] && WallID.Sets.AllowsPlantsToGrow[currentTile.WallType])
+                if (j > Main.worldSurface && WorldGen.genRand.NextBool(16))
                 {
-                    aboveTile.HasTile = true;
-                    if(j > Main.worldSurface && WorldGen.genRand.NextBool(16))
-                    {
-                        aboveTile.TileType = (ushort)ModContent.TileType<HallowedThorns>();
-                    }
-                    else
-                    {
-                        aboveTile.TileType = TileID.HallowedPlants;
-                        if (WorldGen.genRand.NextBool(50) && (j > Main.rockLayer || Main.remixWorld))
-                        {
-                            aboveTile.TileFrameX = 144;
-                        }
-                        else if (WorldGen.genRand.NextBool(35) || aboveTile.WallType >= WallID.GrassUnsafe && aboveTile.WallType <= WallID.HallowedGrassUnsafe)
-                        {
-                            aboveTile.TileFrameX = (short)(WorldGen.genRand.NextFromList(6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20) * 18);
-                        }
-                        else
-                        {
-                            aboveTile.TileFrameX = (short)(WorldGen.genRand.Next(6) * 18);
-                        }
-                    }
+                    Main.tile[i, j - 1].TileType = (ushort)ModContent.TileType<HallowedThorns>();
                     WorldGen.SquareTileFrame(i, j - 1);
-                    aboveTile.CopyPaintAndCoating(currentTile);
                 }
+                Main.tile[i, j - 1].CopyPaintAndCoating(Main.tile[i, j]);
             }
 
-            if (WorldGen.genRand.NextBool(60) && !bellowTile.HasTile && !currentTile.BottomSlope && bellowTile.LiquidType != LiquidID.Lava && InfectedQualitiesUtilities.RefectionMethod(i, j, "GrowMoreVines"))
+            if (WorldGen.genRand.NextBool(60) && !Main.tile[i, j + 1].HasTile && !Main.tile[i, j].BottomSlope && Main.tile[i, j + 1].LiquidType != LiquidID.Lava && InfectedQualitiesUtilities.RefectionMethod(i, j, "GrowMoreVines"))
             {
-                bellowTile.HasTile = true;
-                bellowTile.TileType = TileID.HallowedVines;
-                bellowTile.CopyPaintAndCoating(currentTile);
+                Main.tile[i, j + 1].Get<TileWallWireStateData>().HasTile = true;
+                Main.tile[i, j + 1].TileType = TileID.HallowedVines;
+                Main.tile[i, j + 1].CopyPaintAndCoating(Main.tile[i, j]);
                 WorldGen.SquareTileFrame(i, j + 1);
             }
 
@@ -105,16 +81,16 @@ namespace InfectedQualities.Content.Tiles
                 for (int num22 = j - 1; num22 < j + 2; num22++)
                 {
                     Tile tile = Main.tile[num21, num22];
-                    if ((WorldGen.AllowedToSpreadInfections && WorldGen.CountNearBlocksTypes(num21, num22, 2, 1, [TileID.Sunflower]) == 0 && tile.TileType == TileID.JungleGrass) || tile.TileType == TileID.Mud)
+                    if (tile.TileType == TileID.Mud || (WorldGen.AllowedToSpreadInfections && WorldGen.CountNearBlocksTypes(num21, num22, 2, 1, [TileID.Sunflower]) == 0 && tile.TileType == TileID.JungleGrass && !InfectedQualitiesModSupport.PureglowRange(i)))
                     {
-                        WorldGen.SpreadGrass(num21, num22, tile.TileType, Type, false, currentTile.BlockColorAndCoating());
+                        WorldGen.SpreadGrass(num21, num22, tile.TileType, Type, false, Main.tile[i, j].BlockColorAndCoating());
                         WorldGen.SquareTileFrame(num21, num22);
                         NetMessage.SendTileSquare(-1, i, j);
                     }
                 }
             }
 
-            if (j < Main.worldSurface && WorldGen.genRand.NextBool(500) && (!aboveTile.HasTile || TileID.Sets.IgnoredByGrowingSaplings[aboveTile.TileType]) && WorldGen.GrowTree(i, j) && WorldGen.PlayerLOS(i, j))
+            if (j < Main.worldSurface && WorldGen.genRand.NextBool(500) && (!Main.tile[i, j - 1].HasTile || TileID.Sets.IgnoredByGrowingSaplings[Main.tile[i, j - 1].TileType]) && WorldGen.GrowTree(i, j) && WorldGen.PlayerLOS(i, j))
             {
                 WorldGen.TreeGrowFXCheck(i, j - 1);
             }

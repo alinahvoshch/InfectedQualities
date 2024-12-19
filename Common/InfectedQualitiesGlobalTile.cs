@@ -64,14 +64,37 @@ namespace InfectedQualities.Common
                 if (type is TileID.CorruptPlants or TileID.CrimsonPlants or TileID.HallowedPlants or TileID.HallowedPlants2 or TileID.JunglePlants or TileID.JunglePlants2)
                 {
                     Tile soil = Main.tile[i, j + 1];
-                    if (Main.tile[i, j + 1].TileType == ModContent.TileType<HallowedJungleGrass>() && soil.HasTile && !soil.IsHalfBlock && soil.Slope == SlopeType.Solid)
+                    if (soil.HasTile && !soil.IsHalfBlock && soil.Slope == SlopeType.Solid)
                     {
-                        if (type != TileID.HallowedPlants && type != TileID.HallowedPlants2)
+                        bool isSpore = type == TileID.JunglePlants && Main.tile[i, j].TileFrameX == 144;
+                        bool isMushroom = type == TileID.CrimsonPlants ? Main.tile[i, j].TileFrameX == 270 : type is TileID.CorruptPlants or TileID.HallowedPlants && Main.tile[i, j].TileFrameX == 144;
+
+                        if (j > Main.rockLayer && soil.TileType is TileID.CorruptJungleGrass or TileID.CrimsonJungleGrass)
                         {
-                            Main.tile[i, j].TileType = TileID.HallowedPlants;
-                            NetMessage.SendTileSquare(-1, i, j);
+                            if (isMushroom)
+                            {
+                                Main.tile[i, j].TileType = TileID.JunglePlants;
+                                Main.tile[i, j].TileFrameX = 144;
+                                NetMessage.SendTileSquare(-1, i, j);
+                                return false;
+                            }
+                            else if (isSpore) return false;
                         }
-                        return false;
+                        else if (soil.TileType == ModContent.TileType<HallowedJungleGrass>())
+                        {
+                            if(j > Main.rockLayer && isMushroom)
+                            {
+                                Main.tile[i, j].TileType = TileID.JunglePlants;
+                                Main.tile[i, j].TileFrameX = 144;
+                                NetMessage.SendTileSquare(-1, i, j);
+                            }
+                            else if (type != TileID.HallowedPlants && type != TileID.HallowedPlants2 && !isSpore)
+                            {
+                                Main.tile[i, j].TileType = TileID.HallowedPlants;
+                                NetMessage.SendTileSquare(-1, i, j);
+                            }
+                            return false;
+                        }
                     }
                 }
                 else if (TileID.Sets.IsVine[type])

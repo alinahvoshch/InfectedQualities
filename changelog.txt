@@ -12,6 +12,7 @@
 -Added Russian translation. Credit goes to alinahvoshch
 -Added custom textures for infected snow trees.
 -Added pureglow compability for 'SpiritMod'
+-Jungle spores now grow in infected jungles.
 
 -Infected cave walls now get highlighted by biome sight potions and spread infections. However they won't convert other cave walls
 -Chlorophyte infection preventation now goes back to normal if 'InfectedBiomes' config is turned off
