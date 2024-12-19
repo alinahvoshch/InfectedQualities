@@ -153,7 +153,7 @@ namespace InfectedQualities.Core
                                     Main.tile[m, n].TileType = (ushort)ModContent.TileType<HallowedJungleGrass>();
                                     WorldGen.SquareTileFrame(m, n);
                                 }
-                                else if (Main.tile[m, n].TileType == TileID.SnowBlock)
+                                else if (Main.tile[m, n].TileType == TileID.SnowBlock || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Corrupt) || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Crimson))
                                 {
                                     Main.tile[m, n].TileType = TileUtilities.GetSnowType(InfectionType.Hallowed);
                                     WorldGen.SquareTileFrame(m, n);
@@ -197,7 +197,7 @@ namespace InfectedQualities.Core
                                     Main.tile[m, n].WallType = WallID.CrimsonGrassUnsafe;
                                 }
 
-                                if (Main.tile[m, n].TileType == TileID.SnowBlock)
+                                if (Main.tile[m, n].TileType == TileID.SnowBlock || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Corrupt) || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Hallowed))
                                 {
                                     Main.tile[m, n].TileType = TileUtilities.GetSnowType(InfectionType.Crimson);
                                     WorldGen.SquareTileFrame(m, n);
@@ -242,7 +242,7 @@ namespace InfectedQualities.Core
                                     Main.tile[m, n].WallType = WallID.CorruptGrassUnsafe;
                                 }
 
-                                if (Main.tile[m, n].TileType == TileID.SnowBlock)
+                                if (Main.tile[m, n].TileType == TileID.SnowBlock || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Hallowed) || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Crimson))
                                 {
                                     Main.tile[m, n].TileType = TileUtilities.GetSnowType(InfectionType.Corrupt);
                                     WorldGen.SquareTileFrame(m, n);
