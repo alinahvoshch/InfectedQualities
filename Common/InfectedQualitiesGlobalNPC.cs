@@ -86,7 +86,7 @@ namespace InfectedQualities.Common
 
         public override void BossHeadSlot(NPC npc, ref int index)
         {
-            if (npc.type == NPCID.Plantera)
+            if (npc.type == NPCID.Plantera && ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
             {
                 InfectionType? planteraType = TextureUtilities.GetPlanteraType();
                 if(planteraType.HasValue)

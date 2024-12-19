@@ -19,29 +19,39 @@ namespace InfectedQualities.Core
     {
         public void Load(Mod mod)
         {
-            On_Gore.NewGore_IEntitySource_Vector2_Vector2_int_float += Gore_NewGore;
-            On_Dust.NewDust += Dust_NewDust;
+            if(ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
+            {
+                On_Gore.NewGore_IEntitySource_Vector2_Vector2_int_float += Gore_NewGore;
+                On_Dust.NewDust += Dust_NewDust;
+            }
+
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+            {
+                On_TileDrawing.GetTreeVariant += TileDrawing_GetTreeVariant;
+                On_WorldGen.GetTreeLeaf += WorldGen_GetTreeLeaf;
+                IL_WorldGen.GetCommonTreeFoliageData += WorldGen_GetCommonTreeFoliageData;
+
+                IL_WorldGen.CheckAlch += WorldGen_CheckAlch;
+                IL_WorldGen.PlaceAlch += WorldGen_PlaceAlch;
+                IL_WorldGen.PlantAlch += WorldGen_PlantAlch;
+                IL_WorldGen.IsFitToPlaceFlowerIn += WorldGen_IsFitToPlaceFlowerIn;
+
+                IL_WorldGen.UpdateWorld_GrassGrowth += WorldGen_UpdateWorld_GrassGrowth;
+                On_WorldGen.nearbyChlorophyte += WorldGen_nearbyChlorophyte;
+            }
+
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
+            {
+                On_WorldGen.GetTileMossColor += WorldGen_GetTileMossColor;
+            }
 
             IL_WorldGen.GERunner += WorldGen_GERunner;
             On_WorldGen.Convert += WorldGen_Convert;
-
-            On_TileDrawing.GetTreeVariant += TileDrawing_GetTreeVariant;
-            On_WorldGen.GetTreeLeaf += WorldGen_GetTreeLeaf;
-            IL_WorldGen.GetCommonTreeFoliageData += WorldGen_GetCommonTreeFoliageData;
-
-            IL_WorldGen.CheckAlch += WorldGen_CheckAlch;
-            IL_WorldGen.PlaceAlch += WorldGen_PlaceAlch;
-            IL_WorldGen.PlantAlch += WorldGen_PlantAlch;
-            On_WorldGen.GetTileMossColor += WorldGen_GetTileMossColor;
-            IL_WorldGen.IsFitToPlaceFlowerIn += WorldGen_IsFitToPlaceFlowerIn;
-
             IL_WorldGen.ScoreRoom += WorldGen_ScoreRoom;
             On_WorldGen.GetTileTypeCountByCategory += WorldGen_GetTileTypeCountByCategory;
 
             IL_WorldGen.UpdateWorld_Inner += WorldGen_UpdateWorld_Inner;
-            IL_WorldGen.UpdateWorld_GrassGrowth += WorldGen_UpdateWorld_GrassGrowth;
             IL_WorldGen.hardUpdateWorld += WorldGen_hardUpdateWorld;
-            On_WorldGen.nearbyChlorophyte += WorldGen_nearbyChlorophyte;
             On_WorldGen.ChlorophyteDefense += WorldGen_ChlorophyteDefense;
 
             IL_WorldGen.CheckLilyPad += WorldGen_CheckLilyPad;
@@ -413,7 +423,7 @@ namespace InfectedQualities.Core
 
         private static int TileDrawing_GetTreeVariant(On_TileDrawing.orig_GetTreeVariant orig, int x, int y)
         {
-            if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && Main.tile[x, y].TileType == ModContent.TileType<HallowedJungleGrass>())
+            if(Main.tile[x, y].TileType == ModContent.TileType<HallowedJungleGrass>())
             {
                 return 2;
             }
@@ -422,89 +432,86 @@ namespace InfectedQualities.Core
 
         private static void WorldGen_GetTreeLeaf(On_WorldGen.orig_GetTreeLeaf orig, int x, Tile topTile, Tile t, ref int treeHeight, out int treeFrame, out int passStyle)
         {
-            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+            if (t.TileType == ModContent.TileType<HallowedJungleGrass>())
             {
-                if(t.TileType == ModContent.TileType<HallowedJungleGrass>())
+                treeFrame = 0;
+                passStyle = 917;
+                if (WorldGen.GetHollowTreeFoliageStyle() != 20)
                 {
-                    treeFrame = 0;
-                    passStyle = 917;
-                    if (WorldGen.GetHollowTreeFoliageStyle() != 20)
+                    treeFrame += x % 3 * 3;
+                    switch (treeFrame)
                     {
-                        treeFrame += x % 3 * 3;
-                        switch (treeFrame)
-                        {
-                            case 0:
-                                passStyle += 2;
-                                break;
-                            case 1:
-                                passStyle += 1;
-                                break;
-                            case 2:
-                                passStyle += 7;
-                                break;
-                            case 3:
-                                passStyle += 4;
-                                break;
-                            case 4:
-                                passStyle += 5;
-                                break;
-                            case 5:
-                                passStyle += 6;
-                                break;
-                            case 6:
-                                passStyle += 3;
-                                break;
-                            case 7:
-                                passStyle += 8;
-                                break;
-                        }
+                        case 0:
+                            passStyle += 2;
+                            break;
+                        case 1:
+                            passStyle += 1;
+                            break;
+                        case 2:
+                            passStyle += 7;
+                            break;
+                        case 3:
+                            passStyle += 4;
+                            break;
+                        case 4:
+                            passStyle += 5;
+                            break;
+                        case 5:
+                            passStyle += 6;
+                            break;
+                        case 6:
+                            passStyle += 3;
+                            break;
+                        case 7:
+                            passStyle += 8;
+                            break;
                     }
-                    else
-                    {
-                        passStyle += 196;
-                        treeFrame += x % 6 * 3;
-                        switch (treeFrame)
-                        {
-                            case 3:
-                            case 5:
-                                passStyle += 1;
-                                break;
-                            case 4:
-                                passStyle += 2;
-                                break;
-                            case 6:
-                                passStyle += 3;
-                                break;
-                            case 7:
-                                passStyle += 4;
-                                break;
-                            case 8:
-                                passStyle += 5;
-                                break;
-                            case 9:
-                            case 10:
-                            case 11:
-                                passStyle += 6;
-                                break;
-                            case 12:
-                            case 13:
-                            case 14:
-                                passStyle += 7;
-                                break;
-                            case 15:
-                            case 16:
-                            case 17:
-                                passStyle += 8;
-                                break;
-                        }
-                    }
-                    treeHeight += 5;
-                    return;
                 }
-                else if (t.TileType == TileUtilities.GetSnowType(InfectionType.Hallowed))
+                else
                 {
-                    treeHeight += 5;
+                    passStyle += 196;
+                    treeFrame += x % 6 * 3;
+                    switch (treeFrame)
+                    {
+                        case 3:
+                        case 5:
+                            passStyle += 1;
+                            break;
+                        case 4:
+                            passStyle += 2;
+                            break;
+                        case 6:
+                            passStyle += 3;
+                            break;
+                        case 7:
+                            passStyle += 4;
+                            break;
+                        case 8:
+                            passStyle += 5;
+                            break;
+                        case 9:
+                        case 10:
+                        case 11:
+                            passStyle += 6;
+                            break;
+                        case 12:
+                        case 13:
+                        case 14:
+                            passStyle += 7;
+                            break;
+                        case 15:
+                        case 16:
+                        case 17:
+                            passStyle += 8;
+                            break;
+                    }
                 }
+                treeHeight += 5;
+                return;
+            }
+            else if (t.TileType == TileUtilities.GetSnowType(InfectionType.Hallowed))
+            {
+                treeHeight += 5;
             }
             orig(x, topTile, t, ref treeHeight, out treeFrame, out passStyle);
         }
@@ -517,14 +524,7 @@ namespace InfectedQualities.Core
             if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.GolfGrassHallowed), i => i.MatchBeq(out label)))
             {
                 cursor.Emit(OpCodes.Ldloc, 5);
-                cursor.EmitDelegate(() =>
-                {
-                    if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<HallowedJungleGrass>();
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(ModContent.TileType<HallowedJungleGrass>);
                 cursor.Emit(OpCodes.Beq, label);
             }
         }
@@ -546,14 +546,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 2);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<HallowedJungleGrass>();
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(ModContent.TileType<HallowedJungleGrass>);
                 cursor.Emit(OpCodes.Beq, label);
             }
 
@@ -583,14 +576,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 2);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return TileUtilities.GetSnowType(InfectionType.Corrupt);
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(() => TileUtilities.GetSnowType(InfectionType.Corrupt));
                 cursor.Emit(OpCodes.Beq, label);
 
                 cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
@@ -616,14 +602,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 2);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return TileUtilities.GetSnowType(InfectionType.Crimson);
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(() => TileUtilities.GetSnowType(InfectionType.Crimson));
                 cursor.Emit(OpCodes.Beq, label);
             }
 
@@ -636,14 +615,7 @@ namespace InfectedQualities.Core
             if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.FleshIce)))
             {
                 cursor.Emit(OpCodes.Pop);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return TileUtilities.GetSnowType(InfectionType.Hallowed);
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(() => TileUtilities.GetSnowType(InfectionType.Hallowed));
             }
         }
 
@@ -663,14 +635,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 0);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<HallowedJungleGrass>();
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(ModContent.TileType<HallowedJungleGrass>);
                 cursor.Emit(OpCodes.Beq, label);
             }
 
@@ -700,14 +665,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 0);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return TileUtilities.GetSnowType(InfectionType.Corrupt);
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(() => TileUtilities.GetSnowType(InfectionType.Corrupt));
                 cursor.Emit(OpCodes.Beq, label);
 
                 cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
@@ -733,14 +691,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 0);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return TileUtilities.GetSnowType(InfectionType.Crimson);
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(() => TileUtilities.GetSnowType(InfectionType.Crimson));
                 cursor.Emit(OpCodes.Beq, label);
             }
 
@@ -753,14 +704,7 @@ namespace InfectedQualities.Core
             if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.FleshIce)))
             {
                 cursor.Emit(OpCodes.Pop);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<HallowedJungleGrass>();
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(() => TileUtilities.GetSnowType(InfectionType.Hallowed));
             }
         }
 
@@ -779,14 +723,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 8);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<HallowedJungleGrass>();
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(ModContent.TileType<HallowedJungleGrass>);
                 cursor.Emit(OpCodes.Beq, label);
             }
 
@@ -812,14 +749,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 8);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return TileUtilities.GetSnowType(InfectionType.Corrupt);
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(() => TileUtilities.GetSnowType(InfectionType.Corrupt));
                 cursor.Emit(OpCodes.Beq, label);
 
                 cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
@@ -841,14 +771,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 8);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return TileUtilities.GetSnowType(InfectionType.Crimson);
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(() => TileUtilities.GetSnowType(InfectionType.Crimson));
                 cursor.Emit(OpCodes.Beq, label);
             }
 
@@ -861,29 +784,19 @@ namespace InfectedQualities.Core
             if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.FleshIce)))
             {
                 cursor.Emit(OpCodes.Pop);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return TileUtilities.GetSnowType(InfectionType.Hallowed);
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(() => TileUtilities.GetSnowType(InfectionType.Hallowed));
             }
         }
 
         private static int WorldGen_GetTileMossColor(On_WorldGen.orig_GetTileMossColor orig, int tileType)
         {
-            if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
+            foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
             {
-                foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
+                foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
                 {
-                    foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
+                    if (tileType == TileUtilities.GetEnumType(infectionType, mossType))
                     {
-                        if (tileType == TileUtilities.GetEnumType(infectionType, mossType))
-                        {
-                            return (int)mossType;
-                        }
+                        return (int)mossType;
                     }
                 }
             }
@@ -900,14 +813,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 0);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U2);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<HallowedJungleGrass>();
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(ModContent.TileType<HallowedJungleGrass>);
                 cursor.Emit(OpCodes.Beq, label);
             }
         }
@@ -1036,14 +942,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 9);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U4);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<InfectedPlanteraBulb>();
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(ModContent.TileType<InfectedPlanteraBulb>);
                 cursor.Emit(OpCodes.Bne_Un, label);
             }
 
@@ -1058,14 +957,7 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloca, 9);
                 cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
                 cursor.Emit(OpCodes.Ldind_U4);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<InfectedLifeFruit>();
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(ModContent.TileType<InfectedLifeFruit>);
                 cursor.Emit(OpCodes.Bne_Un, label);
             }
         }
@@ -1092,52 +984,37 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Beq, label);
             }
 
-            label = cursor.DefineLabel();
-            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdloc(17), i => i.MatchBrfalse(out label)))
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
             {
-                cursor.Emit(OpCodes.Ldloc, 17);
-                cursor.Emit(OpCodes.Ldloc, 18);
-                cursor.EmitDelegate<Func<int, int, bool>>((m, n) =>
+                label = cursor.DefineLabel();
+                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdloc(17), i => i.MatchBrfalse(out label)))
                 {
-                    if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && Main.tileMoss[Main.tile[m, n].TileType])
-                    {
-                        return false;
-                    }
-                    return true;
-                });
-                cursor.Emit(OpCodes.Brfalse, label);
-            }
+                    cursor.Emit(OpCodes.Ldloc, 17);
+                    cursor.Emit(OpCodes.Ldloc, 18);
+                    cursor.EmitDelegate<Func<int, int, bool>>((m, n) => !Main.tileMoss[Main.tile[m, n].TileType]);
+                    cursor.Emit(OpCodes.Brfalse, label);
+                }
 
-            label = cursor.DefineLabel();
-            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.CrimsonJungleGrass), i => i.MatchLdloc(20), i => i.MatchBrfalse(out label)))
-            {
-                cursor.Emit(OpCodes.Ldloc, 20);
-                cursor.Emit(OpCodes.Ldloc, 21);
-                cursor.EmitDelegate<Func<int, int, bool>>((m, n) =>
+                label = cursor.DefineLabel();
+                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.CrimsonJungleGrass), i => i.MatchLdloc(20), i => i.MatchBrfalse(out label)))
                 {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && Main.tileMoss[Main.tile[m, n].TileType])
-                    {
-                        return false;
-                    }
-                    return true;
-                });
-                cursor.Emit(OpCodes.Brfalse, label);
+                    cursor.Emit(OpCodes.Ldloc, 20);
+                    cursor.Emit(OpCodes.Ldloc, 21);
+                    cursor.EmitDelegate<Func<int, int, bool>>((m, n) => !Main.tileMoss[Main.tile[m, n].TileType]);
+                    cursor.Emit(OpCodes.Brfalse, label);
+                }
             }
 
             label = cursor.DefineLabel();
             if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdloc(22), i => i.MatchLdloc(23), i => i.MatchLdcI4(10), i => i.MatchCall(typeof(WorldGen).GetMethod("InWorld")), i => i.MatchBrfalse(out label)))
             {
-                cursor.Emit(OpCodes.Ldloc, 22);
-                cursor.Emit(OpCodes.Ldloc, 23);
-                cursor.EmitDelegate<Func<int, int, bool>>((m, n) =>
+                if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses) 
                 {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && Main.tileMoss[Main.tile[m, n].TileType])
-                    {
-                        return false;
-                    }
-                    return true;
-                });
-                cursor.Emit(OpCodes.Brfalse, label);
+                    cursor.Emit(OpCodes.Ldloc, 22);
+                    cursor.Emit(OpCodes.Ldloc, 23);
+                    cursor.EmitDelegate<Func<int, int, bool>>((m, n) => !Main.tileMoss[Main.tile[m, n].TileType]);
+                    cursor.Emit(OpCodes.Brfalse, label);
+                }
 
                 cursor.Emit(OpCodes.Ldloc, 22);
                 cursor.Emit(OpCodes.Ldloc, 23);
@@ -1155,7 +1032,7 @@ namespace InfectedQualities.Core
 
         private static bool WorldGen_nearbyChlorophyte(On_WorldGen.orig_nearbyChlorophyte orig, int i, int j)
         {
-            if (!NPC.downedPlantBoss && ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+            if (!NPC.downedPlantBoss)
             {
                 return false;
             }
@@ -1251,17 +1128,10 @@ namespace InfectedQualities.Core
                 cursor.MarkLabel(nextLabel);
             }
 
-            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.HallowedGrass)))
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.HallowedGrass)))
             {
                 cursor.Emit(OpCodes.Pop);
-                cursor.EmitDelegate(() =>
-                {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<HallowedJungleGrass>();
-                    }
-                    return -1;
-                });
+                cursor.EmitDelegate(ModContent.TileType<HallowedJungleGrass>);
             }
         }
 
@@ -1285,16 +1155,14 @@ namespace InfectedQualities.Core
                 cursor.Emit(OpCodes.Ldloc, 5);
                 cursor.Emit(OpCodes.Ldc_I4, TileID.HallowedGrass);
                 cursor.Emit(OpCodes.Beq, label);
-                cursor.Emit(OpCodes.Ldloc, 5);
-                cursor.EmitDelegate(() =>
+
+                if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                 {
-                    if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                    {
-                        return ModContent.TileType<HallowedJungleGrass>();
-                    }
-                    return -1;
-                });
-                cursor.Emit(OpCodes.Beq, label);
+                    cursor.Emit(OpCodes.Ldloc, 5);
+                    cursor.EmitDelegate(ModContent.TileType<HallowedJungleGrass>);
+                    cursor.Emit(OpCodes.Beq, label);
+                }
+
                 cursor.Emit(OpCodes.Ldloc, 5);
                 cursor.Emit(OpCodes.Ldc_I4, TileID.Pearlsand);
                 cursor.Emit(OpCodes.Bne_Un, nextLabel);

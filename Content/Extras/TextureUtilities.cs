@@ -38,20 +38,17 @@ namespace InfectedQualities.Content.Extras
 
         public static InfectionType? GetPlanteraType()
         {
-            if (ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
+            if (TextureAssets.Npc[NPCID.Plantera] == InfectedQualitiesGlobalNPC.CorruptPlantera)
             {
-                if (TextureAssets.Npc[NPCID.Plantera] == InfectedQualitiesGlobalNPC.CorruptPlantera)
-                {
-                    return InfectionType.Corrupt;
-                }
-                else if (TextureAssets.Npc[NPCID.Plantera] == InfectedQualitiesGlobalNPC.CrimsonPlantera)
-                {
-                    return InfectionType.Crimson;
-                }
-                else if (TextureAssets.Npc[NPCID.Plantera] == InfectedQualitiesGlobalNPC.HallowedPlantera)
-                {
-                    return InfectionType.Hallowed;
-                }
+                return InfectionType.Corrupt;
+            }
+            else if (TextureAssets.Npc[NPCID.Plantera] == InfectedQualitiesGlobalNPC.CrimsonPlantera)
+            {
+                return InfectionType.Crimson;
+            }
+            else if (TextureAssets.Npc[NPCID.Plantera] == InfectedQualitiesGlobalNPC.HallowedPlantera)
+            {
+                return InfectionType.Hallowed;
             }
             return null;
         }
