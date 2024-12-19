@@ -1,5 +1,6 @@
 ﻿using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Extras.Tiles;
+using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -38,9 +39,10 @@ namespace InfectedQualities.Common
 
         public override void ModifyLight(int i, int j, int type, ref float r, ref float g, ref float b)
         {
-            if (TextureUtilities.WallBiomeColor(i, j, type, out Color sightColor))
+            Color sightColor = TextureUtilities.WallBiomeColor(i, j, type);
+            if (sightColor != default)
             {
-                sightColor *= 0.5f;
+                sightColor *= ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlightBrightness;
                 r = sightColor.R / 255f;
                 g = sightColor.G / 255f;
                 b = sightColor.B / 255f;
@@ -49,9 +51,9 @@ namespace InfectedQualities.Common
 
         public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
-            if (Main.rand.NextBool(480) && TextureUtilities.WallBiomeColor(i, j, type, out Color sightColor))
+            Color sightColor = TextureUtilities.WallBiomeColor(i, j, type);
+            if (Main.rand.NextBool(480) && sightColor != default)
             {
-                sightColor *= 0.75f;
                 Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.RainbowMk2, 0f, 0f, 150, sightColor, 0.3f)];
                 dust.noGravity = true;
                 dust.fadeIn = 1f;

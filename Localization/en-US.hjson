@@ -181,9 +181,13 @@ Mods: {
 					'''
 			}
 
-			BiomeSightWallHighlighting: {
-				Label: "[i:5211] Biome Sight Wall Highlighting"
-				Tooltip: Biome sight potion will highlight infection walls. Compatible with other mods.
+			BiomeSightWallHighlightBrightness: {
+				Label: "[i:5211] Biome Sight Wall Brightness"
+				Tooltip:
+					'''
+					Biome sight potion will highlight infected walls with a specific brightness. Compatible with other mods
+					Set to 0 to disable it
+					'''
 			}
 
 			HallowedJungleMusic: {

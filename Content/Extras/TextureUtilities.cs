@@ -169,33 +169,13 @@ namespace InfectedQualities.Content.Extras
             }
         }
 
-        public static bool WallBiomeColor(int i, int j, int type, out Color sightColor)
+        public static Color WallBiomeColor(int i, int j, int type)
         {
-            sightColor = InfectedQualitiesModSupport.ModWallBiomeSight[type];
-            if (ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlighting && Main.LocalPlayer.biomeSight && !WorldGen.SolidTile(i, j, true) && (Main.tile[i, j].LiquidAmount == 0 || Main.tile[i, j].LiquidType == LiquidID.Water))
+            if (Main.LocalPlayer.biomeSight && InfectedQualitiesModSupport.ModWallBiomeSight[type] != default && ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlightBrightness != 0 && !WorldGen.SolidTile(i, j, true) && (Main.tile[i, j].LiquidAmount == 0 || Main.tile[i, j].LiquidType == LiquidID.Water))
             {
-                if (sightColor == default)
-                {
-                    if (WallID.Sets.Corrupt[type])
-                    {
-                        sightColor = new(200, 100, 240);
-                        return true;
-                    }
-                    else if (WallID.Sets.Crimson[type])
-                    {
-                        sightColor = new(255, 100, 100);
-                        return true;
-                    }
-                    else if (WallID.Sets.Hallow[type])
-                    {
-                        sightColor = new(255, 160, 240);
-                        return true;
-                    }
-                    return false;
-                }
-                return true;
+                return InfectedQualitiesModSupport.ModWallBiomeSight[type];
             }
-            return false;
+            return default;
         }
     }
 }

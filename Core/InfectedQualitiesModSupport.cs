@@ -18,7 +18,35 @@ namespace InfectedQualities.Core
         internal static readonly Mod ExxoAvalon = ModLoader.TryGetMod("Avalon", out Mod result) ? result : null;
         internal static readonly Mod TerrariaOrigins = ModLoader.TryGetMod("Origins", out Mod result) ? result : null;
 
-        internal static Color[] ModWallBiomeSight = WallID.Sets.Factory.CreateCustomSet(default(Color));
+        internal static Color[] ModWallBiomeSight = WallID.Sets.Factory.CreateCustomSet(
+            default(Color),
+            WallID.CorruptGrassUnsafe, new Color(200, 100, 240),
+            WallID.CorruptHardenedSand, new Color(200, 100, 240),
+            WallID.CorruptSandstone, new Color(200, 100, 240),
+            WallID.EbonstoneUnsafe, new Color(200, 100, 240),
+            WallID.CorruptionUnsafe1, new Color(200, 100, 240),
+            WallID.CorruptionUnsafe2, new Color(200, 100, 240),
+            WallID.CorruptionUnsafe3, new Color(200, 100, 240),
+            WallID.CorruptionUnsafe4, new Color(200, 100, 240),
+
+            WallID.CrimsonGrassUnsafe, new Color(255, 100, 100),
+            WallID.CrimsonHardenedSand, new Color(255, 100, 100),
+            WallID.CrimsonSandstone, new Color(255, 100, 100),
+            WallID.CrimstoneUnsafe, new Color(255, 100, 100),
+            WallID.CrimsonUnsafe1, new Color(255, 100, 100),
+            WallID.CrimsonUnsafe2, new Color(255, 100, 100),
+            WallID.CrimsonUnsafe3, new Color(255, 100, 100),
+            WallID.CrimsonUnsafe4, new Color(255, 100, 100),
+
+            WallID.HallowedGrassUnsafe, new Color(255, 160, 240),
+            WallID.HallowHardenedSand, new Color(255, 160, 240),
+            WallID.HallowSandstone, new Color(255, 160, 240),
+            WallID.PearlstoneBrickUnsafe, new Color(255, 160, 240),
+            WallID.HallowUnsafe1, new Color(255, 160, 240),
+            WallID.HallowUnsafe2, new Color(255, 160, 240),
+            WallID.HallowUnsafe3, new Color(255, 160, 240),
+            WallID.HallowUnsafe4, new Color(255, 160, 240)
+        );
 
         private static readonly string[][] ModBlocks =
         [

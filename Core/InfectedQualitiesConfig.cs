@@ -18,10 +18,11 @@ namespace InfectedQualities.Core
         [ReloadRequired]
         public bool InfectedPlantera { get; set; }
 
-        [LabelKey("$Mods.InfectedQualities.Config.BiomeSightWallHighlighting.Label"), TooltipKey("$Mods.InfectedQualities.Config.BiomeSightWallHighlighting.Tooltip")]
+        [LabelKey("$Mods.InfectedQualities.Config.BiomeSightWallHighlightBrightness.Label"), TooltipKey("$Mods.InfectedQualities.Config.BiomeSightWallHighlightBrightness.Tooltip")]
         [BackgroundColor(45, 148, 185)]
-        [DefaultValue(true)]
-        public bool BiomeSightWallHighlighting { get; set; }
+        [DefaultValue(0.5f)]
+        [Increment(1)]
+        public float BiomeSightWallHighlightBrightness { get; set; }
 
         [Header("$Mods.InfectedQualities.Config.Title.Audio")]
         [LabelKey("$Mods.InfectedQualities.Config.HallowedJungleMusic.Label"), TooltipKey("$Mods.InfectedQualities.Config.HallowedJungleMusic.Tooltip")]
