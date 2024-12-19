@@ -16,6 +16,11 @@ namespace InfectedQualities.Content.Items.Placables
 
         public override string LocalizationCategory => "Items.Placables";
 
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 100;
+        }
+
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.SnowBlock);

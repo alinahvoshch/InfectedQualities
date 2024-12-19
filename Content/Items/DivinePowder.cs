@@ -7,6 +7,11 @@ namespace InfectedQualities.Content.Items
 {
     public class DivinePowder : ModItem
     {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 99;
+        }
+
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.PurificationPowder);

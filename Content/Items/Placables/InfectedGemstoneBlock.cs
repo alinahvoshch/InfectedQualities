@@ -47,6 +47,11 @@ namespace InfectedQualities.Content.Items.Placables
             _ => ItemID.StoneBlock
         };
 
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 100;
+        }
+
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(TileUtilities.GetEnumType(infectionType, gemType));
