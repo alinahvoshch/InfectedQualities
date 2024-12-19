@@ -13,10 +13,6 @@ namespace InfectedQualities.Content.Tiles.Plants
     [Autoload(false)]
     public class InfectedSnowTree(InfectionType infectionType) : ModTree, ILoadable
     {
-        private Asset<Texture2D> TreeTexture { get; set; } = null;
-        private Asset<Texture2D> BranchTexture { get; set; } = null;
-        private Asset<Texture2D> TopTexture { get; set; } = null;
-
         public override TreeTypes CountsAsTreeType => infectionType switch
         {
             InfectionType.Corrupt => TreeTypes.Corrupt,
@@ -64,11 +60,11 @@ namespace InfectedQualities.Content.Tiles.Plants
             return ModContent.TileType<InfectedSapling>();
         }
 
-        public override Asset<Texture2D> GetBranchTextures() => BranchTexture;
+        public override Asset<Texture2D> GetBranchTextures() => ModContent.Request<Texture2D>("InfectedQualities/Content/Tiles/Plants/" + infectionType.ToString() + "SnowTree_Branch");
 
-        public override Asset<Texture2D> GetTexture() => TreeTexture;
+        public override Asset<Texture2D> GetTexture() => ModContent.Request<Texture2D>("InfectedQualities/Content/Tiles/Plants/" + infectionType.ToString() + "SnowTree");
 
-        public override Asset<Texture2D> GetTopTextures() => TopTexture;
+        public override Asset<Texture2D> GetTopTextures() => ModContent.Request<Texture2D>("InfectedQualities/Content/Tiles/Plants/" + infectionType.ToString() + "SnowTree_Top");
 
         public override void SetStaticDefaults()
         {
@@ -79,10 +75,6 @@ namespace InfectedQualities.Content.Tiles.Plants
             {
                 GrowsOnTileId = [.. GrowsOnTileId, ModContent.TileType<HallowedJungleGrass>()];
             }
-
-            BranchTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Tiles/Plants/" + infectionType.ToString() + "SnowTree_Branch");
-            TreeTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Tiles/Plants/" + infectionType.ToString() + "SnowTree");
-            TopTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Tiles/Plants/" + infectionType.ToString() + "SnowTree_Top");
         }
 
         public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) 
