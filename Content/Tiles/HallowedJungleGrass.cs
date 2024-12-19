@@ -58,7 +58,7 @@ namespace InfectedQualities.Content.Tiles
         {
             TileUtilities.DefaultInfectionSpread(i, j, InfectionType.Hallowed, TileID.JungleGrass);
 
-            if (WorldGen.genRand.NextBool(10) && WorldGen.PlaceTile(i, j - 1, TileID.HallowedPlants, true))
+            if (WorldGen.genRand.NextBool(10) && !Main.tile[i, j - 1].HasTile && WorldGen.PlaceTile(i, j - 1, TileID.HallowedPlants, true))
             {
                 if (j > Main.worldSurface && WorldGen.genRand.NextBool(16))
                 {
