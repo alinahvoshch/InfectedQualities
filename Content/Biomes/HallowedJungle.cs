@@ -14,24 +14,15 @@ namespace InfectedQualities.Content.Biomes
         {
             get
             {
-                if(ModContent.GetInstance<InfectedQualitiesClientConfig>().HallowedJungleMusic)
+                if(ModContent.GetInstance<InfectedQualitiesClientConfig>().HallowedJungleMusic && !Main.LocalPlayer.ZoneGraveyard && !Main.LocalPlayer.ZoneMeteor)
                 {
                     if(Main.LocalPlayer.MusicUnderground())
                     {
-                        if(WorldUtilities.OtherworldMusic())
-                        {
-                            if (Main.remixWorld)
-                            {
-                                return MusicID.OtherworldlyHallow;
-                            }
-                            return MusicID.OtherworldlyUGHallow;
-                        }
-
                         if(Main.remixWorld)
                         {
-                            return MusicID.TheHallow;
+                            return WorldUtilities.OtherworldMusic() ? MusicID.OtherworldlyHallow : MusicID.TheHallow;
                         }
-                        return MusicID.UndergroundHallow;
+                        return WorldUtilities.OtherworldMusic() ? MusicID.OtherworldlyUGHallow : MusicID.UndergroundHallow;
                     }
                     else if(!Main.raining)
                     {
