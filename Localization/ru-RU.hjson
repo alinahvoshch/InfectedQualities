@@ -54,7 +54,7 @@ Mods: {
 			}
 		}
 
-		Projectiles.DivineDust.DisplayName: Священная пыль
+		Projectiles.DivineDustProjectile.DisplayName: Священная пыль
 
 		Biomes: {
 			CorruptJungle: {

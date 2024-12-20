@@ -54,7 +54,7 @@ Mods: {
 			}
 		}
 
-		Projectiles.DivineDust.DisplayName: Divine Dust
+		Projectiles.DivineDustProjectile.DisplayName: Divine Dust
 
 		Biomes: {
 			CorruptJungle: {

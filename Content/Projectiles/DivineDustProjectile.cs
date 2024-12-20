@@ -7,7 +7,7 @@ using InfectedQualities.Core;
 
 namespace InfectedQualities.Content.Projectiles
 {
-    public class DivineDust : ModProjectile
+    public class DivineDustProjectile : ModProjectile
     {
         public override void SetDefaults()
         {
