@@ -11,6 +11,7 @@ using InfectedQualities.Core;
 using System;
 using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Extras.Tiles;
+using System.Collections.Generic;
 
 namespace InfectedQualities.Common
 {
@@ -372,32 +373,23 @@ namespace InfectedQualities.Common
 
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            if(type == TileID.DemonAltar && ModContent.GetInstance<InfectedQualitiesServerConfig>().AltarEvilSpawning)
+            if(ModContent.GetInstance<InfectedQualitiesServerConfig>().AltarEvilSpawning && InfectedQualitiesModSupport.AltarToEvilBlock.TryGetValue(type, out ushort evilStone) && !WorldGen.genRand.NextBool(3))
             {
+                bool evil = WorldGen.genRand.NextBool();
+                ushort goodStone = InfectedQualitiesModSupport.GetGoodStone();
+                if (evilStone == 0) evilStone = Main.tile[i, j].TileFrameX < 54 ? TileID.Ebonstone : TileID.Crimstone;
+
                 int num = 0;
-                while (!WorldGen.genRand.NextBool(3) && num++ < 1000)
+                while (num++ < 1000)
                 {
                     int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
                     int y = WorldGen.genRand.Next((int)Main.rockLayer + 50, Main.maxTilesY - 300);
+
                     if (WorldGen.TileType(x, y) == TileID.Stone)
                     {
-                        if (WorldGen.genRand.NextBool())
-                        {
-                            if (WorldGen.crimson)
-                            {
-                                Main.tile[x, y].TileType = TileID.Crimstone;
-                            }
-                            else
-                            {
-                                Main.tile[x, y].TileType = TileID.Ebonstone;
-                            }
-                        }
-                        else
-                        {
-                            Main.tile[x, y].TileType = TileID.Pearlstone;
-                        }
+                        Main.tile[x, y].TileType = evil ? evilStone : goodStone;
                         WorldGen.SquareTileFrame(x, y);
-                        if (Main.netMode == NetmodeID.Server) NetMessage.SendTileSquare(-1, x, y);
+                        NetMessage.SendTileSquare(-1, x, y);
                         break;
                     }
                 }

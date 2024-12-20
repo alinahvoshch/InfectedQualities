@@ -18,6 +18,8 @@ namespace InfectedQualities.Core
         internal static readonly Mod ExxoAvalon = ModLoader.TryGetMod("Avalon", out Mod result) ? result : null;
         internal static readonly Mod TerrariaOrigins = ModLoader.TryGetMod("Origins", out Mod result) ? result : null;
 
+        internal static Dictionary<int, ushort> AltarToEvilBlock;
+
         internal static Color[] ModWallBiomeSight = WallID.Sets.Factory.CreateCustomSet(
             default(Color),
             WallID.CorruptGrassUnsafe, new Color(200, 100, 240),
@@ -62,6 +64,8 @@ namespace InfectedQualities.Core
 
         public static void PostSetupContent()
         {
+            AltarToEvilBlock = new() { [TileID.DemonAltar] = 0 };
+
             if (CalamityMod != null)
             {
                 foreach (string wallName in ModBlocks[0])
@@ -81,6 +85,8 @@ namespace InfectedQualities.Core
 
             if (ExxoAvalon != null)
             {
+                AltarToEvilBlock.Add(ExxoAvalon.Find<ModTile>("IckyAltar").Type, ExxoAvalon.Find<ModTile>("Chunkstone").Type);
+
                 Color contagionGlow = new(170, 255, 0);
                 foreach (string wallName in ModBlocks[3])
                 {
@@ -90,7 +96,10 @@ namespace InfectedQualities.Core
 
             if(TerrariaOrigins != null)
             {
-                foreach(string wallName in ModBlocks[5])
+                AltarToEvilBlock.Add(TerrariaOrigins.Find<ModTile>("Defiled_Altar").Type, TerrariaOrigins.Find<ModTile>("Defiled_Stone").Type);
+                AltarToEvilBlock.Add(TerrariaOrigins.Find<ModTile>("Riven_Altar").Type, TerrariaOrigins.Find<ModTile>("Riven_Flesh").Type);
+
+                foreach (string wallName in ModBlocks[5])
                 {
                     ModWallBiomeSight[TerrariaOrigins.Find<ModWall>(wallName).Type] = Color.White;
                 }
@@ -121,6 +130,12 @@ namespace InfectedQualities.Core
                     RecipeGroup.recipeGroups[pylonIndex].ValidItems.Add(SpiritMod.Find<ModItem>("SpiritPylonItem").Type);
                 }
             }
+        }
+
+        public static void Unload()
+        {
+            AltarToEvilBlock?.Clear();
+            AltarToEvilBlock = null;
         }
 
         public static bool PureglowRange(int i)
@@ -242,6 +257,16 @@ namespace InfectedQualities.Core
             return false;
         }
 
+        public static ushort GetGoodStone()
+        {
+            if(ConfectionRebaked != null && (bool)ConfectionRebaked.Call("confectionorHallow"))
+            {
+                return ConfectionRebaked.Find<ModTile>("Creamstone").Type;
+            }
+
+            return TileID.Pearlstone;
+        }
+
         public static bool AltLibraryInfection(bool good)
         {
             if(ModLoader.TryGetMod("AltLibrary", out Mod altLib))
@@ -275,5 +300,7 @@ namespace InfectedQualities.Core
             }
             return false;
         }
+
+
     }
 }

@@ -64,6 +64,7 @@ DISABLING INFECTION SPREADING --> Self explanatory, just enable it in the config
 NPCS BEING ABLE TO LIVE IN EVIL BIOMES --> Again, self explanatory. Should save you the annoyance of having to build new houses.
 
 DEMON ALTAR EVIL BLOCK SPAWNING --> Demon altars have a 66% chance to spawn an evil block in the world. This feature used to exist in the main game, before it was removed in 1.4.4
+Compatible with other mods, some altars of other mods will spawn in their respective evil tiles, and all altars will spawn in the respective stone of the "good biome"(Hallow, Confection, etc.) into the world.
 
 |MOD COMPABILITY|
 =================
@@ -77,6 +78,7 @@ You can use Calamity pylons to craft a 'PYLON OF NIGHT'.
 
 CONFECTION REBAKED -->	Conversions between this mods' moss blocks and Confections' moss blocks don't work properly.
 Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
+'DEMON ALTAR EVIL BLOCK SPAWNING' gives all altars a 33% chance to spawn in creamstone if confection was chosen instead of hallow.
 
 SPIRIT MOD --> You can use the spirit mod pylons to craft a 'PYLON OF NIGHT'.
 Tile spreading added by this mod is compatible with pureglow flowers.
@@ -87,6 +89,7 @@ Additionally, Remnants' Hallow generation avoids jungle grass blocks, this means
 EXXO AVALON --> Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 'CHASM PURIFICATION UPON HARDMODE' also purifies the contagion chasms.
 'PYLON OF NIGHT' works in the Contagion.
+'DEMON ALTAR EVIL BLOCK SPAWNING' gives icky altars a 33% chance to spawn in chunkstone.
 
 PYLONS PREVENT EVILS --> The game runs, but the features are partially incompatible.
 You can make corrupt and crimson snow get purified in the config with no issues, but the hallowed snow gets purified by the hallow pylon.
@@ -95,6 +98,7 @@ Hallowed jungle grass cannot be added in the config file.
 TERRARIA ORIGINS --> Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 'CHASM PURIFICATION UPON HARDMODE' also purifies the chasm of Defiled Wastelands and Riven Hive.
 'PYLON OF NIGHT' works in the Defiled Wastelands and Riven Hive.
+'DEMON ALTAR EVIL BLOCK SPAWNING' gives riven and defiled altars a 33% chance to spawn in riven flesh and defiled stone respectively.
 
 ALTERNATIVES LIBRARY --> The way the mod uses to generate it's hardmode had clashes with this mod. I tried my best to resolve this issue, though expect the hardmode world generation to slow down by a bit.
 

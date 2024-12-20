@@ -48,14 +48,27 @@ namespace InfectedQualities
 
         public override void PostSetupContent() => InfectedQualitiesModSupport.PostSetupContent();
 
-        public override object Call(params object[] args) => args switch
+        public override object Call(params object[] args)
         {
-            ["ZoneCorruptJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CorruptJungle>(),
-            ["ZoneCrimsonJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CrimsonJungle>(),
-            ["ZoneHallowedJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<HallowedJungle>(),
-            ["GetWallBiomeSightColor", int type] => InfectedQualitiesModSupport.ModWallBiomeSight[type],
-            ["SetWallBiomeSightColor", int type, Color color] => InfectedQualitiesModSupport.ModWallBiomeSight[type] = color,
-            _ => throw new Exception("You buffoon, you failed to use InfectedQualities.Call")
-        };
+            switch(args)
+            {
+                case ["SetWallBiomeSightColor", int type, Color color]:
+                    InfectedQualitiesModSupport.ModWallBiomeSight[type] = color;
+                    return null;
+                case ["SetDemonAltarBlock", int altar, ushort type]:
+                    InfectedQualitiesModSupport.AltarToEvilBlock.Add(altar, type);
+                    return null;
+            }
+
+            return args switch
+            {
+                ["ZoneCorruptJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CorruptJungle>(),
+                ["ZoneCrimsonJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CrimsonJungle>(),
+                ["ZoneHallowedJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<HallowedJungle>(),
+                _ => throw new Exception("You buffoon, you failed to use InfectedQualities.Call")
+            };
+        }
+
+        public override void Unload() => InfectedQualitiesModSupport.Unload();
     }
 }
