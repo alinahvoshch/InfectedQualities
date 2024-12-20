@@ -18,7 +18,7 @@ namespace InfectedQualities.Core
         internal static readonly Mod ExxoAvalon = ModLoader.TryGetMod("Avalon", out Mod result) ? result : null;
         internal static readonly Mod TerrariaOrigins = ModLoader.TryGetMod("Origins", out Mod result) ? result : null;
 
-        internal static Dictionary<int, ushort> AltarToEvilBlock;
+        public static readonly Dictionary<int, ushort> AltarToEvilBlock = new() { [TileID.DemonAltar] = 0 };
 
         internal static Color[] ModWallBiomeSight = WallID.Sets.Factory.CreateCustomSet(
             default(Color),
@@ -64,8 +64,6 @@ namespace InfectedQualities.Core
 
         public static void PostSetupContent()
         {
-            AltarToEvilBlock = new() { [TileID.DemonAltar] = 0 };
-
             if (CalamityMod != null)
             {
                 foreach (string wallName in ModBlocks[0])
@@ -130,12 +128,6 @@ namespace InfectedQualities.Core
                     RecipeGroup.recipeGroups[pylonIndex].ValidItems.Add(SpiritMod.Find<ModItem>("SpiritPylonItem").Type);
                 }
             }
-        }
-
-        public static void Unload()
-        {
-            AltarToEvilBlock?.Clear();
-            AltarToEvilBlock = null;
         }
 
         public static bool PureglowRange(int i)

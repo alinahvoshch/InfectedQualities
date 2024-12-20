@@ -48,27 +48,14 @@ namespace InfectedQualities
 
         public override void PostSetupContent() => InfectedQualitiesModSupport.PostSetupContent();
 
-        public override object Call(params object[] args)
+        public override object Call(params object[] args) => args switch
         {
-            switch(args)
-            {
-                case ["SetWallBiomeSightColor", int type, Color color]:
-                    InfectedQualitiesModSupport.ModWallBiomeSight[type] = color;
-                    return null;
-                case ["SetDemonAltarBlock", int altar, ushort type]:
-                    InfectedQualitiesModSupport.AltarToEvilBlock.Add(altar, type);
-                    return null;
-            }
-
-            return args switch
-            {
-                ["ZoneCorruptJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CorruptJungle>(),
-                ["ZoneCrimsonJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CrimsonJungle>(),
-                ["ZoneHallowedJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<HallowedJungle>(),
-                _ => throw new Exception("You buffoon, you failed to use InfectedQualities.Call")
-            };
-        }
-
-        public override void Unload() => InfectedQualitiesModSupport.Unload();
+            ["ZoneCorruptJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CorruptJungle>(),
+            ["ZoneCrimsonJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CrimsonJungle>(),
+            ["ZoneHallowedJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<HallowedJungle>(),
+            ["SetWallBiomeSightColor", int type, Color color] => delegate() { InfectedQualitiesModSupport.ModWallBiomeSight[type] = color; },
+            ["SetDemonAltarBlock", int altar, ushort type] => delegate() { InfectedQualitiesModSupport.AltarToEvilBlock.Add(altar, type); },
+            _ => throw new Exception("You buffoon, you failed to use InfectedQualities.Call")
+        };
     }
 }
