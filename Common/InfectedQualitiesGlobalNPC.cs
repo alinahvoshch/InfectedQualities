@@ -352,5 +352,19 @@ namespace InfectedQualities.Common
                 }
             }
         }
+
+        public override void Unload()
+        {
+            if (ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera && TextureUtilities.GetPlanteraType().HasValue)
+            {
+                TextureAssets.Npc[NPCID.Plantera] = Plantera;
+                TextureAssets.Npc[NPCID.PlanterasHook] = PlanteraHook;
+                TextureAssets.Chain26 = PlanteraHookVine;
+                TextureAssets.Npc[NPCID.PlanterasTentacle] = PlanteraTentacle;
+                TextureAssets.Chain27 = PlanteraTentacleVine;
+                TextureAssets.Npc[NPCID.Spore] = PlanteraSpore;
+                TextureAssets.Projectile[ProjectileID.SeedPlantera] = PlanteraSeed;
+            }
+        }
     }
 }
