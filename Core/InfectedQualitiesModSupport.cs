@@ -292,7 +292,5 @@ namespace InfectedQualities.Core
             }
             return false;
         }
-
-
     }
 }

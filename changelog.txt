@@ -18,6 +18,7 @@
 -Chlorophyte infection preventation now goes back to normal if 'InfectedBiomes' config is turned off
 -Hallow theme now plays in the Hallowed jungle, can be disabled in the config
 -Jungle spores now grow in infected jungles
+-Changed the server config to only accept changes from the server host
 
 -Fixed description typo, and added missing features to the description. Also removed comment about Radiance mod compat, since it had no point in existing
 -Fixed vertebrae --> leather recipe not needing workbench. Also fixed duplicate recipe when used with Thorium mod

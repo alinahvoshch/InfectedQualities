@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader.Config;
 
@@ -37,6 +38,16 @@ namespace InfectedQualities.Core
         public override LocalizedText DisplayName => Language.GetText("Mods.InfectedQualities.Config.Title.Main.Server");
 
         public override ConfigScope Mode => ConfigScope.ServerSide;
+
+        public override bool AcceptClientChanges(ModConfig pendingConfig, int whoAmI, ref NetworkText message)
+        {
+            if (!NetMessage.DoesPlayerSlotCountAsAHost(whoAmI))
+            {
+                message = NetworkText.FromKey("tModLoader.ModConfigRejectChangesNotHost");
+                return false;
+            }
+            return true;
+        }
 
         [Header("$Mods.InfectedQualities.Config.Title.Content")]
         [LabelKey("$Mods.InfectedQualities.Config.InfectedBiomes.Label"), TooltipKey("$Mods.InfectedQualities.Config.InfectedBiomes.Tooltip")]
