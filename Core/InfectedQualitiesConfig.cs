@@ -13,6 +13,7 @@ namespace InfectedQualities.Core
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
         [Header("$Mods.InfectedQualities.Config.Title.Visual")]
+
         [LabelKey("$Mods.InfectedQualities.Config.InfectedPlantera.Label"), TooltipKey("$Mods.InfectedQualities.Config.InfectedPlantera.Tooltip")]
         [BackgroundColor(45, 148, 185)]
         [DefaultValue(true)]
@@ -22,10 +23,10 @@ namespace InfectedQualities.Core
         [LabelKey("$Mods.InfectedQualities.Config.BiomeSightWallHighlightBrightness.Label"), TooltipKey("$Mods.InfectedQualities.Config.BiomeSightWallHighlightBrightness.Tooltip")]
         [BackgroundColor(45, 148, 185)]
         [DefaultValue(0.5f)]
-        [Increment(1)]
         public float BiomeSightWallHighlightBrightness { get; set; }
 
         [Header("$Mods.InfectedQualities.Config.Title.Audio")]
+
         [LabelKey("$Mods.InfectedQualities.Config.HallowedJungleMusic.Label"), TooltipKey("$Mods.InfectedQualities.Config.HallowedJungleMusic.Tooltip")]
         [BackgroundColor(45, 148, 185)]
         [DefaultValue(true)]
@@ -50,6 +51,7 @@ namespace InfectedQualities.Core
         }
 
         [Header("$Mods.InfectedQualities.Config.Title.Content")]
+
         [LabelKey("$Mods.InfectedQualities.Config.InfectedBiomes.Label"), TooltipKey("$Mods.InfectedQualities.Config.InfectedBiomes.Tooltip")]
         [BackgroundColor(135, 54, 206)]
         [DefaultValue(true)]
@@ -87,6 +89,7 @@ namespace InfectedQualities.Core
         public bool DivinePowder { get; set; }
 
         [Header("$Mods.InfectedQualities.Config.Title.Experimental")]
+
         [LabelKey("$Mods.InfectedQualities.Config.HardmodeChasmPurification.Label"), TooltipKey("$Mods.InfectedQualities.Config.HardmodeChasmPurification.Tooltip")]
         [BackgroundColor(185, 133, 45)]
         [DefaultValue(false)]
