@@ -357,13 +357,13 @@ namespace InfectedQualities.Common
         {
             if (ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera && TextureUtilities.GetPlanteraType().HasValue)
             {
-                TextureAssets.Npc[NPCID.Plantera] = Plantera;
-                TextureAssets.Npc[NPCID.PlanterasHook] = PlanteraHook;
-                TextureAssets.Chain26 = PlanteraHookVine;
-                TextureAssets.Npc[NPCID.PlanterasTentacle] = PlanteraTentacle;
-                TextureAssets.Chain27 = PlanteraTentacleVine;
-                TextureAssets.Npc[NPCID.Spore] = PlanteraSpore;
-                TextureAssets.Projectile[ProjectileID.SeedPlantera] = PlanteraSeed;
+                TextureAssets.Npc[NPCID.Plantera] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.Plantera}");
+                TextureAssets.Npc[NPCID.PlanterasHook] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.PlanterasHook}");
+                TextureAssets.Chain26 = Main.Assets.Request<Texture2D>("Images/Extra_26");
+                TextureAssets.Npc[NPCID.PlanterasTentacle] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.PlanterasTentacle}");
+                TextureAssets.Chain27 = Main.Assets.Request<Texture2D>("Images/Extra_27");
+                TextureAssets.Npc[NPCID.Spore] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.Spore}");
+                TextureAssets.Projectile[ProjectileID.SeedPlantera] = Main.Assets.Request<Texture2D>($"Images/Projectile_{ProjectileID.SeedPlantera}");
             }
         }
     }
