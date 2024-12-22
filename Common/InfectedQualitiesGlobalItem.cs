@@ -50,7 +50,7 @@ namespace InfectedQualities.Common
 
                     if (infectionType.HasValue)
                     {
-                        Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = TileUtilities.GetEnumType(infectionType, mossType.Value);
+                        Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = TileUtilities.GetEnumType(infectionType.Value, mossType.Value);
                         WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
                         SoundEngine.PlaySound(SoundID.Dig, player.position);
                         player.ConsumeItem(item.type);

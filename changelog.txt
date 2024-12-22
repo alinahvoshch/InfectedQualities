@@ -1,11 +1,11 @@
-0.7.6
-=====.
+0.7.4.1
+=======
 -File organization
 -RENAMED EVERY PLACABLE TILE FOR BETTER DISTINGUISMENT. THIS CHANGE WILL RESULT IN ALL PYLON OF NIGHT AND INFECTED SNOW ITEMS IN THE WORLD TO BE CONSIDERED INVALID. MANY APOLOGIES FOR THIS.
 
 -Added a config option to customize the brightness of walls when they are highlighted by the biome sight potion.
 -Added mod compat with 'Terraria Origins' and 'AltLibrary'
--Added an experimental config option to bring back demon altars spawning in infected blocks
+-Added an experimental config option to bring back demon altars spawning in infected blocks, has mod compability
 -Added infected variants of moss and gemstone blocks and a config option to disable them respectively
 -Added a config header for client
 -Added a background color for client-side config
@@ -15,13 +15,15 @@
 -Added journey mode research values for some items
 
 -Infected cave walls now get highlighted by biome sight potions and spread infections. However they won't convert other cave walls
--Chlorophyte infection preventation now goes back to normal if 'InfectedBiomes' config is turned off
+-Chlorophyte can block infections pre-plantera again if 'InfectedBiomes' are disabled
 -Hallow theme now plays in the Hallowed jungle, can be disabled in the config
 -Jungle spores now grow in infected jungles
 -Changed the server config to only accept changes from the server host
 
 -Fixed description typo, and added missing features to the description. Also removed comment about Radiance mod compat, since it had no point in existing
 -Fixed vertebrae --> leather recipe not needing workbench. Also fixed duplicate recipe when used with Thorium mod
+-Fixed infected planteras crashing the game upon mod unload
+-Fixed infection spreading potentially crashing the game if infected biomes aren't enabled
 
 0.7.1
 =====

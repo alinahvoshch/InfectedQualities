@@ -100,7 +100,8 @@ TERRARIA ORIGINS --> Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING'
 'PYLON OF NIGHT' works in the Defiled Wastelands and Riven Hive.
 'DEMON ALTAR EVIL BLOCK SPAWNING' gives riven and defiled altars a 33% chance to spawn in riven flesh and defiled stone respectively.
 
-ALTERNATIVES LIBRARY --> The way the mod uses to generate it's hardmode had clashes with this mod. I tried my best to resolve this issue, though expect the hardmode world generation to slow down by a bit.
+ALTERNATIVES LIBRARY --> The way the mod uses to generate it's hardmode had clashes with this mod. I tried my best to resolve this issue, though expect the hardmode world generation to slow down by a bit. 
+Powder and solution interactions are slightly broken, however. Functional, but still a bit broken.
 
 |CREDITS|
 alinahvoshch --> Russian translation.
