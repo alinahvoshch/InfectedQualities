@@ -80,7 +80,9 @@ CONFECTION REBAKED -->	Conversions between this mods' moss blocks and Confection
 Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 'DEMON ALTAR EVIL BLOCK SPAWNING' gives all altars a 33% chance to spawn in creamstone if confection was chosen instead of hallow.
 
-SPIRIT MOD --> You can use the spirit mod pylons to craft a 'PYLON OF NIGHT'.
+SPIRIT MOD --> Spirit biome doesn't replace infected snow blocks, resulting in an overlap between the spirit biome and whatever biome it generateed over.
+Infected moss and gemstone blocks also do not get replaced.
+You can use the spirit mod pylons to craft a 'PYLON OF NIGHT'.
 Tile spreading added by this mod is compatible with pureglow flowers.
 
 REMNANTS --> Due to the way Remnants generates it's corruption and crimson, the 'CHASM PURIFICATION UPON HARDMODE' is automatically disabled.
