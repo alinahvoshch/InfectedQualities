@@ -16,9 +16,9 @@ Mods: {
 			}
 
 			Placables: {
-				CorruptSnowBlock.DisplayName: Unholy Snow
-				CrimsonSnowBlock.DisplayName: Clotted Blood
-				HallowedSnowBlock.DisplayName: Holy Snow
+				CorruptSnowBlock.DisplayName: Unholy Snow Block
+				CrimsonSnowBlock.DisplayName: Clotted Blood Block
+				HallowedSnowBlock.DisplayName: Holy Snow Block
 
 				PylonOfNightBlock: {
 					DisplayName: Pylon of Night
