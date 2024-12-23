@@ -29,6 +29,7 @@ namespace InfectedQualities.Core
                                 if (lastChest.item[i].type == ModContent.ItemType<KeyOfNaught>())
                                 {
                                     keyOfNaught += lastChest.item[i].stack;
+                                    if (keyOfNaught > 1) break;
                                 }
                                 else if (lastChest.item[i].type != ItemID.None)
                                 {
@@ -61,7 +62,7 @@ namespace InfectedQualities.Core
 
                                 int chestID = 1;
                                 if (Main.tile[x, y].TileType == TileID.Containers2) chestID = 5;
-                                if (Main.tile[x, y].TileType >= TileID.Count) chestID = 101;
+                                else if (Main.tile[x, y].TileType >= TileID.Count) chestID = 101;
 
                                 NetMessage.SendData(MessageID.ChestUpdates, -1, -1, null, chestID, x, y, 0, Chest.FindChest(x, y));
                                 NetMessage.SendTileSquare(-1, x, y, 3);
