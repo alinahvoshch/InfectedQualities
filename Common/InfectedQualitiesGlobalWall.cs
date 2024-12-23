@@ -42,7 +42,7 @@ namespace InfectedQualities.Common
             Color sightColor = TextureUtilities.WallBiomeColor(i, j, type);
             if (sightColor != default)
             {
-                sightColor *= ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlightBrightness;
+                sightColor *= ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlightBrightness / 255f;
                 r = sightColor.R / 255f;
                 g = sightColor.G / 255f;
                 b = sightColor.B / 255f;

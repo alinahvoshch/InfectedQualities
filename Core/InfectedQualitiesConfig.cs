@@ -22,8 +22,8 @@ namespace InfectedQualities.Core
 
         [LabelKey("$Mods.InfectedQualities.Config.BiomeSightWallHighlightBrightness.Label"), TooltipKey("$Mods.InfectedQualities.Config.BiomeSightWallHighlightBrightness.Tooltip")]
         [BackgroundColor(45, 148, 185)]
-        [DefaultValue(0.5f)]
-        public float BiomeSightWallHighlightBrightness { get; set; }
+        [DefaultValue(102)]
+        public byte BiomeSightWallHighlightBrightness { get; set; }
 
         [Header("$Mods.InfectedQualities.Config.Title.Audio")]
 
