@@ -365,7 +365,7 @@ namespace InfectedQualities.Common
 
         public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
-            if(type == TileID.CorruptJungleGrass && Main.rand.NextBool(500))
+            if(type == TileID.CorruptJungleGrass && !Main.tile[i, j].IsTileInvisible && Main.rand.NextBool(500))
             {
                 Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite);
             }

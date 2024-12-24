@@ -94,10 +94,9 @@ namespace InfectedQualities.Content.Tiles
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!Main.tile[i, j].IsTileInvisible)
-            {
-                TextureUtilities.TileDraw(i, j, GemTexture, TextureUtilities.TileGlowColor(i, j), spriteBatch);
-            }
+            if (Main.tile[i, j].IsTileInvisible) return;
+
+            TextureUtilities.TileDraw(i, j, GemTexture, TextureUtilities.TileGlowColor(i, j), spriteBatch);
 
             if (infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
             {

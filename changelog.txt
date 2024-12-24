@@ -24,6 +24,7 @@
 -Fixed vertebrae --> leather recipe not needing workbench. Also fixed duplicate recipe when used with Thorium mod
 -Fixed infected planteras crashing the game upon mod unload
 -Fixed infection spreading potentially crashing the game if infected biomes aren't enabled
+-Fixed corrupt jungle grass emmiting particles even when coated with echo paint.
 
 0.7.1
 =====

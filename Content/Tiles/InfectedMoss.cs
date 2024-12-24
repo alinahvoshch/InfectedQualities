@@ -520,17 +520,16 @@ namespace InfectedQualities.Content.Tiles
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!Main.tile[i, j].IsTileInvisible)
-            {
-                Color mossColor = MossColor;
-                if (mossType < MossType.Lava) mossColor = Lighting.GetColorClamped(i, j, MossColor);
-                else if (mossType == MossType.Helium) mossColor = Main.DiscoColor;
+            if (Main.tile[i, j].IsTileInvisible) return;
 
-                if (MossColor.A == 0) TextureUtilities.TileDraw(i, j, MossTexture, Lighting.GetColor(i, j), spriteBatch);
-                TextureUtilities.TileDraw(i, j, MossTexture, mossColor, spriteBatch);
-            }
+            Color mossColor = MossColor;
+            if (mossType < MossType.Lava) mossColor = Lighting.GetColorClamped(i, j, MossColor);
+            else if (mossType == MossType.Helium) mossColor = Main.DiscoColor;
 
-            if(infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
+            if (MossColor.A == 0) TextureUtilities.TileDraw(i, j, MossTexture, Lighting.GetColor(i, j), spriteBatch);
+            TextureUtilities.TileDraw(i, j, MossTexture, mossColor, spriteBatch);
+
+            if (infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
             {
                 Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite);
             }
