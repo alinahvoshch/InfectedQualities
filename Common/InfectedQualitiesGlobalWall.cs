@@ -40,7 +40,7 @@ namespace InfectedQualities.Common
         public override void ModifyLight(int i, int j, int type, ref float r, ref float g, ref float b)
         {
             Color sightColor = TextureUtilities.WallBiomeColor(i, j, type);
-            if (sightColor != default)
+            if (!Main.tile[i, j].IsWallInvisible && sightColor != default)
             {
                 sightColor *= ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlightBrightness / 255f;
 
