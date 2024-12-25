@@ -235,7 +235,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if(Main.tile[i, j].TileFrameX > 216 || Main.tile[i, j].TileFrameY > 72)
+            if(TileDrawing.IsVisible(Main.tile[i, j]) && (Main.tile[i, j].TileFrameX > 216 || Main.tile[i, j].TileFrameY > 72))
             {
                 short frameX = Main.tile[i, j].TileFrameX;
                 short frameY = Main.tile[i, j].TileFrameY;
@@ -513,7 +513,7 @@ namespace InfectedQualities.Content.Tiles
                     }
                 }
 
-                TextureUtilities.TileDraw(i, j, TextureAssets.Tile[Type], TextureUtilities.TileGlowColor(i, j, true), spriteBatch, new(frameX, frameY));
+                TextureUtilities.TileDraw(i, j, TextureAssets.Tile[Type], TextureUtilities.TileDrawColor(i, j, true), spriteBatch, new(frameX, frameY));
                 return false;
             }
             return true;

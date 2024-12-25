@@ -53,12 +53,18 @@ namespace InfectedQualities.Content.Extras
             return null;
         }
 
-        public static Color TileGlowColor(int i, int j, bool emitDust = false)
+        public static Color TileDrawColor(int i, int j, bool emitDust = false)
         {
             Color color = Lighting.GetColor(i, j);
             if (Main.tile[i, j].IsTileFullbright) color = Color.White;
+            if(Main.tile[i, j].IsActuated) 
+            {
+                byte alpha = color.A;
+                color *= 0.4f;
+                color.A = alpha;
+            }
 
-            if(Main.LocalPlayer.dangerSense && TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer))
+            if (Main.LocalPlayer.dangerSense && TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer))
             {
                 color.R = byte.MaxValue;
                 color.G = Math.Max((byte)50, color.G);
