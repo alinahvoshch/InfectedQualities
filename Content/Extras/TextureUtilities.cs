@@ -56,6 +56,8 @@ namespace InfectedQualities.Content.Extras
         public static Color TileGlowColor(int i, int j, bool emitDust = false)
         {
             Color color = Lighting.GetColor(i, j);
+            if (Main.tile[i, j].IsTileFullbright) color = Color.White;
+
             if(Main.LocalPlayer.dangerSense && TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer))
             {
                 color.R = byte.MaxValue;

@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -520,10 +521,10 @@ namespace InfectedQualities.Content.Tiles
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (Main.tile[i, j].IsTileInvisible) return;
+            if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
 
             Color mossColor = MossColor;
-            if (mossType < MossType.Lava) mossColor = Lighting.GetColorClamped(i, j, MossColor);
+            if (mossType < MossType.Lava && !Main.tile[i, j].IsTileFullbright) mossColor = Lighting.GetColorClamped(i, j, MossColor);
             else if (mossType == MossType.Helium) mossColor = Main.DiscoColor;
 
             if (MossColor.A == 0) TextureUtilities.TileDraw(i, j, MossTexture, Lighting.GetColor(i, j), spriteBatch);

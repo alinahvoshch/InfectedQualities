@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -94,7 +95,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (Main.tile[i, j].IsTileInvisible) return;
+            if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
 
             TextureUtilities.TileDraw(i, j, GemTexture, TextureUtilities.TileGlowColor(i, j), spriteBatch);
 
