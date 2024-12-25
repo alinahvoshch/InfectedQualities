@@ -526,6 +526,7 @@ namespace InfectedQualities.Content.Tiles
             Color mossColor = MossColor;
             if (mossType < MossType.Lava && !Main.tile[i, j].IsTileFullbright) mossColor = Lighting.GetColorClamped(i, j, MossColor);
             else if (mossType == MossType.Helium) mossColor = Main.DiscoColor;
+            TextureUtilities.ActuatedColor(i, j, ref mossColor);
 
             if (MossColor.A == 0) TextureUtilities.TileDraw(i, j, MossTexture, Lighting.GetColor(i, j), spriteBatch);
             TextureUtilities.TileDraw(i, j, MossTexture, mossColor, spriteBatch);

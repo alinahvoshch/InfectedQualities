@@ -57,12 +57,7 @@ namespace InfectedQualities.Content.Extras
         {
             Color color = Lighting.GetColor(i, j);
             if (Main.tile[i, j].IsTileFullbright) color = Color.White;
-            if(Main.tile[i, j].IsActuated) 
-            {
-                byte alpha = color.A;
-                color *= 0.4f;
-                color.A = alpha;
-            }
+            ActuatedColor(i, j, ref color);
 
             if (Main.LocalPlayer.dangerSense && TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer))
             {
@@ -174,6 +169,17 @@ namespace InfectedQualities.Content.Extras
                 int slopeOffset = (Main.tile[i, j].Slope <= SlopeType.SlopeDownRight) ? 14 : 0;
                 frame = new(frames.Value.X, frames.Value.Y + slopeOffset, 16, 2);
                 spriteBatch.Draw(texture.Value, drawVector + new Vector2(0, slopeOffset), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            }
+        }
+
+        //Basically Tile.actColor
+        public static void ActuatedColor(int i, int j, ref Color color)
+        {
+            if (Main.tile[i, j].IsActuated)
+            {
+                byte alpha = color.A;
+                color *= 0.4f;
+                color.A = alpha;
             }
         }
 
