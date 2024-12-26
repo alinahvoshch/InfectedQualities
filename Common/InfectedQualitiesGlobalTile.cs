@@ -58,24 +58,6 @@ namespace InfectedQualities.Common
             }
         }
 
-        public override void PlaceInWorld(int i, int j, int type, Item item)
-        {
-            if(type == TileID.Mud)
-            {
-                for (int x = i - 1; x < i + 2; x++)
-                {
-                    for (int y = j - 1; y < j + 2; y++)
-                    {
-                        if (WorldGen.TileType(x, y) == ModContent.TileType<HallowedJungleGrass>())
-                        {
-                            Main.tile[x, y].TileType = TileID.Mud;
-                            WorldGen.SquareTileFrame(x, y);
-                        }
-                    }
-                }
-            }
-        }
-
         public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak)
         {
             if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)

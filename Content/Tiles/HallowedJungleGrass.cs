@@ -5,7 +5,6 @@ using InfectedQualities.Content.Tiles.Plants;
 using InfectedQualities.Core;
 using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Extras.Tiles;
-using Humanizer;
 
 namespace InfectedQualities.Content.Tiles
 {
