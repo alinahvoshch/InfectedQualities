@@ -11,7 +11,6 @@ using InfectedQualities.Core;
 using System;
 using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Extras.Tiles;
-using System.Collections.Generic;
 using Terraria.GameContent.Drawing;
 
 namespace InfectedQualities.Common
