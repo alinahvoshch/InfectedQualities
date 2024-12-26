@@ -12,6 +12,7 @@ using System;
 using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Extras.Tiles;
 using System.Collections.Generic;
+using Terraria.GameContent.Drawing;
 
 namespace InfectedQualities.Common
 {
@@ -383,7 +384,7 @@ namespace InfectedQualities.Common
 
         public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {
-            if(type == TileID.CorruptJungleGrass && !Main.tile[i, j].IsTileInvisible && Main.rand.NextBool(500))
+            if(type == TileID.CorruptJungleGrass && TileDrawing.IsVisible(Main.tile[i, j]) && Main.rand.NextBool(500))
             {
                 Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite);
             }
