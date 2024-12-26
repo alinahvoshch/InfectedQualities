@@ -44,7 +44,7 @@ namespace InfectedQualities.Common
             Color sightColor = TextureUtilities.WallBiomeColor(i, j, type);
             if (sightColor != default)
             {
-                sightColor *= ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlightBrightness / 255f;
+                if (!Main.tile[i, j].IsWallFullbright) sightColor *= ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlightBrightness / 255f;
 
                 r = sightColor.R / 255f;
                 g = sightColor.G / 255f;
@@ -57,7 +57,9 @@ namespace InfectedQualities.Common
             Color sightColor = TextureUtilities.WallBiomeColor(i, j, type);
             if (Main.rand.NextBool(480) && sightColor != default)
             {
-                Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.RainbowMk2, 0f, 0f, 150, sightColor * 0.7f, 0.3f)];
+                if (!Main.tile[i, j].IsWallFullbright) sightColor *= 0.7f;
+
+                Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.RainbowMk2, 0f, 0f, 150, sightColor, 0.3f)];
                 dust.noGravity = true;
                 dust.fadeIn = 1f;
                 dust.velocity *= 0.1f;
