@@ -984,29 +984,24 @@ namespace InfectedQualities.Core
                 }
             }
 
-            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdloc(32), i => i.MatchLdloc(33), i => i.MatchLdcI4(TileID.HallowedGrass)))
-            {
-                cursor.Emit(OpCodes.Pop);
-                cursor.Emit(OpCodes.Ldc_I4_M1);
-            }
+            ushort[] goodGrass = [TileID.HallowedGrass, TileID.GolfGrassHallowed];
 
-            if(cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.GolfGrassHallowed))) 
+            foreach(ushort grass in goodGrass)
             {
-                cursor.Emit(OpCodes.Pop);
-                cursor.Emit(OpCodes.Ldc_I4_M1);
-            }
-
-            ushort[] grass = [TileID.CorruptGrass, TileID.CrimsonGrass];
-
-            for (int a = 0; a < 2; a++)
-            {
-                label = cursor.DefineLabel();
-                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdsfld(typeof(WorldGen).GetField(nameof(WorldGen.AllowedToSpreadInfections))), i => i.MatchBrfalse(out label)))
+                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(grass)))
                 {
-                    cursor.EmitDelegate(() => Main.hardMode);
-                    cursor.Emit(OpCodes.Brfalse, label);
+                    cursor.Emit(OpCodes.Pop);
+                    cursor.Emit(OpCodes.Ldc_I4_M1);
                 }
-                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(grass[a])))
+            }
+
+            if(!cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.CorruptGrass))) return;
+
+            ushort[] evilGrass = [TileID.CorruptGrass, TileID.CrimsonGrass];
+
+            foreach (ushort grass in evilGrass)
+            {
+                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(grass)))
                 {
                     cursor.Emit(OpCodes.Pop);
                     cursor.Emit(OpCodes.Ldc_I4_M1);
