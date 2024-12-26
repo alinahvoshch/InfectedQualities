@@ -378,6 +378,24 @@ namespace InfectedQualities.Common
                         NetMessage.SendTileSquare(-1, i, j + 1);
                     }
                 }
+                else if(type is TileID.HallowedGrass or TileID.GolfGrassHallowed)
+                {
+                    for (int x = i - 1; x < i + 2; x++)
+                    {
+                        for (int y = j - 1; y < j + 2; y++)
+                        {
+                            ushort tileType = Main.tile[x, y].TileType;
+                            bool flag = Main.hardMode && WorldGen.AllowedToSpreadInfections && Main.tile[x, y - 1].TileType != TileID.Sunflower && !InfectedQualitiesModSupport.PureglowRange(i);
+
+                            if (tileType == TileID.Mud || (tileType == TileID.JungleGrass && flag))
+                            {
+                                WorldGen.SpreadGrass(x, y, tileType, ModContent.TileType<HallowedJungleGrass>(), false, Main.tile[i, j].BlockColorAndCoating());
+                                WorldGen.SquareTileFrame(x, y);
+                                NetMessage.SendTileSquare(-1, x, y);
+                            }
+                        }
+                    }
+                }
             }
         }
 

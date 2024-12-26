@@ -5,6 +5,7 @@ using InfectedQualities.Content.Tiles.Plants;
 using InfectedQualities.Core;
 using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Extras.Tiles;
+using Humanizer;
 
 namespace InfectedQualities.Content.Tiles
 {
@@ -81,9 +82,23 @@ namespace InfectedQualities.Content.Tiles
                 for (int y = j - 1; y < j + 2; y++)
                 {
                     ushort tileType = Main.tile[x, y].TileType;
-                    if (tileType == TileID.Mud || (WorldGen.AllowedToSpreadInfections && WorldGen.CountNearBlocksTypes(x, y, 2, 1, [TileID.Sunflower]) == 0 && tileType == TileID.JungleGrass && !InfectedQualitiesModSupport.PureglowRange(i)))
+                    bool flag = Main.hardMode && WorldGen.AllowedToSpreadInfections && Main.tile[x, y - 1].TileType != TileID.Sunflower && !InfectedQualitiesModSupport.PureglowRange(i);
+
+                    if (tileType == TileID.Mud || (tileType == TileID.JungleGrass && flag))
                     {
                         WorldGen.SpreadGrass(x, y, tileType, Type, false, Main.tile[i, j].BlockColorAndCoating());
+                        WorldGen.SquareTileFrame(x, y);
+                        NetMessage.SendTileSquare(-1, x, y);
+                    }
+                    else if (tileType == TileID.Grass && flag)
+                    {
+                        WorldGen.SpreadGrass(x, y, tileType, TileID.HallowedGrass, false, Main.tile[i, j].BlockColorAndCoating());
+                        WorldGen.SquareTileFrame(x, y);
+                        NetMessage.SendTileSquare(-1, x, y);
+                    }
+                    else if (tileType == TileID.GolfGrass && flag)
+                    {
+                        WorldGen.SpreadGrass(x, y, tileType, TileID.GolfGrassHallowed, false, Main.tile[i, j].BlockColorAndCoating());
                         WorldGen.SquareTileFrame(x, y);
                         NetMessage.SendTileSquare(-1, x, y);
                     }

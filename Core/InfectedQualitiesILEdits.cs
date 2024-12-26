@@ -960,6 +960,58 @@ namespace InfectedQualities.Core
                 cursor.EmitDelegate(ModContent.TileType<InfectedLifeFruit>);
                 cursor.Emit(OpCodes.Bne_Un, label);
             }
+
+            for(int i = 0; i < 2; i++)
+            {
+                label = cursor.DefineLabel();
+                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdsfld(typeof(WorldGen).GetField(nameof(WorldGen.AllowedToSpreadInfections)))))
+                {
+                    cursor.Emit(OpCodes.Brfalse, label);
+                    cursor.EmitDelegate(() => Main.hardMode);
+
+                    cursor.Index++;
+                    cursor.MarkLabel(label);
+                }
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                label = cursor.DefineLabel();
+                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdsfld(typeof(WorldGen).GetField(nameof(WorldGen.AllowedToSpreadInfections))), i => i.MatchBrfalse(out label)))
+                {
+                    cursor.EmitDelegate(() => Main.hardMode);
+                    cursor.Emit(OpCodes.Brfalse, label);
+                }
+            }
+
+            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdloc(32), i => i.MatchLdloc(33), i => i.MatchLdcI4(TileID.HallowedGrass)))
+            {
+                cursor.Emit(OpCodes.Pop);
+                cursor.Emit(OpCodes.Ldc_I4_M1);
+            }
+
+            if(cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.GolfGrassHallowed))) 
+            {
+                cursor.Emit(OpCodes.Pop);
+                cursor.Emit(OpCodes.Ldc_I4_M1);
+            }
+
+            ushort[] grass = [TileID.CorruptGrass, TileID.CrimsonGrass];
+
+            for (int a = 0; a < 2; a++)
+            {
+                label = cursor.DefineLabel();
+                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdsfld(typeof(WorldGen).GetField(nameof(WorldGen.AllowedToSpreadInfections))), i => i.MatchBrfalse(out label)))
+                {
+                    cursor.EmitDelegate(() => Main.hardMode);
+                    cursor.Emit(OpCodes.Brfalse, label);
+                }
+                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(grass[a])))
+                {
+                    cursor.Emit(OpCodes.Pop);
+                    cursor.Emit(OpCodes.Ldc_I4_M1);
+                }
+            }
         }
 
         private static void WorldGen_hardUpdateWorld(ILContext il)
