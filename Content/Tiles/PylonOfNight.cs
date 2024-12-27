@@ -12,6 +12,7 @@ using Terraria.Localization;
 using InfectedQualities.Core;
 using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Items.Placables;
+using InfectedQualities.Content.Tiles.TileEntities;
 
 namespace InfectedQualities.Content.Tiles
 {
@@ -35,8 +36,8 @@ namespace InfectedQualities.Content.Tiles
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.HookCheckIfCanPlace = new(ModContent.GetInstance<TileEntities.PylonTileEntity>().PlacementPreviewHook_CheckIfCanPlace, 1, 0, true);
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new(ModContent.GetInstance<TileEntities.PylonTileEntity>().Hook_AfterPlacement, -1, 0, false);
+            TileObjectData.newTile.HookCheckIfCanPlace = new(ModContent.GetInstance<PylonTileEntity>().PlacementPreviewHook_CheckIfCanPlace, 1, 0, true);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = new(ModContent.GetInstance<PylonTileEntity>().Hook_AfterPlacement, -1, 0, false);
             TileObjectData.addTile(Type);
 
             AddToArray(ref TileID.Sets.CountsAsPylon);
@@ -52,10 +53,10 @@ namespace InfectedQualities.Content.Tiles
         public override void MouseOver(int i, int j)
         {
             Main.LocalPlayer.cursorItemIconEnabled = true;
-            Main.LocalPlayer.cursorItemIconID = ModContent.ItemType<Items.Placables.PylonOfNightBlock>();
+            Main.LocalPlayer.cursorItemIconID = ModContent.ItemType<PylonOfNightBlock>();
         }
 
-        public override void KillMultiTile(int i, int j, int frameX, int frameY) => ModContent.GetInstance<TileEntities.PylonTileEntity>().Kill(i, j);
+        public override void KillMultiTile(int i, int j, int frameX, int frameY) => ModContent.GetInstance<PylonTileEntity>().Kill(i, j);
 
         public override bool ValidTeleportCheck_NPCCount(TeleportPylonInfo pylonInfo, int defaultNecessaryNPCCount) => true;
 

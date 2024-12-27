@@ -1,4 +1,5 @@
-﻿using InfectedQualities.Common;
+﻿using FullSerializer.Internal;
+using InfectedQualities.Common;
 using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
@@ -89,27 +90,17 @@ namespace InfectedQualities.Content.Extras
             return null;
         }
 
-        public static Color TileDrawColor(int i, int j, bool emitDust = false, Color baseColor = default)
+        public static Color TileDrawColor(int i, int j, Color tintColor, bool emitDust = false)
         {
-            if (baseColor == default)
-            {
-                baseColor = Color.White;
-            }
-
             Color color;
-            if (Main.tile[i, j].IsTileFullbright) color = baseColor;
+            if(tintColor == Color.White)
+            {
+                color = Lighting.GetColor(i, j);
+            }
             else
             {
-                if(baseColor == Color.White)
-                {
-                    color = Lighting.GetColor(i, j);
-                }
-                else
-                {
-                    color = Lighting.GetColor(i, j, baseColor);
-                }
+                color = Lighting.GetColorClamped(i, j, tintColor);
             }
-            ActuatedColor(i, j, ref color);
 
             if (Main.LocalPlayer.dangerSense && TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer))
             {
@@ -154,19 +145,27 @@ namespace InfectedQualities.Content.Extras
                     {
                         Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.RainbowMk2, 0f, 0f, 150, sightColor, 0.3f)];
                         dust.noGravity = true;
-                        dust.fadeIn = 1f;
+                        dust.fadeIn = 1;
                         dust.velocity *= 0.1f;
                         dust.noLightEmittence = true;
                     }
                 }
             }
 
+            if (Main.tile[i, j].IsTileFullbright)
+            {
+                color = tintColor;
+            }
+            ActuateAndShineColors(i, j, ref color);
             return color;
         }
 
         public static void TileDraw(int i, int j, Texture2D texture, Color color, SpriteBatch spriteBatch, Point? frames = null)
         {
-            if (texture == null) return;
+            if (texture == null)
+            {
+                return;
+            }
 
             Vector2 offscreenVector = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
             Vector2 drawVector = new Vector2(i * 16, j * 16) + offscreenVector - Main.screenPosition;
@@ -226,14 +225,22 @@ namespace InfectedQualities.Content.Extras
             }
         }
 
-        //Basically Tile.actColor
-        public static void ActuatedColor(int i, int j, ref Color color)
+        //Basically Tile.actColor and Main.shine combined into one
+        public static void ActuateAndShineColors(int i, int j, ref Color color)
         {
             if (Main.tile[i, j].IsActuated)
             {
                 byte alpha = color.A;
                 color *= 0.4f;
                 color.A = alpha;
+            }
+            else
+            {
+                ushort type = Main.tile[i, j].TileType;
+                if ((Main.shimmerAlpha > 0f && Main.tileSolid[type]) || Main.tileShine2[type])
+                {
+                    color = Main.shine(color, type);
+                }
             }
         }
 

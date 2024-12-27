@@ -511,7 +511,7 @@ namespace InfectedQualities.Content.Tiles
                     }
                 }
 
-                TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(Texture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, true), spriteBatch, new(frameX, frameY));
+                TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(Texture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White, true), spriteBatch, new(frameX, frameY));
                 return false;
             }
             return true;
@@ -531,18 +531,15 @@ namespace InfectedQualities.Content.Tiles
                 Color mossColor;
                 if (mossType < MossType.Lava)
                 {
-                    mossColor = TextureUtilities.TileDrawColor(i, j, baseColor: MossColor);
+                    mossColor = TextureUtilities.TileDrawColor(i, j, MossColor);
                 }
                 else
                 {
                     mossColor = MossColor;
-                    TextureUtilities.ActuatedColor(i, j, ref mossColor);
+                    TextureUtilities.ActuateAndShineColors(i, j, ref mossColor);
+                    TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(MossTexture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White), spriteBatch);
                 }
 
-                if (MossColor.A == 0)
-                {
-                    TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(MossTexture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j), spriteBatch);
-                }
                 TextureUtilities.TileDraw(i, j, texture, mossColor, spriteBatch);
             }
 

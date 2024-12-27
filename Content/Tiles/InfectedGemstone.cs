@@ -96,7 +96,7 @@ namespace InfectedQualities.Content.Tiles
         {
             if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
 
-            TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(GemTexture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j), spriteBatch);
+            TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(GemTexture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White), spriteBatch);
             if (infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
             {
                 Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite);
