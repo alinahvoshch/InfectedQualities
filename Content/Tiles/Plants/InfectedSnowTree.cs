@@ -21,13 +21,12 @@ namespace InfectedQualities.Content.Tiles.Plants
             _ => TreeTypes.Snow
         };
 
-        public override TreePaintingSettings TreeShaderSettings => new()
+        public override TreePaintingSettings TreeShaderSettings => infectionType switch
         {
-            UseSpecialGroups = true,
-            SpecialGroupMinimalHueValue = 11f / 72f,
-            SpecialGroupMaximumHueValue = 0.25f,
-            SpecialGroupMinimumSaturationValue = 0.88f,
-            SpecialGroupMaximumSaturationValue = 1
+            InfectionType.Corrupt => TreePaintSystemData.GetTileSettings(PlantTileId, 0),
+            InfectionType.Crimson => TreePaintSystemData.GetTileSettings(PlantTileId, 4),
+            InfectionType.Hallowed => TreePaintSystemData.GetTileSettings(PlantTileId, 2),
+            _ => TreePaintSystemData.GetTileSettings(PlantTileId, 3)
         };
 
         public override int DropWood() => infectionType switch
