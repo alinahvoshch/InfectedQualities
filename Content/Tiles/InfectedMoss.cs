@@ -3,9 +3,7 @@ using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,7 +13,7 @@ namespace InfectedQualities.Content.Tiles
     [Autoload(false)]
     public class InfectedMoss(InfectionType infectionType, MossType mossType) : ModTile
     {
-        private Asset<Texture2D> MossTexture { get; set; } = TextureAssets.GlowMask[GlowMaskID.RainbowMoss];
+        private string MossTexture { get; set; } = $"Terraria/Images/Glow_{GlowMaskID.RainbowMoss}";
 
         private Color MossColor { get; set; } = default;
 
@@ -98,31 +96,31 @@ namespace InfectedQualities.Content.Tiles
                     break;
                 case MossType.Lava:
                     MossColor = new(150, 100, 50, 0);
-                    MossTexture = TextureAssets.GlowMask[GlowMaskID.LavaMoss];
+                    MossTexture = $"Terraria/Images/Glow_{GlowMaskID.LavaMoss}";
                     AddMapEntry(new (254, 121, 2));
                     DustType = DustID.LavaMoss;
                     break;
                 case MossType.Krypton:
                     MossColor = new (0, 200, 0, 0);
-                    MossTexture = TextureAssets.GlowMask[GlowMaskID.KryptonMoss];
+                    MossTexture = $"Terraria/Images/Glow_{GlowMaskID.KryptonMoss}";
                     AddMapEntry(new (114, 254, 2));
                     DustType = DustID.KryptonMoss;
                     break;
                 case MossType.Xenon:
                     MossColor = new (0, 180, 250, 0);
-                    MossTexture = TextureAssets.GlowMask[GlowMaskID.XenonMoss];
+                    MossTexture = $"Terraria/Images/Glow_{GlowMaskID.XenonMoss}";
                     AddMapEntry(new (0, 197, 208));
                     DustType = DustID.XenonMoss;
                     break;
                 case MossType.Argon:
                     MossColor = new (225, 0, 125, 0);
-                    MossTexture = TextureAssets.GlowMask[GlowMaskID.ArgonMoss];
+                    MossTexture = $"Terraria/Images/Glow_{GlowMaskID.ArgonMoss}";
                     AddMapEntry(new (208, 0, 126));
                     DustType = DustID.ArgonMoss;
                     break;
                 case MossType.Neon:
                     MossColor = new (150, 0, 250, 0);
-                    MossTexture = TextureAssets.GlowMask[GlowMaskID.VioletMoss];
+                    MossTexture = $"Terraria/Images/Glow_{GlowMaskID.VioletMoss}";
                     AddMapEntry(new (220, 12, 237));
                     DustType = DustID.VioletMoss;
                     break;
@@ -513,7 +511,7 @@ namespace InfectedQualities.Content.Tiles
                     }
                 }
 
-                TextureUtilities.TileDraw(i, j, TextureAssets.Tile[Type], TextureUtilities.TileDrawColor(i, j, true), spriteBatch, new(frameX, frameY));
+                TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(Texture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, true), spriteBatch, new(frameX, frameY));
                 return false;
             }
             return true;
@@ -523,13 +521,30 @@ namespace InfectedQualities.Content.Tiles
         {
             if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
 
-            Color mossColor = MossColor;
-            if (mossType < MossType.Lava && !Main.tile[i, j].IsTileFullbright) mossColor = Lighting.GetColorClamped(i, j, MossColor);
-            else if (mossType == MossType.Helium) mossColor = Main.DiscoColor;
-            TextureUtilities.ActuatedColor(i, j, ref mossColor);
+            Texture2D texture = ModContent.Request<Texture2D>(MossTexture).Value;
+            if (mossType == MossType.Helium)
+            {
+                TextureUtilities.TileDraw(i, j, texture, Main.DiscoColor, spriteBatch);
+            }
+            else
+            {
+                Color mossColor;
+                if (mossType < MossType.Lava)
+                {
+                    mossColor = TextureUtilities.TileDrawColor(i, j, baseColor: MossColor);
+                }
+                else
+                {
+                    mossColor = MossColor;
+                    TextureUtilities.ActuatedColor(i, j, ref mossColor);
+                }
 
-            if (MossColor.A == 0) TextureUtilities.TileDraw(i, j, MossTexture, Lighting.GetColor(i, j), spriteBatch);
-            TextureUtilities.TileDraw(i, j, MossTexture, mossColor, spriteBatch);
+                if (MossColor.A == 0)
+                {
+                    TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(MossTexture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j), spriteBatch);
+                }
+                TextureUtilities.TileDraw(i, j, texture, mossColor, spriteBatch);
+            }
 
             if (infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
             {

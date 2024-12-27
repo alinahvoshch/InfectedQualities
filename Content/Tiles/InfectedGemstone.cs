@@ -3,7 +3,6 @@ using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Drawing;
@@ -16,7 +15,7 @@ namespace InfectedQualities.Content.Tiles
     [Autoload(false)]
     public class InfectedGemstone(InfectionType infectionType, GemType gemType) : ModTile
     {
-        private Asset<Texture2D> GemTexture { get; set; } = null;
+        private string GemTexture { get; set; } = null;
 
         public override void SetStaticDefaults()
         {
@@ -86,7 +85,7 @@ namespace InfectedQualities.Content.Tiles
                     break;
             }
 
-            GemTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/" + gemType.ToString() + "_Gemstone");
+            GemTexture = "InfectedQualities/Content/Extras/Tiles/" + gemType.ToString() + "_Gemstone";
         }
 
         public override void RandomUpdate(int i, int j) => TileUtilities.DefaultInfectionSpread(i, j, infectionType, TileUtilities.GetEnumType(null, gemType));
@@ -97,8 +96,7 @@ namespace InfectedQualities.Content.Tiles
         {
             if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
 
-            TextureUtilities.TileDraw(i, j, GemTexture, TextureUtilities.TileDrawColor(i, j), spriteBatch);
-
+            TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(GemTexture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j), spriteBatch);
             if (infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
             {
                 Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite);

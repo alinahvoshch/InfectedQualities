@@ -5,17 +5,21 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.GameContent.TilePaintSystemV2;
 
 namespace InfectedQualities.Content.Extras
 {
     public static class TextureUtilities
     {
         internal static Asset<Texture2D> PylonCrystalHighlightTexture { get; set; } = null;
+        private static readonly Dictionary<TexturePaintkey, TileRenderTargetHolder> textureRenders = [];
 
         public static void ReplacePlanteraType(InfectionType infectionType)
         {
@@ -53,10 +57,58 @@ namespace InfectedQualities.Content.Extras
             return null;
         }
 
-        public static Color TileDrawColor(int i, int j, bool emitDust = false)
+        public static RenderTarget2D RequestPaintTexture(string name, int color)
         {
-            Color color = Lighting.GetColor(i, j);
-            if (Main.tile[i, j].IsTileFullbright) color = Color.White;
+            TexturePaintkey tileVariationkey = new()
+            {
+                TextureName = name,
+                PaintColor = color
+            };
+            textureRenders.TryGetValue(tileVariationkey, out var value);
+
+            if (value != default && value.IsReady)
+            {
+                return value.Target;
+            }
+
+            if (value == default)
+            {
+                value = new TileRenderTargetHolder
+                {
+                    Key = tileVariationkey
+                };
+
+                textureRenders.Add(tileVariationkey, value);
+            }
+
+            if (!value.IsReady)
+            {
+                List<ARenderTargetHolder> renderRequests = (List<ARenderTargetHolder>)typeof(TilePaintSystemV2).GetField("_requests", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilePaintSystem);
+                renderRequests.Add(value);
+            }
+            return null;
+        }
+
+        public static Color TileDrawColor(int i, int j, bool emitDust = false, Color baseColor = default)
+        {
+            if (baseColor == default)
+            {
+                baseColor = Color.White;
+            }
+
+            Color color;
+            if (Main.tile[i, j].IsTileFullbright) color = baseColor;
+            else
+            {
+                if(baseColor == Color.White)
+                {
+                    color = Lighting.GetColor(i, j);
+                }
+                else
+                {
+                    color = Lighting.GetColor(i, j, baseColor);
+                }
+            }
             ActuatedColor(i, j, ref color);
 
             if (Main.LocalPlayer.dangerSense && TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer))
@@ -112,8 +164,10 @@ namespace InfectedQualities.Content.Extras
             return color;
         }
 
-        public static void TileDraw(int i, int j, Asset<Texture2D> texture, Color color, SpriteBatch spriteBatch, Point? frames = null)
+        public static void TileDraw(int i, int j, Texture2D texture, Color color, SpriteBatch spriteBatch, Point? frames = null)
         {
+            if (texture == null) return;
+
             Vector2 offscreenVector = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
             Vector2 drawVector = new Vector2(i * 16, j * 16) + offscreenVector - Main.screenPosition;
             if (!frames.HasValue)
@@ -124,13 +178,13 @@ namespace InfectedQualities.Content.Extras
             Rectangle frame = new(frames.Value.X, frames.Value.Y, 16, 16);
             if (Main.tile[i, j].Slope == SlopeType.Solid && !Main.tile[i, j].IsHalfBlock)
             {
-                spriteBatch.Draw(texture.Value, drawVector, frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, drawVector, frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             }
             else if (Main.tile[i, j].IsHalfBlock)
             {
                 drawVector += new Vector2(0, 8);
                 frame.Height = 8;
-                spriteBatch.Draw(texture.Value, drawVector, frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, drawVector, frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             }
             else
             {
@@ -163,12 +217,12 @@ namespace InfectedQualities.Content.Extras
                             break;
                     }
                     frame = new(frames.Value.X + xOffset, frames.Value.Y + yOffset, width, height);
-                    spriteBatch.Draw(texture.Value, drawVector + new Vector2(xOffset, q * width + num), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                    spriteBatch.Draw(texture, drawVector + new Vector2(xOffset, q * width + num), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
                 }
 
                 int slopeOffset = (Main.tile[i, j].Slope <= SlopeType.SlopeDownRight) ? 14 : 0;
                 frame = new(frames.Value.X, frames.Value.Y + slopeOffset, 16, 2);
-                spriteBatch.Draw(texture.Value, drawVector + new Vector2(0, slopeOffset), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, drawVector + new Vector2(0, slopeOffset), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             }
         }
 
@@ -190,6 +244,48 @@ namespace InfectedQualities.Content.Extras
                 return InfectedQualitiesModSupport.ModWallBiomeSight[type];
             }
             return default;
+        }
+
+        private class TileRenderTargetHolder : ARenderTargetHolder
+        {
+            public TexturePaintkey Key;
+
+            public override void Prepare()
+            {
+                Asset<Texture2D> asset = ModContent.Request<Texture2D>(Key.TextureName, AssetRequestMode.ImmediateLoad);
+                asset.Wait?.Invoke();
+                PrepareTextureIfNecessary(asset.Value);
+            }
+
+            public override void PrepareShader()
+            {
+                PrepareShader(Key.PaintColor, TreePaintSystemData.GetTileSettings(-1, 0));
+            }
+        }
+
+        private struct TexturePaintkey
+        {
+            public string TextureName;
+            public int PaintColor;
+
+            public override readonly bool Equals(object obj)
+            {
+                if (obj is TexturePaintkey variationkey)
+                {
+                    return TextureName == variationkey.TextureName && PaintColor == variationkey.PaintColor;
+                }
+                return false;
+            }
+
+            public override readonly int GetHashCode()
+            {
+                int stringHash = TextureName.GetHashCode();
+                return ((stringHash << 16) | (stringHash >> 16)) ^ PaintColor;
+            }
+
+            public static bool operator ==(TexturePaintkey left, TexturePaintkey right) => left.Equals(right);
+
+            public static bool operator !=(TexturePaintkey left, TexturePaintkey right) => !left.Equals(right);
         }
     }
 }
