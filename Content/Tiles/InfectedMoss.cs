@@ -511,7 +511,7 @@ namespace InfectedQualities.Content.Tiles
                     }
                 }
 
-                TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(Texture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White, true), spriteBatch, new(frameX, frameY));
+                TextureUtilities.TileDraw(i, j, Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(Type, 0, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White, true), spriteBatch, new(frameX, frameY));
                 return false;
             }
             return true;
