@@ -15,8 +15,6 @@ namespace InfectedQualities.Content.Tiles
     [Autoload(false)]
     public class InfectedGemstone(InfectionType infectionType, GemType gemType) : ModTile
     {
-        private string GemTexture { get; set; } = null;
-
         public override void SetStaticDefaults()
         {
             Main.tileStone[Type] = true;
@@ -84,20 +82,32 @@ namespace InfectedQualities.Content.Tiles
                     AddMapEntry(new(233, 180, 90), Language.GetText("ItemName.Amber"));
                     break;
             }
-
-            GemTexture = "InfectedQualities/Content/Extras/Tiles/" + gemType.ToString() + "_Gemstone";
         }
 
         public override void RandomUpdate(int i, int j) => TileUtilities.DefaultInfectionSpread(i, j, infectionType, TileUtilities.GetEnumType(null, gemType));
 
         public override IEnumerable<Item> GetItemDrops(int i, int j) => [new Item(ItemID.Search.GetId(gemType.ToString()))];
 
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            if(TileDrawing.IsVisible(Main.tile[i, j]))
+            {
+                ushort infectedStoneType = infectionType switch
+                {
+                    InfectionType.Corrupt => TileID.Ebonstone,
+                    InfectionType.Crimson => TileID.Crimstone,
+                    InfectionType.Hallowed => TileID.Pearlstone,
+                    _ => TileID.Stone
+                };
+
+                TextureUtilities.TileDraw(i, j, Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(infectedStoneType, 0, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White, true), spriteBatch);
+            }
+            return true;
+        }
+
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
-
-            TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(GemTexture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White), spriteBatch);
-            if (infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
+            if (TileDrawing.IsVisible(Main.tile[i, j]) && infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
             {
                 Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite);
             }
@@ -107,13 +117,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override string Name => infectionType.ToString() + gemType.ToString() + "Gemstone";
 
-        public override string Texture => $"Terraria/Images/Tiles_{infectionType switch
-        {
-            InfectionType.Corrupt => TileID.Ebonstone,
-            InfectionType.Crimson => TileID.Crimstone,
-            InfectionType.Hallowed => TileID.Pearlstone,
-            _ => TileID.Stone
-        }}";
+        public override string Texture => "InfectedQualities/Content/Extras/Tiles/" + gemType.ToString() + "_Gemstone";
 
         public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones;
     }

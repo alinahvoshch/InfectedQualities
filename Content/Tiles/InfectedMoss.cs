@@ -4,6 +4,7 @@ using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,27 +14,17 @@ namespace InfectedQualities.Content.Tiles
     [Autoload(false)]
     public class InfectedMoss(InfectionType infectionType, MossType mossType) : ModTile
     {
-        private string MossTexture { get; set; } = $"Terraria/Images/Glow_{GlowMaskID.RainbowMoss}";
-
         private Color MossColor { get; set; } = default;
 
-        private ushort InfectedStoneType => infectionType switch
-        {
-            InfectionType.Corrupt => TileID.Ebonstone,
-            InfectionType.Crimson => TileID.Crimstone,
-            InfectionType.Hallowed => TileID.Pearlstone,
-            _ => TileID.Stone
-        };
+        private ushort InfectedStoneType { get; set; }
 
         public override void SetStaticDefaults()
         {
             Main.tileBrick[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
-            Main.tileMerge[InfectedStoneType][Type] = true;
 
             TileID.Sets.NeedsGrassFraming[Type] = true;
-            TileID.Sets.NeedsGrassFramingDirt[Type] = InfectedStoneType;
             TileID.Sets.ResetsHalfBrickPlacementAttempt[Type] = false;
             TileID.Sets.Conversion.Moss[Type] = true;
 
@@ -44,6 +35,9 @@ namespace InfectedQualities.Content.Tiles
             switch(infectionType)
             {
                 case InfectionType.Corrupt:
+                    InfectedStoneType = TileID.Ebonstone;
+                    Main.tileMerge[TileID.Ebonstone][Type] = true;
+                    TileID.Sets.NeedsGrassFramingDirt[Type] = TileID.Ebonstone;
                     TileID.Sets.Corrupt[Type] = true;
                     TileID.Sets.AddCorruptionTile(Type);
                     TileID.Sets.CorruptBiomeSight[Type] = true;
@@ -51,6 +45,9 @@ namespace InfectedQualities.Content.Tiles
                     RegisterItemDrop(ItemID.EbonstoneBlock);
                     break;
                 case InfectionType.Crimson:
+                    InfectedStoneType = TileID.Crimstone;
+                    Main.tileMerge[TileID.Crimstone][Type] = true;
+                    TileID.Sets.NeedsGrassFramingDirt[Type] = TileID.Crimstone;
                     TileID.Sets.Crimson[Type] = true;
                     TileID.Sets.AddCrimsonTile(Type);
                     TileID.Sets.CrimsonBiomeSight[Type] = true;
@@ -58,7 +55,10 @@ namespace InfectedQualities.Content.Tiles
                     RegisterItemDrop(ItemID.CrimstoneBlock);
                     break;
                 case InfectionType.Hallowed:
+                    InfectedStoneType = TileID.Pearlstone;
                     Main.tileShine[Type] = 9000;
+                    Main.tileMerge[TileID.Pearlstone][Type] = true;
+                    TileID.Sets.NeedsGrassFramingDirt[Type] = TileID.Pearlstone;
                     TileID.Sets.Hallow[Type] = true;
                     TileID.Sets.HallowBiome[Type] = 1;
                     TileID.Sets.HallowBiomeSight[Type] = true;
@@ -96,31 +96,26 @@ namespace InfectedQualities.Content.Tiles
                     break;
                 case MossType.Lava:
                     MossColor = new(150, 100, 50, 0);
-                    MossTexture = $"Terraria/Images/Glow_{GlowMaskID.LavaMoss}";
                     AddMapEntry(new (254, 121, 2));
                     DustType = DustID.LavaMoss;
                     break;
                 case MossType.Krypton:
                     MossColor = new (0, 200, 0, 0);
-                    MossTexture = $"Terraria/Images/Glow_{GlowMaskID.KryptonMoss}";
                     AddMapEntry(new (114, 254, 2));
                     DustType = DustID.KryptonMoss;
                     break;
                 case MossType.Xenon:
                     MossColor = new (0, 180, 250, 0);
-                    MossTexture = $"Terraria/Images/Glow_{GlowMaskID.XenonMoss}";
                     AddMapEntry(new (0, 197, 208));
                     DustType = DustID.XenonMoss;
                     break;
                 case MossType.Argon:
                     MossColor = new (225, 0, 125, 0);
-                    MossTexture = $"Terraria/Images/Glow_{GlowMaskID.ArgonMoss}";
                     AddMapEntry(new (208, 0, 126));
                     DustType = DustID.ArgonMoss;
                     break;
                 case MossType.Neon:
                     MossColor = new (150, 0, 250, 0);
-                    MossTexture = $"Terraria/Images/Glow_{GlowMaskID.VioletMoss}";
                     AddMapEntry(new (220, 12, 237));
                     DustType = DustID.VioletMoss;
                     break;
@@ -233,314 +228,317 @@ namespace InfectedQualities.Content.Tiles
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if(TileDrawing.IsVisible(Main.tile[i, j]) && (Main.tile[i, j].TileFrameX > 216 || Main.tile[i, j].TileFrameY > 72))
+            if(TileDrawing.IsVisible(Main.tile[i, j]))
             {
                 short frameX = Main.tile[i, j].TileFrameX;
                 short frameY = Main.tile[i, j].TileFrameY;
 
-                if (frameX is 0 or 18 && frameY is 270 or 288 or 306)
+                if(frameX > 216 || frameY > 72)
                 {
-                    frameX = (short)(frameX == 18 ? 72 : 0);
-                    frameY -= 270;
-                }
-                else if (frameX is 36 or 54)
-                {
-                    if (frameY is 90 or 108)
+                    if (frameX is 0 or 18 && frameY is 270 or 288 or 306)
                     {
-                        frameX = 18;
-                        frameY = 18;
+                        frameX = (short)(frameX == 18 ? 72 : 0);
+                        frameY -= 270;
                     }
-                    else if (frameY is 126 or 144)
+                    else if (frameX is 36 or 54)
                     {
-                        frameX = 36;
-                        frameY = 18;
-                    }
-                    else if (frameY is 162 or 180)
-                    {
-                        frameX = 54;
-                        frameY = 18;
-                    }
-                }
-                else if (frameX is 72 or 90)
-                {
-                    if (frameY is 90 or 144)
-                    {
-                        frameX = (short)(frameX == 90 ? 72 : 0);
-                        frameY = 0;
-                    }
-                    else if (frameY is 108 or 162)
-                    {
-                        frameX = (short)(frameX == 90 ? 72 : 0);
-                        frameY = 18;
-                    }
-                    else if (frameY is 126 or 180)
-                    {
-                        frameX = (short)(frameX == 90 ? 72 : 0);
-                        frameY = 36;
-                    }
-                }
-                else if (frameX == 108)
-                {
-                    if (frameY is 90 or 108 or 126)
-                    {
-                        frameX = (short)(frameY + 18);
-                        frameY = 0;
-                    }
-                    else if (frameY is 144 or 162 or 180)
-                    {
-                        frameX = (short)(frameY - 36);
-                        frameY = 54;
-                    }
-                    else if (frameY is 216 or 234 or 252)
-                    {
-                        frameX = 90;
-                        frameY -= 216;
-                    }
-                    else if (frameY > 306)
-                    {
-                        frameX = 18;
-                        frameY = 18;
-                    }
-                }
-                else if (frameX == 126)
-                {
-                    if (frameY is 90 or 144)
-                    {
-                        frameX = 90;
-                        frameY = 0;
-                    }
-                    else if (frameY is 108 or 162)
-                    {
-                        frameX = 90;
-                        frameY = 18;
-                    }
-                    else if (frameY is 126 or 180)
-                    {
-                        frameX = 90;
-                        frameY = 36;
-                    }
-                    else if (frameY > 306)
-                    {
-                        frameX = 36;
-                        frameY = 18;
-                    }
-                }
-                else if (frameX is 144 or 162 or 180)
-                {
-                    if (frameY is 126 or 144 or 162)
-                    {
-                        frameX = (short)(frameY - 108);
-                        frameY = 18;
-                    }
-                    else if (frameY is 90 or 108 or 180)
-                    {
-                        frameX -= 126;
-                        frameY = 18;
-                    }
-                    else if (frameX == 144 && frameY >= 324)
-                    {
-                        frameX = 54;
-                        frameY = 18;
-                    }
-                }
-
-                if (frameY is 198 or 216)
-                {
-                    if (frameX is 0 or 54)
-                    {
-                        frameX = 18;
-                        frameY = (short)(frameY == 216 ? 36 : 0);
-                    }
-                    else if (frameX is 18 or 72)
-                    {
-                        frameX = 36;
-                        frameY = (short)(frameY == 216 ? 36 : 0);
-                    }
-                    else if (frameX is 36 or 90)
-                    {
-                        frameX = 54;
-                        frameY = (short)(frameY == 216 ? 36 : 0);
-                    }
-
-                    if (frameY == 198)
-                    {
-                        if (frameX is 108 or 126 or 144)
+                        if (frameY is 90 or 108)
                         {
-                            frameX -= 90;
+                            frameX = 18;
                             frameY = 18;
                         }
-                        else if (frameX is 162 or 180 or 198)
+                        else if (frameY is 126 or 144)
                         {
-                            frameX -= 54;
-                            frameY = 72;
+                            frameX = 36;
+                            frameY = 18;
+                        }
+                        else if (frameY is 162 or 180)
+                        {
+                            frameX = 54;
+                            frameY = 18;
                         }
                     }
-                    else
+                    else if (frameX is 72 or 90)
                     {
-                        if (frameX is 126 or 180 or 234)
+                        if (frameY is 90 or 144)
                         {
-                            frameX = (short)(frameX == 234 ? 72 : frameX == 180 ? 36 : 0);
+                            frameX = (short)(frameX == 90 ? 72 : 0);
+                            frameY = 0;
+                        }
+                        else if (frameY is 108 or 162)
+                        {
+                            frameX = (short)(frameX == 90 ? 72 : 0);
+                            frameY = 18;
+                        }
+                        else if (frameY is 126 or 180)
+                        {
+                            frameX = (short)(frameX == 90 ? 72 : 0);
+                            frameY = 36;
+                        }
+                    }
+                    else if (frameX == 108)
+                    {
+                        if (frameY is 90 or 108 or 126)
+                        {
+                            frameX = (short)(frameY + 18);
+                            frameY = 0;
+                        }
+                        else if (frameY is 144 or 162 or 180)
+                        {
+                            frameX = (short)(frameY - 36);
                             frameY = 54;
+                        }
+                        else if (frameY is 216 or 234 or 252)
+                        {
+                            frameX = 90;
+                            frameY -= 216;
+                        }
+                        else if (frameY > 306)
+                        {
+                            frameX = 18;
+                            frameY = 18;
+                        }
+                    }
+                    else if (frameX == 126)
+                    {
+                        if (frameY is 90 or 144)
+                        {
+                            frameX = 90;
+                            frameY = 0;
+                        }
+                        else if (frameY is 108 or 162)
+                        {
+                            frameX = 90;
+                            frameY = 18;
+                        }
+                        else if (frameY is 126 or 180)
+                        {
+                            frameX = 90;
+                            frameY = 36;
+                        }
+                        else if (frameY > 306)
+                        {
+                            frameX = 36;
+                            frameY = 18;
+                        }
+                    }
+                    else if (frameX is 144 or 162 or 180)
+                    {
+                        if (frameY is 126 or 144 or 162)
+                        {
+                            frameX = (short)(frameY - 108);
+                            frameY = 18;
+                        }
+                        else if (frameY is 90 or 108 or 180)
+                        {
+                            frameX -= 126;
+                            frameY = 18;
+                        }
+                        else if (frameX == 144 && frameY >= 324)
+                        {
+                            frameX = 54;
+                            frameY = 18;
+                        }
+                    }
+
+                    if (frameY is 198 or 216)
+                    {
+                        if (frameX is 0 or 54)
+                        {
+                            frameX = 18;
+                            frameY = (short)(frameY == 216 ? 36 : 0);
+                        }
+                        else if (frameX is 18 or 72)
+                        {
+                            frameX = 36;
+                            frameY = (short)(frameY == 216 ? 36 : 0);
+                        }
+                        else if (frameX is 36 or 90)
+                        {
+                            frameX = 54;
+                            frameY = (short)(frameY == 216 ? 36 : 0);
+                        }
+
+                        if (frameY == 198)
+                        {
+                            if (frameX is 108 or 126 or 144)
+                            {
+                                frameX -= 90;
+                                frameY = 18;
+                            }
+                            else if (frameX is 162 or 180 or 198)
+                            {
+                                frameX -= 54;
+                                frameY = 72;
+                            }
+                        }
+                        else
+                        {
+                            if (frameX is 126 or 180 or 234)
+                            {
+                                frameX = (short)(frameX == 234 ? 72 : frameX == 180 ? 36 : 0);
+                                frameY = 54;
+                            }
+                            else if (frameX is 144 or 198 or 252)
+                            {
+                                frameX = (short)(frameX == 252 ? 54 : frameX == 198 ? 36 : 18);
+                                frameY = 0;
+                            }
+                            else if (frameX is 162 or 216 or 270)
+                            {
+                                frameX = (short)(frameX == 270 ? 90 : frameX == 216 ? 54 : 18);
+                                frameY = 54;
+                            }
+                        }
+                    }
+                    else if (frameY == 234)
+                    {
+                        if (frameX < 108)
+                        {
+                            if (frameX < 54)
+                            {
+                                frameY = frameX;
+                                frameX = 216;
+                            }
+                            else
+                            {
+                                frameY = (short)(frameX - 54);
+                                frameX = 162;
+                            }
+                        }
+                        else if (frameX is 126 or 180 or 234)
+                        {
+                            frameX = 0;
+                            frameY = (short)(frameX == 234 ? 36 : frameX == 180 ? 18 : 0);
                         }
                         else if (frameX is 144 or 198 or 252)
                         {
                             frameX = (short)(frameX == 252 ? 54 : frameX == 198 ? 36 : 18);
-                            frameY = 0;
+                            frameY = 18;
+                        }
+                        else if (frameX is 162 or 216 or 270)
+                        {
+                            frameX = 72;
+                            frameY = (short)(frameX == 234 ? 36 : frameX == 180 ? 18 : 0);
+                        }
+                    }
+                    else if (frameY == 252)
+                    {
+                        if (frameX < 108)
+                        {
+                            if (frameX > 36)
+                            {
+                                frameX -= 54;
+                            }
+                            frameX += 108;
+                            frameY = 72;
+                        }
+                        else if (frameX is 126 or 180 or 234)
+                        {
+                            frameX = (short)(frameX == 234 ? 72 : frameX == 180 ? 36 : 0);
+                            frameY = 72;
+                        }
+                        else if (frameX is 144 or 198 or 252)
+                        {
+                            frameX = (short)(frameX == 252 ? 54 : frameX == 198 ? 36 : 18);
+                            frameY = 36;
                         }
                         else if (frameX is 162 or 216 or 270)
                         {
                             frameX = (short)(frameX == 270 ? 90 : frameX == 216 ? 54 : 18);
-                            frameY = 54;
+                            frameY = 72;
                         }
                     }
-                }
-                else if (frameY == 234)
-                {
-                    if (frameX < 108)
+                    else if (frameY is 270 or 288)
                     {
-                        if (frameX < 54)
+                        if (frameX is 36 or 54 or 72)
                         {
+                            frameX -= 18;
+                            frameY = (short)(frameY == 288 ? 36 : 0);
+                        }
+                        else if (frameX is 90 or 108 or 126)
+                        {
+                            frameX = (short)(frameX == 126 ? 72 : frameX == 108 ? 36 : 0);
+                            frameY = (short)(frameY == 288 ? 72 : 54);
+                        }
+                        else if (frameX is 144 or 162 or 180)
+                        {
+                            frameX = (short)(frameX == 126 ? 90 : frameX == 108 ? 54 : 18);
+                            frameY = (short)(frameY == 288 ? 72 : 54);
+                        }
+                        else if (frameX is 198 or 216 or 234)
+                        {
+                            frameX -= 180;
+                            frameY = 18;
+                        }
+                    }
+                    else if (frameY == 306)
+                    {
+                        if (frameX >= 36 && frameX < 252)
+                        {
+                            while (frameX > 72) frameX -= 54;
+
+                            frameX -= 18;
+                            frameY = 18;
+                        }
+                    }
+                    else if (frameY is 324 or 342)
+                    {
+                        if (frameX < 108)
+                        {
+                            if (frameX >= 54)
+                            {
+                                frameX -= 54;
+                            }
+                            frameX += 18;
+                            frameY = (short)(frameY == 342 ? 36 : 0);
+                        }
+                    }
+                    else if (frameY is 360 or 378)
+                    {
+                        if (frameX < 108)
+                        {
+                            if (frameX > 36)
+                            {
+                                frameX -= 54;
+                            }
+                            short oldFrameY = frameY;
                             frameY = frameX;
-                            frameX = 216;
+                            frameX = (short)(oldFrameY == 360 ? 0 : 72);
                         }
-                        else
-                        {
-                            frameY = (short)(frameX - 54);
-                            frameX = 162;
-                        }
-                    }
-                    else if (frameX is 126 or 180 or 234)
-                    {
-                        frameX = 0;
-                        frameY = (short)(frameX == 234 ? 36 : frameX == 180 ? 18 : 0);
-                    }
-                    else if (frameX is 144 or 198 or 252)
-                    {
-                        frameX = (short)(frameX == 252 ? 54 : frameX == 198 ? 36 : 18);
-                        frameY = 18;
-                    }
-                    else if (frameX is 162 or 216 or 270)
-                    {
-                        frameX = 72;
-                        frameY = (short)(frameX == 234 ? 36 : frameX == 180 ? 18 : 0);
-                    }
-                }
-                else if (frameY == 252)
-                {
-                    if (frameX < 108)
-                    {
-                        if (frameX > 36)
-                        {
-                            frameX -= 54;
-                        }
-                        frameX += 108;
-                        frameY = 72;
-                    }
-                    else if (frameX is 126 or 180 or 234)
-                    {
-                        frameX = (short)(frameX == 234 ? 72 : frameX == 180 ? 36 : 0);
-                        frameY = 72;
-                    }
-                    else if (frameX is 144 or 198 or 252)
-                    {
-                        frameX = (short)(frameX == 252 ? 54 : frameX == 198 ? 36 : 18);
-                        frameY = 36;
-                    }
-                    else if (frameX is 162 or 216 or 270)
-                    {
-                        frameX = (short)(frameX == 270 ? 90 : frameX == 216 ? 54 : 18);
-                        frameY = 72;
-                    }
-                }
-                else if (frameY is 270 or 288)
-                {
-                    if (frameX is 36 or 54 or 72)
-                    {
-                        frameX -= 18;
-                        frameY = (short)(frameY == 288 ? 36 : 0);
-                    }
-                    else if (frameX is 90 or 108 or 126)
-                    {
-                        frameX = (short)(frameX == 126 ? 72 : frameX == 108 ? 36 : 0);
-                        frameY = (short)(frameY == 288 ? 72 : 54);
-                    }
-                    else if (frameX is 144 or 162 or 180)
-                    {
-                        frameX = (short)(frameX == 126 ? 90 : frameX == 108 ? 54 : 18);
-                        frameY = (short)(frameY == 288 ? 72 : 54);
-                    }
-                    else if (frameX is 198 or 216 or 234)
-                    {
-                        frameX -= 180;
-                        frameY = 18;
-                    }
-                }
-                else if (frameY == 306)
-                {
-                    if (frameX >= 36 && frameX < 252)
-                    {
-                        while (frameX > 72) frameX -= 54;
-
-                        frameX -= 18;
-                        frameY = 18;
-                    }
-                }
-                else if (frameY is 324 or 342)
-                {
-                    if (frameX < 108)
-                    {
-                        if (frameX >= 54)
-                        {
-                            frameX -= 54;
-                        }
-                        frameX += 18;
-                        frameY = (short)(frameY == 342 ? 36 : 0);
-                    }
-                }
-                else if (frameY is 360 or 378)
-                {
-                    if (frameX < 108)
-                    {
-                        if (frameX > 36)
-                        {
-                            frameX -= 54;
-                        }
-                        short oldFrameY = frameY;
-                        frameY = frameX;
-                        frameX = (short)(oldFrameY == 360 ? 0 : 72);
                     }
                 }
 
-                TextureUtilities.TileDraw(i, j, Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(Type, 0, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White, true), spriteBatch, new(frameX, frameY));
-                return false;
+                TextureUtilities.TileDraw(i, j, Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(InfectedStoneType, 0, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White, true, InfectedStoneType), spriteBatch, new(frameX, frameY));
             }
-            return true;
+            return mossType != MossType.Helium && mossType >= MossType.Lava;
         }
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
 
-            Texture2D texture = ModContent.Request<Texture2D>(MossTexture).Value;
             if (mossType == MossType.Helium)
             {
-                TextureUtilities.TileDraw(i, j, texture, Main.DiscoColor, spriteBatch);
+                TextureUtilities.TileDraw(i, j, TextureAssets.Tile[Type].Value, Main.DiscoColor, spriteBatch);
             }
-            else
+            else if(mossType >= MossType.Lava)
             {
-                Color mossColor;
-                if (mossType < MossType.Lava)
+                TextureUtilities.TileDraw(i, j, TextureAssets.Tile[Type].Value, MossColor, spriteBatch);
+            }
+            else 
+            {
+                //Due to the nature of the methods I use for the paint textures, I have to make use of this to at least make the negative painted moss more accurate. Still, it will be darker than expected.
+                //I consider it a small price to pay for dynamic texture creation
+                Color mossColor = MossColor;
+                byte tileColor = Main.tile[i, j].TileColor;
+                if(tileColor == PaintID.NegativePaint)
                 {
-                    mossColor = TextureUtilities.TileDrawColor(i, j, MossColor);
+                    mossColor.R = (byte)(byte.MaxValue - MossColor.R);
+                    mossColor.G = (byte)(byte.MaxValue - MossColor.G);
+                    mossColor.B = (byte)(byte.MaxValue - MossColor.B);
                 }
-                else
-                {
-                    mossColor = MossColor;
-                    TextureUtilities.ActuateAndShineColors(i, j, ref mossColor);
-                    TextureUtilities.TileDraw(i, j, TextureUtilities.RequestPaintTexture(MossTexture, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White), spriteBatch);
-                }
-
-                TextureUtilities.TileDraw(i, j, texture, mossColor, spriteBatch);
+                TextureUtilities.TileDraw(i, j, Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(Type, 0, tileColor), TextureUtilities.TileDrawColor(i, j, mossColor), spriteBatch);
             }
 
             if (infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
@@ -576,7 +574,15 @@ namespace InfectedQualities.Content.Tiles
 
         public override string Name => infectionType.ToString() + mossType.ToString() + "Moss";
 
-        public override string Texture => $"Terraria/Images/Tiles_{InfectedStoneType}";
+        public override string Texture => mossType switch
+        {
+            MossType.Lava => $"Terraria/Images/Glow_{GlowMaskID.LavaMoss}",
+            MossType.Krypton => $"Terraria/Images/Glow_{GlowMaskID.KryptonMoss}",
+            MossType.Xenon => $"Terraria/Images/Glow_{GlowMaskID.XenonMoss}",
+            MossType.Argon => $"Terraria/Images/Glow_{GlowMaskID.ArgonMoss}",
+            MossType.Neon => $"Terraria/Images/Glow_{GlowMaskID.VioletMoss}",
+            _ => $"Terraria/Images/Glow_{GlowMaskID.RainbowMoss}"
+        };
 
         public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses;
     }

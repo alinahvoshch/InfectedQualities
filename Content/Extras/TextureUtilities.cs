@@ -1,26 +1,21 @@
-﻿using FullSerializer.Internal;
-using InfectedQualities.Common;
+﻿using InfectedQualities.Common;
 using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
-using System.Reflection;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.GameContent.TilePaintSystemV2;
 
 namespace InfectedQualities.Content.Extras
 {
     public static class TextureUtilities
     {
         internal static Asset<Texture2D> PylonCrystalHighlightTexture { get; set; } = null;
-        private static readonly Dictionary<TexturePaintkey, TileRenderTargetHolder> textureRenders = [];
 
         public static void ReplacePlanteraType(InfectionType infectionType)
         {
@@ -58,49 +53,9 @@ namespace InfectedQualities.Content.Extras
             return null;
         }
 
-        public static RenderTarget2D RequestPaintTexture(string name, int color)
+        public static Color TileDrawColor(int i, int j, Color tintColor, bool emitDust = false, ushort tileShineType = 0)
         {
-            TexturePaintkey tileVariationkey = new()
-            {
-                TextureName = name,
-                PaintColor = color
-            };
-            textureRenders.TryGetValue(tileVariationkey, out var value);
-
-            if (value != default && value.IsReady)
-            {
-                return value.Target;
-            }
-
-            if (value == default)
-            {
-                value = new TileRenderTargetHolder
-                {
-                    Key = tileVariationkey
-                };
-
-                textureRenders.Add(tileVariationkey, value);
-            }
-
-            if (!value.IsReady)
-            {
-                List<ARenderTargetHolder> renderRequests = (List<ARenderTargetHolder>)typeof(TilePaintSystemV2).GetField("_requests", BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Public | BindingFlags.Instance).GetValue(Main.instance.TilePaintSystem);
-                renderRequests.Add(value);
-            }
-            return null;
-        }
-
-        public static Color TileDrawColor(int i, int j, Color tintColor, bool emitDust = false)
-        {
-            Color color;
-            if(tintColor == Color.White)
-            {
-                color = Lighting.GetColor(i, j);
-            }
-            else
-            {
-                color = Lighting.GetColorClamped(i, j, tintColor);
-            }
+            Color color = Lighting.GetColor(i, j);
 
             if (Main.LocalPlayer.dangerSense && TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer))
             {
@@ -152,11 +107,33 @@ namespace InfectedQualities.Content.Extras
                 }
             }
 
+            color = color.MultiplyRGB(tintColor);
+            int red = Math.Min(color.R, byte.MaxValue);
+            int green = Math.Min(color.G, byte.MaxValue);
+            int blue = Math.Min(color.B, byte.MaxValue);
+
+            blue <<= 16;
+            green <<= 8;
+            color.PackedValue = (uint)(red | green | blue) | 0xFF000000u;
+
             if (Main.tile[i, j].IsTileFullbright)
             {
                 color = tintColor;
             }
-            ActuateAndShineColors(i, j, ref color);
+            if (Main.tile[i, j].IsActuated)
+            {
+                byte alpha = color.A;
+                color *= 0.4f;
+                color.A = alpha;
+            }
+            else
+            {
+                if (tileShineType == 0) tileShineType = Main.tile[i, j].TileType;
+                if ((Main.shimmerAlpha > 0f && Main.tileSolid[tileShineType]) || Main.tileShine2[tileShineType])
+                {
+                    color = Main.shine(color, tileShineType);
+                }
+            }
             return color;
         }
 
@@ -225,25 +202,6 @@ namespace InfectedQualities.Content.Extras
             }
         }
 
-        //Basically Tile.actColor and Main.shine combined into one
-        public static void ActuateAndShineColors(int i, int j, ref Color color)
-        {
-            if (Main.tile[i, j].IsActuated)
-            {
-                byte alpha = color.A;
-                color *= 0.4f;
-                color.A = alpha;
-            }
-            else
-            {
-                ushort type = Main.tile[i, j].TileType;
-                if ((Main.shimmerAlpha > 0f && Main.tileSolid[type]) || Main.tileShine2[type])
-                {
-                    color = Main.shine(color, type);
-                }
-            }
-        }
-
         public static Color WallBiomeColor(int i, int j, int type)
         {
             if (Main.LocalPlayer.biomeSight && ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlightBrightness != 0 && !WorldGen.SolidTile(i, j, true) && (Main.tile[i, j].LiquidAmount == 0 || Main.tile[i, j].LiquidType == LiquidID.Water))
@@ -251,48 +209,6 @@ namespace InfectedQualities.Content.Extras
                 return InfectedQualitiesModSupport.ModWallBiomeSight[type];
             }
             return default;
-        }
-
-        private class TileRenderTargetHolder : ARenderTargetHolder
-        {
-            public TexturePaintkey Key;
-
-            public override void Prepare()
-            {
-                Asset<Texture2D> asset = ModContent.Request<Texture2D>(Key.TextureName, AssetRequestMode.ImmediateLoad);
-                asset.Wait?.Invoke();
-                PrepareTextureIfNecessary(asset.Value);
-            }
-
-            public override void PrepareShader()
-            {
-                PrepareShader(Key.PaintColor, TreePaintSystemData.GetTileSettings(-1, 0));
-            }
-        }
-
-        private struct TexturePaintkey
-        {
-            public string TextureName;
-            public int PaintColor;
-
-            public override readonly bool Equals(object obj)
-            {
-                if (obj is TexturePaintkey variationkey)
-                {
-                    return TextureName == variationkey.TextureName && PaintColor == variationkey.PaintColor;
-                }
-                return false;
-            }
-
-            public override readonly int GetHashCode()
-            {
-                int stringHash = TextureName.GetHashCode();
-                return ((stringHash << 16) | (stringHash >> 16)) ^ PaintColor;
-            }
-
-            public static bool operator ==(TexturePaintkey left, TexturePaintkey right) => left.Equals(right);
-
-            public static bool operator !=(TexturePaintkey left, TexturePaintkey right) => !left.Equals(right);
         }
     }
 }
