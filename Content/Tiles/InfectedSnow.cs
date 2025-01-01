@@ -75,7 +75,10 @@ namespace InfectedQualities.Content.Tiles
 
         public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)
         {
-            if (down == TileID.Stalactite) down = Type;
+            if (down == TileID.Stalactite)
+            {
+                down = Type;
+            }
         }
 
         public override string Name => infectionType.ToString() + "Snow";

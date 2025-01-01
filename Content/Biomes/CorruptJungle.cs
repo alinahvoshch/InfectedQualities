@@ -27,7 +27,14 @@ namespace InfectedQualities.Content.Biomes
 
         public override int BiomeCampfireItemType => ItemID.CursedCampfire;
 
-        public override bool IsBiomeActive(Player player) => Main.hardMode && player.ZoneCorrupt && player.ZoneJungle && player.ZoneCavern() && !player.ZoneDungeon && !player.ZoneLihzhardTemple && !player.ZoneGlowshroom;
+        public override bool IsBiomeActive(Player player)
+        {
+            if(Main.hardMode && player.ZoneCorrupt && player.ZoneJungle && !player.ZoneGlowshroom)
+            {
+                return player.ZoneCavern() && !player.ZoneDungeon && !player.ZoneLihzhardTemple;
+            }
+            return false;
+        }
 
         public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes;
     }

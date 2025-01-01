@@ -35,10 +35,7 @@ namespace InfectedQualities.Content.Tiles.Plants
             AddMapEntry(new(228, 139, 215), Language.GetText("MapObject.PlanterasBulb"));
         }
 
-        public override ushort GetMapOption(int i, int j)
-        {
-            return (ushort)TileObjectData.GetTileStyle(Main.tile[i, j]);
-        }
+        public override ushort GetMapOption(int i, int j) => (ushort)TileObjectData.GetTileStyle(Main.tile[i, j]);
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 
@@ -66,17 +63,14 @@ namespace InfectedQualities.Content.Tiles.Plants
             {
                 case 0:
                     r = 0.2f;
-                    g = 0.1f;
                     b = 0.5f;
                     break;
                 case 1:
                     r = 0.5f;
-                    g = 0.1f;
                     b = 0.1f;
                     break;
                 case 2:
                     r = 0.5f;
-                    g = 0.1f;
                     b = 0.7f;
                     break;
             }
@@ -108,32 +102,37 @@ namespace InfectedQualities.Content.Tiles.Plants
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (TileObjectData.IsTopLeft(i, j) && WorldGen.genRand.NextBool(10))
-            {
-                Vector2 positionVector = new((i + 1) * 16, (j + 1) * 16);
-                switch (TileObjectData.GetTileStyle(Main.tile[i, j]))
-                {
-                    case 0:
-                        Dust.NewDust(positionVector, 2, 2, DustID.Corruption);
-                        break;
-                    case 1:
-                        Dust.NewDust(positionVector, 2, 2, DustID.Crimson);
-                        break;
-                    case 2:
-                        Dust planteraDust = Main.dust[Dust.NewDust(positionVector, 2, 2, DustID.PlanteraBulb, newColor: Color.Magenta, Alpha: 200)];
-                        planteraDust.noGravity = true;
-                        break;
-                }
-            }
+            bool topLeft = TileObjectData.IsTopLeft(i, j);
+            Vector2 vector = new(i * 16, j * 16);
 
-            if (TileObjectData.GetTileStyle(Main.tile[i, j]) == 0 && Main.rand.NextBool(500))
+            switch (TileObjectData.GetTileStyle(Main.tile[i, j]))
             {
-                Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite);
-            }
-            else if (TileObjectData.GetTileStyle(Main.tile[i, j]) == 2 && Main.rand.NextBool(127))
-            {
-                Dust shineDust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.TintableDustLighted, 0f, 0f, 254, Color.White, 0.5f)];
-                shineDust.velocity *= 0f;
+                case 0:
+                    if(Main.rand.NextBool(10))
+                    {
+                        Dust.NewDust(vector, 16, 16, DustID.Demonite);
+                    }
+                    break;
+                case 1:
+                    if (topLeft && WorldGen.genRand.NextBool(10))
+                    {
+                        vector += new Vector2(16, 0);
+                        Dust.NewDust(vector, 16, 16, DustID.Crimson);
+                    }
+                    break;
+                case 2:
+                    if (Main.rand.NextBool(127))
+                    {
+                        Dust shineDust = Main.dust[Dust.NewDust(vector, 16, 16, DustID.TintableDustLighted, 0f, 0f, 254, Color.White, 0.5f)];
+                        shineDust.velocity *= 0f;
+                    }
+                    if (topLeft && WorldGen.genRand.NextBool(10))
+                    {
+                        vector += new Vector2(16, 16);
+                        Dust planteraDust = Main.dust[Dust.NewDust(vector, 16, 16, DustID.PlanteraBulb, newColor: Color.Magenta, Alpha: 200)];
+                        planteraDust.noGravity = true;
+                    }
+                    break;
             }
         }
 
@@ -185,7 +184,7 @@ namespace InfectedQualities.Content.Tiles.Plants
                     NetMessage.SendTileSquare(-1, i, j, 2);
                 }
             }
-            else if (Main.tile[i, j - 1].HasTile && Main.tile[i, j - 1].TileType == Type)
+            else if (WorldGen.TileType(i, j - 1) == Type)
             {
                 WorldGen.TileFrame(i, j - 1);
             }
@@ -208,7 +207,10 @@ namespace InfectedQualities.Content.Tiles.Plants
                 }
             }
 
-            if (num8 / 16f < 50f) NPC.SpawnOnPlayer(plr, NPCID.Plantera);
+            if (num8 / 16f < 50f)
+            {
+                NPC.SpawnOnPlayer(plr, NPCID.Plantera);
+            }
         }
 
         public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes;

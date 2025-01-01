@@ -18,7 +18,7 @@ namespace InfectedQualities.Content.Tiles.Plants
             InfectionType.Corrupt => TreeTypes.Corrupt,
             InfectionType.Crimson => TreeTypes.Crimson,
             InfectionType.Hallowed => TreeTypes.Hallowed,
-            _ => TreeTypes.Snow
+            _ => base.CountsAsTreeType
         };
 
         public override TreePaintingSettings TreeShaderSettings => infectionType switch
@@ -34,7 +34,7 @@ namespace InfectedQualities.Content.Tiles.Plants
             InfectionType.Corrupt => ItemID.Ebonwood,
             InfectionType.Crimson => ItemID.Shadewood,
             InfectionType.Hallowed => ItemID.Pearlwood,
-            _ => ItemID.BorealWood
+            _ => ItemID.Wood
         };
 
         public override int CreateDust() => infectionType switch
@@ -42,7 +42,7 @@ namespace InfectedQualities.Content.Tiles.Plants
             InfectionType.Corrupt => DustID.Ebonwood,
             InfectionType.Crimson => DustID.Shadewood_Tree,
             InfectionType.Hallowed => DustID.t_PearlWood,
-            _ => DustID.WoodFurniture
+            _ => base.CreateDust()
         };
 
         public override int TreeLeaf() => infectionType switch
@@ -50,7 +50,7 @@ namespace InfectedQualities.Content.Tiles.Plants
             InfectionType.Corrupt => GoreID.TreeLeaf_Corruption,
             InfectionType.Crimson => GoreID.TreeLeaf_Crimson,
             InfectionType.Hallowed => 921,
-            _ => -1
+            _ => base.TreeLeaf()
         };
 
         public override int SaplingGrowthType(ref int style)

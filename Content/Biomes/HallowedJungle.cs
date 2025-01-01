@@ -59,7 +59,14 @@ namespace InfectedQualities.Content.Biomes
 
         public override Color? BackgroundColor => Color.Blue;
 
-        public override bool IsBiomeActive(Player player) => Main.hardMode && player.ZoneHallow && player.ZoneJungle && !player.ZoneDungeon && !player.ZoneLihzhardTemple && !player.ZoneGlowshroom && !player.ZoneSkyHeight && !player.ZoneUnderworldHeight;
+        public override bool IsBiomeActive(Player player)
+        {
+            if (Main.hardMode && player.ZoneHallow && player.ZoneJungle && !player.ZoneGlowshroom)
+            {
+                return !player.ZoneSkyHeight && !player.ZoneUnderworldHeight && !player.ZoneDungeon && !player.ZoneLihzhardTemple;
+            }
+            return false;
+        }
 
         public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes;
     }

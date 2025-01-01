@@ -16,7 +16,7 @@ namespace InfectedQualities.Core
                 if (Main.hardMode && Player.chest == -1 && LastChest >= 0)
                 {
                     Chest lastChest = Main.chest[LastChest];
-                    if (lastChest != null && Chest.FindChest(lastChest.x, lastChest.y) != 0)
+                    if (lastChest != null && Chest.FindChest(lastChest.x, lastChest.y) != -1)
                     {
                         int x = lastChest.x;
                         int y = lastChest.y;

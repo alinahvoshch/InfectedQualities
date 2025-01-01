@@ -10,10 +10,7 @@ namespace InfectedQualities.Content.Worldgen
 {
     public class WorldGenChasmPurifyer : GenPass
     {
-        public WorldGenChasmPurifyer() :
-            base("Chasm Purifyer", 1.0f)
-        {
-        }
+        public WorldGenChasmPurifyer() : base("Chasm Purifyer", 1.0f) { }
 
         protected override void ApplyPass(GenerationProgress progress, GameConfiguration configuration)
         {

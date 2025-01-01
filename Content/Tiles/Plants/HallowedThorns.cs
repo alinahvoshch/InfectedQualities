@@ -34,6 +34,8 @@ namespace InfectedQualities.Content.Tiles.Plants
             AddMapEntry(new(29, 160, 247), Language.GetText("MapObject.Thorn"));
         }
 
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+
         public override bool IsTileDangerous(int i, int j, Player player) => true;
 
         public override void RandomUpdate(int i, int j)
@@ -55,7 +57,10 @@ namespace InfectedQualities.Content.Tiles.Plants
 
         public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)
         {
-            if (down == ModContent.TileType<HallowedJungleGrass>()) down = Type;
+            if (down == ModContent.TileType<HallowedJungleGrass>())
+            {
+                down = Type;
+            }
         }
 
         public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes;

@@ -21,12 +21,14 @@
 -Jungle spores now grow in infected jungles
 -Changed the server config to only accept changes from the server host
 -Infected grasses(both normal and jungle) no longer spread to grass pre-hardmode, and no longer spread over each other.
+-Infected plantera bulbs' dusts changed to be less bloated.
 
 -Fixed description typo, and added missing features to the description. Also removed comment about Radiance mod compat, since it had no point in existing
 -Fixed vertebrae --> leather recipe not needing workbench. Also fixed duplicate recipe when used with Thorium mod
 -Fixed infected planteras crashing the game upon mod unload
 -Fixed infection spreading potentially crashing the game if infected biomes aren't enabled
 -Fixed corrupt jungle grass emmiting particles even when coated with echo paint.
+-Fixed hallowed thorns not having proper dust values
 
 0.7.1
 =====

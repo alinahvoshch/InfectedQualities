@@ -40,16 +40,13 @@ namespace InfectedQualities.Content.Tiles.Plants
             AddMapEntry(new(82, 166, 199), Language.GetText("ItemName.LifeFruit"));
         }
 
-        public override ushort GetMapOption(int i, int j)
-        {
-            return (ushort)(Main.tile[i, j].TileFrameY / 36);
-        }
+        public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameY / 36);
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
 
         public override bool CreateDust(int i, int j, ref int type)
         {
-            switch ((ushort)(Main.tile[i, j].TileFrameY / 36))
+            switch (Main.tile[i, j].TileFrameY / 36)
             {
                 case 0:
                     type = DustID.CorruptPlants;
@@ -75,13 +72,19 @@ namespace InfectedQualities.Content.Tiles.Plants
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (Main.tile[i, j].TileFrameY / 36 == 0 && Main.rand.NextBool(500))
+            int tileStyle = Main.tile[i, j].TileFrameY / 36;
+            if (tileStyle == 1)
             {
-                Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Demonite);
+                return;
             }
-            else if (Main.tile[i, j].TileFrameY / 36 == 2 && Main.rand.NextBool(127))
+            Vector2 vector = new (i * 16, j * 16);
+            if (tileStyle == 0 && Main.rand.NextBool(500))
             {
-                Dust shineDust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.TintableDustLighted, 0f, 0f, 254, Color.White, 0.5f)];
+                Dust.NewDust(vector, 16, 16, DustID.Demonite);
+            }
+            else if (tileStyle == 2 && Main.rand.NextBool(127))
+            {
+                Dust shineDust = Main.dust[Dust.NewDust(vector, 16, 16, DustID.TintableDustLighted, 0f, 0f, 254, Color.White, 0.5f)];
                 shineDust.velocity *= 0f;
             }
         }
@@ -134,7 +137,7 @@ namespace InfectedQualities.Content.Tiles.Plants
                     NetMessage.SendTileSquare(-1, i, j, 2);
                 }
             }
-            else if (Main.tile[i, j - 1].HasTile && Main.tile[i, j - 1].TileType == Type)
+            else if (WorldGen.TileType(i, j - 1) == Type)
             {
                 WorldGen.TileFrame(i, j - 1);
             }

@@ -559,7 +559,24 @@ namespace InfectedQualities.Content.Tiles
             }
         }
 
-        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : mossType == MossType.Helium ? 5 : 3;
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            if (fail)
+            {
+                num = 1;
+            }
+            else
+            {
+                if (mossType == MossType.Helium)
+                {
+                    num = 5;
+                }
+                else
+                {
+                    num = 3;
+                }
+            }
+        }
 
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
