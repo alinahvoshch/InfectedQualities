@@ -22,6 +22,7 @@ namespace InfectedQualities.Common
         private static Asset<Texture2D> PlanteraTentacleVine { get; set; } = null;
         private static Asset<Texture2D> PlanteraSpore { get; set; } = null;
         private static Asset<Texture2D> PlanteraSeed { get; set; } = null;
+        private static Asset<Texture2D> PlanteraThornBall { get; set; } = null;
         internal static Asset<Texture2D> CorruptPlantera { get; set; } = null;
         internal static Asset<Texture2D> CrimsonPlantera { get; set; } = null;
         internal static Asset<Texture2D> HallowedPlantera { get; set; } = null;
@@ -37,6 +38,7 @@ namespace InfectedQualities.Common
                 PlanteraTentacleVine = TextureAssets.Chain27;
                 PlanteraSpore = TextureAssets.Npc[NPCID.Spore];
                 PlanteraSeed = TextureAssets.Projectile[ProjectileID.SeedPlantera];
+                PlanteraThornBall = TextureAssets.Projectile[ProjectileID.ThornBall];
 
                 CorruptPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/CorruptPlantera");
                 CrimsonPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/CrimsonPlantera");
@@ -57,6 +59,7 @@ namespace InfectedQualities.Common
                     PlanteraTentacleVine = TextureAssets.Chain27;
                     PlanteraSpore = TextureAssets.Npc[NPCID.Spore];
                     PlanteraSeed = TextureAssets.Projectile[ProjectileID.SeedPlantera];
+                    PlanteraThornBall = TextureAssets.Projectile[ProjectileID.ThornBall];
                 }
 
                 if (Main.LocalPlayer.ZoneCorrupt)
@@ -80,6 +83,7 @@ namespace InfectedQualities.Common
                     TextureAssets.Chain27 = PlanteraTentacleVine;
                     TextureAssets.Npc[NPCID.Spore] = PlanteraSpore;
                     TextureAssets.Projectile[ProjectileID.SeedPlantera] = PlanteraSeed;
+                    TextureAssets.Projectile[ProjectileID.ThornBall] = PlanteraThornBall;
                 }
             }
         }
@@ -364,6 +368,7 @@ namespace InfectedQualities.Common
                 TextureAssets.Chain27 = Main.Assets.Request<Texture2D>("Images/Extra_27");
                 TextureAssets.Npc[NPCID.Spore] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.Spore}");
                 TextureAssets.Projectile[ProjectileID.SeedPlantera] = Main.Assets.Request<Texture2D>($"Images/Projectile_{ProjectileID.SeedPlantera}");
+                TextureAssets.Projectile[ProjectileID.ThornBall] = Main.Assets.Request<Texture2D>($"Images/Projectile_{ProjectileID.ThornBall}");
             }
         }
     }
