@@ -40,9 +40,9 @@ namespace InfectedQualities.Common
                 PlanteraSeed = TextureAssets.Projectile[ProjectileID.SeedPlantera];
                 PlanteraThornBall = TextureAssets.Projectile[ProjectileID.ThornBall];
 
-                CorruptPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/CorruptPlantera");
-                CrimsonPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/CrimsonPlantera");
-                HallowedPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/HallowedPlantera");
+                CorruptPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/CorruptPlantera");
+                CrimsonPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/CrimsonPlantera");
+                HallowedPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/HallowedPlantera");
             }
         }
 

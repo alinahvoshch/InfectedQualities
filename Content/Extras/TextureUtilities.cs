@@ -28,13 +28,13 @@ namespace InfectedQualities.Content.Extras
             };
 
             string planteraType = infectionType.ToString();
-            TextureAssets.Npc[NPCID.PlanterasHook] = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/" + planteraType + "Plantera_Hook");
+            TextureAssets.Npc[NPCID.PlanterasHook] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/" + planteraType + "Plantera_Hook");
             TextureAssets.Chain26 = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/" + planteraType + "Plantera_Hook_Vine");
-            TextureAssets.Npc[NPCID.PlanterasTentacle] = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/" + planteraType + "Plantera_Tentacle");
+            TextureAssets.Npc[NPCID.PlanterasTentacle] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/" + planteraType + "Plantera_Tentacle");
             TextureAssets.Chain27 = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/" + planteraType + "Plantera_Tentacle_Vine");
-            TextureAssets.Npc[NPCID.Spore] = ModContent.Request<Texture2D>("InfectedQualities/Content/NPCs/" + planteraType + "Plantera_Spore");
-            TextureAssets.Projectile[ProjectileID.SeedPlantera] = ModContent.Request<Texture2D>("InfectedQualities/Content/Projectiles/" + planteraType + "Plantera_Seed");
-            TextureAssets.Projectile[ProjectileID.ThornBall] = ModContent.Request<Texture2D>("InfectedQualities/Content/Projectiles/" + planteraType + "Plantera_ThornBall");
+            TextureAssets.Npc[NPCID.Spore] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/" + planteraType + "Plantera_Spore");
+            TextureAssets.Projectile[ProjectileID.SeedPlantera] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Projectiles/" + planteraType + "Plantera_Seed");
+            TextureAssets.Projectile[ProjectileID.ThornBall] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Projectiles/" + planteraType + "Plantera_ThornBall");
         }
 
         public static InfectionType? GetPlanteraType()
