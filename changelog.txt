@@ -23,6 +23,7 @@
 -Infected grasses(both normal and jungle) no longer spread to grass pre-hardmode, and no longer spread over each other.
 -Infected plantera bulbs' dusts changed to be less bloated.
 -Plantera thorn balls now have their own custom infected textures.
+-Resprited the crystal of pylon of night
 
 -Fixed description typo, and added missing features to the description. Also removed comment about Radiance mod compat, since it had no point in existing
 -Fixed vertebrae --> leather recipe not needing workbench. Also fixed duplicate recipe when used with Thorium mod
