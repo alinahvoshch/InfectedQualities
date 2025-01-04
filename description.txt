@@ -52,6 +52,7 @@ INFECTED PLANTERA --> Purely visual, plantera now gets her own custom texture wh
 -Hardmode V-Generation now affects moss blocks and thorns.
 -Unused corrupt and crimson lily pads and cattails can now appear.
 -Infected grass no longer spreads pre-hardmode, and they no longer spread over each other.
+-Light and dark shards are now exchangable with their respective souls inside a graveyard.
 
 |EXPERIMENTAL FEATURES|
 =======================

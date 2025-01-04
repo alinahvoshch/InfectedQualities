@@ -34,6 +34,22 @@ namespace InfectedQualities.Core
                 .AddCondition(Condition.InGraveyard)
                 .DisableDecraft()
                 .Register();
+
+            Recipe.Create(ItemID.LightShard)
+                .AddIngredient(ItemID.DarkShard)
+                .AddIngredient(ItemID.SoulofLight, 7)
+                .AddTile(TileID.WorkBenches)
+                .AddCondition(Condition.InGraveyard)
+                .DisableDecraft()
+                .Register();
+
+            Recipe.Create(ItemID.DarkShard)
+                .AddIngredient(ItemID.LightShard)
+                .AddIngredient(ItemID.SoulofNight, 7)
+                .AddTile(TileID.WorkBenches)
+                .AddCondition(Condition.InGraveyard)
+                .DisableDecraft()
+                .Register();
         }
 
         public override void AddRecipeGroups()

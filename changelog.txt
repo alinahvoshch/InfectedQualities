@@ -14,6 +14,7 @@
 -Added pureglow compability for 'SpiritMod'
 -Added journey mode research values for some items
 -Added ecto and illuminant coating support for biome sight wall highlighting
+-Added light shard and night shard exchanges in graveyard with the respective souls.
 
 -Infected cave walls now get highlighted by biome sight potions and spread infections. However they won't convert other cave walls
 -Chlorophyte can block infections pre-plantera again if 'InfectedBiomes' are disabled
