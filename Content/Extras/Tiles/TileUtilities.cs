@@ -292,6 +292,7 @@ namespace InfectedQualities.Content.Extras.Tiles
                 {
                     Main.tile[i, j].TileType = GetEnumType(infectionType, enumType);
                     WorldGen.SquareTileFrame(i, j);
+                    break;
                 }
                 else if (!safe)
                 {
@@ -301,37 +302,60 @@ namespace InfectedQualities.Content.Extras.Tiles
                         {
                             Main.tile[i, j].TileType = GetEnumType(infectionType, enumType);
                             WorldGen.SquareTileFrame(i, j);
+                            break;
                         }
                     }
                 }
             }
         }
 
-        public static ushort GetEnumType(InfectionType? infectionType, Enum enumType)
+        public static ushort GetEnumType(InfectionType? infectionType, Enum enumType, string prefix = null)
         {
-            string prefix = null;
-
-            if(enumType.GetType() == typeof(MossType))
+            if(prefix == null)
             {
-                prefix = "Moss";
-            }
-            else if (enumType.GetType() == typeof(GemType))
-            {
-                prefix = "Gemstone";
+                if (enumType.GetType() == typeof(MossType))
+                {
+                    prefix = "Moss";
+                }
+                else if (enumType.GetType() == typeof(GemType))
+                {
+                    prefix = "Gemstone";
+                }
             }
 
             if (!infectionType.HasValue)
             {
                 if(prefix == "Moss")
                 {
-                    if ((MossType)enumType == MossType.Helium) return TileID.RainbowMoss;
-                    else if ((MossType)enumType == MossType.Neon) return TileID.VioletMoss;
-                    return (ushort)TileID.Search.GetId(enumType.ToString() + "Moss");
+                    if ((MossType)enumType == MossType.Helium)
+                    {
+                        return TileID.RainbowMoss;
+                    }
+                    else if ((MossType)enumType == MossType.Neon)
+                    {
+                        return TileID.VioletMoss;
+                    }
+                    return (ushort)TileID.Search.GetId(enumType.ToString() + prefix);
                 }
                 else if (prefix == "Gemstone")
                 {
-                    if ((GemType)enumType == GemType.Amber) return TileID.AmberStoneBlock;
+                    if ((GemType)enumType == GemType.Amber)
+                    {
+                        return TileID.AmberStoneBlock;
+                    }
                     return (ushort)TileID.Search.GetId(enumType.ToString());
+                }
+                else if (prefix == "MossBrick")
+                {
+                    if ((MossType)enumType == MossType.Helium)
+                    {
+                        return TileID.RainbowMossBrick;
+                    }
+                    else if ((MossType)enumType == MossType.Neon)
+                    {
+                        return TileID.VioletMossBrick;
+                    }
+                    return (ushort)TileID.Search.GetId(enumType.ToString() + prefix);
                 }
             }
             return ModContent.GetInstance<InfectedQualities>().Find<ModTile>(infectionType.Value.ToString() + enumType.ToString() + prefix).Type;

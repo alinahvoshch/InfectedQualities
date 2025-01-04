@@ -379,6 +379,38 @@ namespace InfectedQualities.Common
                     }
                 }
             }
+
+            //Making vanilla moss spread to infected blocks
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && WorldGen.genRand.NextDouble() < 0.5 && (TileID.Sets.Conversion.Moss[type] || TileID.Sets.Conversion.MossBrick[type]) && type < TileID.Count)
+            {
+                int mossColor = WorldGen.GetTileMossColor(type);
+                if (mossColor != -1)
+                {
+                    for (int x = i - 1; x < i + 2; x++)
+                    {
+                        for (int y = j - 1; y < j + 2; y++)
+                        {
+                            if ((i != x || j != y) && Main.tile[x, y].HasTile)
+                            {
+                                ushort tileType = Main.tile[x, y].TileType;
+                                InfectionType? infectionType = tileType switch
+                                {
+                                    TileID.Ebonstone => InfectionType.Corrupt,
+                                    TileID.Crimstone => InfectionType.Crimson,
+                                    TileID.Pearlstone => InfectionType.Hallowed,
+                                    _ => null
+                                };
+                                if (infectionType.HasValue)
+                                {
+                                    WorldGen.SpreadGrass(x, y, tileType, TileUtilities.GetEnumType(infectionType, (MossType)mossColor), repeat: false, Main.tile[i, j].BlockColorAndCoating());
+                                    WorldGen.SquareTileFrame(x, y);
+                                    NetMessage.SendTileSquare(-1, i, j, 3);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch)

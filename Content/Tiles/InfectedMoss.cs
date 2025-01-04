@@ -153,29 +153,35 @@ namespace InfectedQualities.Content.Tiles
                     {
                         if ((i != x || j != y) && Main.tile[x, y].HasTile)
                         {
-                            if(Main.tile[x, y].TileType == TileID.Ebonstone)
+                            ushort type = Main.tile[x, y].TileType;
+                            InfectionType? infectionType = type switch
                             {
-                                WorldGen.SpreadGrass(x, y, Main.tile[x, y].TileType, TileUtilities.GetEnumType(InfectionType.Corrupt, mossType), repeat: false, Main.tile[i, j].BlockColorAndCoating());
+                                TileID.Ebonstone => InfectionType.Corrupt,
+                                TileID.Crimstone => InfectionType.Crimson,
+                                TileID.Pearlstone => InfectionType.Hallowed,
+                                _ => null
+                            };
+
+                            if(infectionType.HasValue)
+                            {
+                                WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(infectionType, mossType), repeat: false, Main.tile[i, j].BlockColorAndCoating());
                                 WorldGen.SquareTileFrame(x, y);
                                 NetMessage.SendTileSquare(-1, i, j, 3);
                             }
-                            else if (Main.tile[x, y].TileType == TileID.Crimstone)
+                            else
                             {
-                                WorldGen.SpreadGrass(x, y, Main.tile[x, y].TileType, TileUtilities.GetEnumType(InfectionType.Crimson, mossType), repeat: false, Main.tile[i, j].BlockColorAndCoating());
-                                WorldGen.SquareTileFrame(x, y);
-                                NetMessage.SendTileSquare(-1, i, j, 3);
-                            }
-                            else if (Main.tile[x, y].TileType == TileID.Pearlstone)
-                            {
-                                WorldGen.SpreadGrass(x, y, Main.tile[x, y].TileType, TileUtilities.GetEnumType(InfectionType.Hallowed, mossType), repeat: false, Main.tile[i, j].BlockColorAndCoating());
-                                WorldGen.SquareTileFrame(x, y);
-                                NetMessage.SendTileSquare(-1, i, j, 3);
-                            }
-                            else if (Main.tile[x, y].TileType == TileID.Stone)
-                            {
-                                WorldGen.SpreadGrass(x, y, Main.tile[x, y].TileType, TileUtilities.GetEnumType(null, mossType), repeat: false, Main.tile[i, j].BlockColorAndCoating());
-                                WorldGen.SquareTileFrame(x, y);
-                                NetMessage.SendTileSquare(-1, i, j, 3);
+                                if (type == TileID.Stone)
+                                {
+                                    WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(null, mossType), repeat: false, Main.tile[i, j].BlockColorAndCoating());
+                                    WorldGen.SquareTileFrame(x, y);
+                                    NetMessage.SendTileSquare(-1, i, j, 3);
+                                }
+                                else if (type == TileID.GrayBrick)
+                                {
+                                    WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(null, mossType, "MossBrick"), repeat: false, Main.tile[i, j].BlockColorAndCoating());
+                                    WorldGen.SquareTileFrame(x, y);
+                                    NetMessage.SendTileSquare(-1, i, j, 3);
+                                }
                             }
                         }
                     }
