@@ -35,8 +35,6 @@ namespace InfectedQualities.Core
                 IL_WorldGen.PlaceAlch += WorldGen_PlaceAlch;
                 IL_WorldGen.PlantAlch += WorldGen_PlantAlch;
                 IL_WorldGen.IsFitToPlaceFlowerIn += WorldGen_IsFitToPlaceFlowerIn;
-
-                IL_WorldGen.UpdateWorld_GrassGrowth += WorldGen_UpdateWorld_GrassGrowth;
                 On_WorldGen.nearbyChlorophyte += WorldGen_nearbyChlorophyte;
             }
 
@@ -45,6 +43,7 @@ namespace InfectedQualities.Core
                 On_WorldGen.GetTileMossColor += WorldGen_GetTileMossColor;
             }
 
+            IL_WorldGen.UpdateWorld_GrassGrowth += WorldGen_UpdateWorld_GrassGrowth;
             IL_WorldGen.GERunner += WorldGen_GERunner;
             On_WorldGen.Convert += WorldGen_Convert;
             IL_WorldGen.ScoreRoom += WorldGen_ScoreRoom;
@@ -933,35 +932,39 @@ namespace InfectedQualities.Core
         private static void WorldGen_UpdateWorld_GrassGrowth(ILContext il)
         {
             ILCursor cursor = new(il);
-            ILLabel label = cursor.DefineLabel();
+            ILLabel label;
 
-            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.PlanteraBulb), i => i.MatchBneUn(out label)))
+            if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
             {
-                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
-                cursor.Emit(OpCodes.Ldloc, 17);
-                cursor.Emit(OpCodes.Ldloc, 18);
-                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
-                cursor.Emit(OpCodes.Stloc, 9);
-                cursor.Emit(OpCodes.Ldloca, 9);
-                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
-                cursor.Emit(OpCodes.Ldind_U4);
-                cursor.EmitDelegate(ModContent.TileType<InfectedPlanteraBulb>);
-                cursor.Emit(OpCodes.Bne_Un, label);
-            }
+                label = cursor.DefineLabel();
+                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.PlanteraBulb), i => i.MatchBneUn(out label)))
+                {
+                    cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
+                    cursor.Emit(OpCodes.Ldloc, 17);
+                    cursor.Emit(OpCodes.Ldloc, 18);
+                    cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
+                    cursor.Emit(OpCodes.Stloc, 9);
+                    cursor.Emit(OpCodes.Ldloca, 9);
+                    cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
+                    cursor.Emit(OpCodes.Ldind_U4);
+                    cursor.EmitDelegate(ModContent.TileType<InfectedPlanteraBulb>);
+                    cursor.Emit(OpCodes.Bne_Un, label);
+                }
 
-            label = cursor.DefineLabel();
-            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.LifeFruit), i => i.MatchBneUn(out label)))
-            {
-                cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
-                cursor.Emit(OpCodes.Ldloc, 21);
-                cursor.Emit(OpCodes.Ldloc, 22);
-                cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
-                cursor.Emit(OpCodes.Stloc, 9);
-                cursor.Emit(OpCodes.Ldloca, 9);
-                cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
-                cursor.Emit(OpCodes.Ldind_U4);
-                cursor.EmitDelegate(ModContent.TileType<InfectedLifeFruit>);
-                cursor.Emit(OpCodes.Bne_Un, label);
+                label = cursor.DefineLabel();
+                if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdcI4(TileID.LifeFruit), i => i.MatchBneUn(out label)))
+                {
+                    cursor.Emit(OpCodes.Ldsflda, typeof(Main).GetField("tile"));
+                    cursor.Emit(OpCodes.Ldloc, 21);
+                    cursor.Emit(OpCodes.Ldloc, 22);
+                    cursor.Emit(OpCodes.Call, typeof(Tilemap).GetMethod("get_Item", [typeof(int), typeof(int)]));
+                    cursor.Emit(OpCodes.Stloc, 9);
+                    cursor.Emit(OpCodes.Ldloca, 9);
+                    cursor.Emit(OpCodes.Call, typeof(Tile).GetMethod("get_TileType"));
+                    cursor.Emit(OpCodes.Ldind_U4);
+                    cursor.EmitDelegate(ModContent.TileType<InfectedLifeFruit>);
+                    cursor.Emit(OpCodes.Bne_Un, label);
+                }
             }
 
             for(int i = 0; i < 2; i++)
