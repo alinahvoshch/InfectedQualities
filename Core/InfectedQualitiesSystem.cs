@@ -38,16 +38,14 @@ namespace InfectedQualities.Core
             Recipe.Create(ItemID.LightShard)
                 .AddIngredient(ItemID.DarkShard)
                 .AddIngredient(ItemID.SoulofLight, 7)
-                .AddTile(TileID.WorkBenches)
-                .AddCondition(Condition.InGraveyard)
+                .AddTile(TileID.MythrilAnvil)
                 .DisableDecraft()
                 .Register();
 
             Recipe.Create(ItemID.DarkShard)
                 .AddIngredient(ItemID.LightShard)
                 .AddIngredient(ItemID.SoulofNight, 7)
-                .AddTile(TileID.WorkBenches)
-                .AddCondition(Condition.InGraveyard)
+                .AddTile(TileID.MythrilAnvil)
                 .DisableDecraft()
                 .Register();
         }
