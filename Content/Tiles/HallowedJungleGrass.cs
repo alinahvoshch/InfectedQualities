@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using InfectedQualities.Content.Tiles.Plants;
 using InfectedQualities.Core;
-using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Extras.Tiles;
 
 namespace InfectedQualities.Content.Tiles
@@ -68,7 +67,7 @@ namespace InfectedQualities.Content.Tiles
                 Main.tile[i, j - 1].CopyPaintAndCoating(Main.tile[i, j]);
             }
 
-            if (WorldGen.genRand.NextBool(60) && !Main.tile[i, j + 1].HasTile && !Main.tile[i, j].BottomSlope && Main.tile[i, j + 1].LiquidType != LiquidID.Lava && InfectedQualitiesUtilities.RefectionMethod(i, j, "GrowMoreVines"))
+            if (WorldGen.genRand.NextBool(60) && !Main.tile[i, j + 1].HasTile && !Main.tile[i, j].BottomSlope && Main.tile[i, j + 1].LiquidType != LiquidID.Lava && WorldGen.GrowMoreVines(i, j))
             {
                 Main.tile[i, j + 1].Get<TileWallWireStateData>().HasTile = true;
                 Main.tile[i, j + 1].TileType = TileID.HallowedVines;

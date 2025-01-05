@@ -64,19 +64,19 @@ namespace InfectedQualities.Core
             InfectionType? planteraType = TextureUtilities.GetPlanteraType();
             if (planteraType.HasValue)
             {
-                if (Type >= 378 && Type <= 380)
+                if (Type >= 378 && Type < 381)
                 {
                     Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType.ToString() + "Plantera_1_" + (Type - 378)).Type;
                 }
-                else if (Type >= 381 && Type <= 387)
+                else if (Type >= 381 && Type < 388)
                 {
                     Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType.ToString() + "Plantera_2_" + (Type - 381)).Type;
                 }
-                else if (Type >= 388 && Type <= 389)
+                else if (Type >= 388 && Type < 390)
                 {
                     Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType.ToString() + "Plantera_Tentacle_" + (Type - 388)).Type;
                 }
-                else if (Type >= 390 && Type <= 391)
+                else if (Type >= 390 && Type < 392)
                 {
                     Type = ModContent.GetInstance<InfectedQualities>().Find<ModGore>(planteraType.ToString() + "Plantera_Hook_" + (Type - 390)).Type;
                 }
@@ -188,94 +188,97 @@ namespace InfectedQualities.Core
                                 WorldGen.SquareTileFrame(m, n);
                             }
                         }
-                        else if (WorldGen.crimson)
+                        else
                         {
-                            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                            if (WorldGen.crimson)
                             {
-                                if (Main.tile[m, n].WallType is WallID.JungleUnsafe or WallID.Jungle)
+                                if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                                 {
-                                    Main.tile[m, n].WallType = WallID.CrimsonGrassUnsafe;
+                                    if (Main.tile[m, n].WallType is WallID.JungleUnsafe or WallID.Jungle)
+                                    {
+                                        Main.tile[m, n].WallType = WallID.CrimsonGrassUnsafe;
+                                    }
+
+                                    if (Main.tile[m, n].TileType == TileID.SnowBlock || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Corrupt) || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Hallowed))
+                                    {
+                                        Main.tile[m, n].TileType = TileUtilities.GetSnowType(InfectionType.Crimson);
+                                        WorldGen.SquareTileFrame(m, n);
+                                    }
+                                    else if (Main.tile[m, n].TileType == ModContent.TileType<HallowedThorns>())
+                                    {
+                                        Main.tile[m, n].TileType = TileID.CrimsonThorns;
+                                        WorldGen.SquareTileFrame(m, n);
+                                    }
                                 }
 
-                                if (Main.tile[m, n].TileType == TileID.SnowBlock || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Corrupt) || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Hallowed))
+                                if (Main.tile[m, n].WallType is WallID.Stone or WallID.EbonstoneUnsafe or WallID.PearlstoneBrickUnsafe)
                                 {
-                                    Main.tile[m, n].TileType = TileUtilities.GetSnowType(InfectionType.Crimson);
-                                    WorldGen.SquareTileFrame(m, n);
+                                    Main.tile[m, n].WallType = WallID.CrimstoneUnsafe;
                                 }
-                                else if (Main.tile[m, n].TileType == ModContent.TileType<HallowedThorns>())
+
+                                if (Main.tile[m, n].TileType is TileID.CorruptThorns or TileID.JungleThorns)
                                 {
                                     Main.tile[m, n].TileType = TileID.CrimsonThorns;
                                     WorldGen.SquareTileFrame(m, n);
                                 }
-                            }
-
-                            if (Main.tile[m, n].WallType is WallID.Stone or WallID.EbonstoneUnsafe or WallID.PearlstoneBrickUnsafe)
-                            {
-                                Main.tile[m, n].WallType = WallID.CrimstoneUnsafe;
-                            }
-
-                            if (Main.tile[m, n].TileType is TileID.CorruptThorns or TileID.JungleThorns)
-                            {
-                                Main.tile[m, n].TileType = TileID.CrimsonThorns;
-                                WorldGen.SquareTileFrame(m, n);
-                            }
-                            else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[m, n].TileType])
-                            {
-                                TileUtilities.ConvertEnum<MossType>(m, n, InfectionType.Crimson);
-                            }
-                            else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[m, n].TileType])
-                            {
-                                TileUtilities.ConvertEnum<GemType>(m, n, InfectionType.Crimson);
-                            }
-                            else if (Main.tileMoss[Main.tile[m, n].TileType])
-                            {
-                                Main.tile[m, n].TileType = TileID.Crimstone;
-                                WorldGen.SquareTileFrame(m, n);
-                            }
-                        }
-                        else
-                        {
-                            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                            {
-                                if (Main.tile[m, n].WallType is WallID.JungleUnsafe or WallID.Jungle)
+                                else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[m, n].TileType])
                                 {
-                                    Main.tile[m, n].WallType = WallID.CorruptGrassUnsafe;
+                                    TileUtilities.ConvertEnum<MossType>(m, n, InfectionType.Crimson);
                                 }
-
-                                if (Main.tile[m, n].TileType == TileID.SnowBlock || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Hallowed) || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Crimson))
+                                else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[m, n].TileType])
                                 {
-                                    Main.tile[m, n].TileType = TileUtilities.GetSnowType(InfectionType.Corrupt);
+                                    TileUtilities.ConvertEnum<GemType>(m, n, InfectionType.Crimson);
+                                }
+                                else if (Main.tileMoss[Main.tile[m, n].TileType])
+                                {
+                                    Main.tile[m, n].TileType = TileID.Crimstone;
                                     WorldGen.SquareTileFrame(m, n);
                                 }
-                                else if (Main.tile[m, n].TileType == ModContent.TileType<HallowedThorns>())
+                            }
+                            else
+                            {
+                                if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                                {
+                                    if (Main.tile[m, n].WallType is WallID.JungleUnsafe or WallID.Jungle)
+                                    {
+                                        Main.tile[m, n].WallType = WallID.CorruptGrassUnsafe;
+                                    }
+
+                                    if (Main.tile[m, n].TileType == TileID.SnowBlock || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Hallowed) || Main.tile[m, n].TileType == TileUtilities.GetSnowType(InfectionType.Crimson))
+                                    {
+                                        Main.tile[m, n].TileType = TileUtilities.GetSnowType(InfectionType.Corrupt);
+                                        WorldGen.SquareTileFrame(m, n);
+                                    }
+                                    else if (Main.tile[m, n].TileType == ModContent.TileType<HallowedThorns>())
+                                    {
+                                        Main.tile[m, n].TileType = TileID.CorruptThorns;
+                                        WorldGen.SquareTileFrame(m, n);
+                                    }
+                                }
+
+                                if (Main.tile[m, n].WallType is WallID.Stone or WallID.CrimstoneUnsafe or WallID.PearlstoneBrickUnsafe)
+                                {
+                                    Main.tile[m, n].WallType = WallID.EbonstoneUnsafe;
+                                }
+
+                                if (Main.tile[m, n].TileType is TileID.CrimsonThorns or TileID.JungleThorns)
                                 {
                                     Main.tile[m, n].TileType = TileID.CorruptThorns;
                                     WorldGen.SquareTileFrame(m, n);
                                 }
-                            }
-
-                            if (Main.tile[m, n].WallType is WallID.Stone or WallID.CrimstoneUnsafe or WallID.PearlstoneBrickUnsafe)
-                            {
-                                Main.tile[m, n].WallType = WallID.EbonstoneUnsafe;
-                            }
-
-                            if (Main.tile[m, n].TileType is TileID.CrimsonThorns or TileID.JungleThorns)
-                            {
-                                Main.tile[m, n].TileType = TileID.CorruptThorns;
-                                WorldGen.SquareTileFrame(m, n);
-                            }
-                            else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[m, n].TileType])
-                            {
-                                TileUtilities.ConvertEnum<MossType>(m, n, InfectionType.Corrupt);
-                            }
-                            else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[m, n].TileType])
-                            {
-                                TileUtilities.ConvertEnum<GemType>(m, n, InfectionType.Corrupt);
-                            }
-                            else if (Main.tileMoss[Main.tile[m, n].TileType])
-                            {
-                                Main.tile[m, n].TileType = TileID.Ebonstone;
-                                WorldGen.SquareTileFrame(m, n);
+                                else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && TileID.Sets.Conversion.Moss[Main.tile[m, n].TileType])
+                                {
+                                    TileUtilities.ConvertEnum<MossType>(m, n, InfectionType.Corrupt);
+                                }
+                                else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[m, n].TileType])
+                                {
+                                    TileUtilities.ConvertEnum<GemType>(m, n, InfectionType.Corrupt);
+                                }
+                                else if (Main.tileMoss[Main.tile[m, n].TileType])
+                                {
+                                    Main.tile[m, n].TileType = TileID.Ebonstone;
+                                    WorldGen.SquareTileFrame(m, n);
+                                }
                             }
                         }
                     }
@@ -1065,7 +1068,7 @@ namespace InfectedQualities.Core
 
                 cursor.Emit(OpCodes.Ldloc, 22);
                 cursor.Emit(OpCodes.Ldloc, 23);
-                cursor.Emit(OpCodes.Call, typeof(WorldGen).GetMethod("nearbyChlorophyte", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static, [typeof(int), typeof(int)]));
+                cursor.Emit(OpCodes.Call, typeof(WorldGen).GetMethod("nearbyChlorophyte", [typeof(int), typeof(int)]));
                 cursor.Emit(OpCodes.Brfalse, nextLabel);
 
                 cursor.Emit(OpCodes.Ldloc, 22);

@@ -1,5 +1,4 @@
-﻿using InfectedQualities.Content.Extras;
-using InfectedQualities.Content.Extras.Tiles;
+﻿using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Terraria;
 using Terraria.ID;
@@ -41,7 +40,7 @@ namespace InfectedQualities.Content.Tiles.Plants
         public override void RandomUpdate(int i, int j)
         {
             WorldGen.GrowSpike(i, j, Type, (ushort)ModContent.TileType<HallowedJungleGrass>());
-            if (InfectedQualitiesUtilities.RefectionMethod(i, j, "nearbyChlorophyte"))
+            if (WorldGen.nearbyChlorophyte(i, j))
             {
                 if (WorldGen.AllowedToSpreadInfections && Main.remixWorld)
                 {

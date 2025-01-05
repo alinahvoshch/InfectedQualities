@@ -54,9 +54,23 @@ namespace InfectedQualities.Content.Extras
             return null;
         }
 
-        public static Color TileDrawColor(int i, int j, Color tintColor, bool emitDust = false, ushort tileShineType = 0)
+        public static Texture2D TileDrawTexture(ushort type, byte color)
+        {
+            Texture2D paintTexture = Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(type, 0, color);
+            if(paintTexture == null)
+            {
+                return TextureAssets.Tile[type].Value;
+            }
+            return paintTexture;
+        }
+
+        public static Color TileDrawColor(int i, int j, Color tintColor = default, bool emitDust = false, ushort tileShineType = 0)
         {
             Color color = Lighting.GetColor(i, j);
+            if (tintColor == default)
+            {
+                tintColor = Color.White;
+            }
 
             if (Main.LocalPlayer.dangerSense && TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer))
             {
@@ -129,7 +143,10 @@ namespace InfectedQualities.Content.Extras
             }
             else
             {
-                if (tileShineType == 0) tileShineType = Main.tile[i, j].TileType;
+                if (tileShineType == 0)
+                {
+                    tileShineType = Main.tile[i, j].TileType;
+                }
                 if ((Main.shimmerAlpha > 0f && Main.tileSolid[tileShineType]) || Main.tileShine2[tileShineType])
                 {
                     color = Main.shine(color, tileShineType);
@@ -140,11 +157,6 @@ namespace InfectedQualities.Content.Extras
 
         public static void TileDraw(int i, int j, Texture2D texture, Color color, SpriteBatch spriteBatch, Point? frames = null)
         {
-            if (texture == null)
-            {
-                return;
-            }
-
             Vector2 offscreenVector = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
             Vector2 drawVector = new Vector2(i * 16, j * 16) + offscreenVector - Main.screenPosition;
             if (!frames.HasValue)

@@ -100,7 +100,7 @@ namespace InfectedQualities.Content.Tiles
                     _ => TileID.Stone
                 };
 
-                TextureUtilities.TileDraw(i, j, Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(infectedStoneType, 0, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White, true), spriteBatch);
+                TextureUtilities.TileDraw(i, j, TextureUtilities.TileDrawTexture(infectedStoneType, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j), spriteBatch);
             }
             return true;
         }

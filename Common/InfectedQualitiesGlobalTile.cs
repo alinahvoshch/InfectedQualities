@@ -9,7 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using InfectedQualities.Core;
 using System;
-using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Extras.Tiles;
 using Terraria.GameContent.Drawing;
 
@@ -340,7 +339,7 @@ namespace InfectedQualities.Common
                         TileUtilities.AttemptToPlaceInfectedPlant(i, j, ModContent.TileType<InfectedLifeFruit>(), TileID.LifeFruit, Main.expertMode ? 50 : 60);
                     }
                 }
-                else if (type == TileID.HallowedVines && WorldGen.genRand.NextBool(20) && !Main.tile[i, j + 1].HasTile && Main.tile[i, j + 1].LiquidType != LiquidID.Lava && InfectedQualitiesUtilities.RefectionMethod(i, j, "GrowMoreVines"))
+                else if (type == TileID.HallowedVines && WorldGen.genRand.NextBool(20) && !Main.tile[i, j + 1].HasTile && Main.tile[i, j + 1].LiquidType != LiquidID.Lava && WorldGen.GrowMoreVines(i, j))
                 {
                     bool flag = false;
                     for (int num = j; num > j - 10 && num < 0; num--)
@@ -381,7 +380,7 @@ namespace InfectedQualities.Common
             }
 
             //Making vanilla moss spread to infected blocks
-            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && WorldGen.genRand.NextDouble() < 0.5 && (TileID.Sets.Conversion.Moss[type] || TileID.Sets.Conversion.MossBrick[type]) && type < TileID.Count)
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses&& (TileID.Sets.Conversion.Moss[type] || TileID.Sets.Conversion.MossBrick[type]) && type < TileID.Count && WorldGen.genRand.NextDouble() < 0.5)
             {
                 int mossColor = WorldGen.GetTileMossColor(type);
                 if (mossColor != -1)
@@ -402,7 +401,7 @@ namespace InfectedQualities.Common
                                 };
                                 if (infectionType.HasValue)
                                 {
-                                    WorldGen.SpreadGrass(x, y, tileType, TileUtilities.GetEnumType(infectionType, (MossType)mossColor), repeat: false, Main.tile[i, j].BlockColorAndCoating());
+                                    WorldGen.SpreadGrass(x, y, tileType, TileUtilities.GetEnumType(infectionType, (MossType)mossColor), false, Main.tile[i, j].BlockColorAndCoating());
                                     WorldGen.SquareTileFrame(x, y);
                                     NetMessage.SendTileSquare(-1, i, j, 3);
                                 }
@@ -429,8 +428,7 @@ namespace InfectedQualities.Common
                 ushort goodStone = InfectedQualitiesModSupport.GetGoodStone();
                 if (evilStone == 0) evilStone = Main.tile[i, j].TileFrameX < 54 ? TileID.Ebonstone : TileID.Crimstone;
 
-                int num = 0;
-                while (num++ < 1000)
+                for (int num = 0; num < 1000; num++)
                 {
                     int x = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
                     int y = WorldGen.genRand.Next((int)Main.rockLayer + 50, Main.maxTilesY - 300);

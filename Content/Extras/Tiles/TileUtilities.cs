@@ -35,7 +35,7 @@ namespace InfectedQualities.Content.Extras.Tiles
 
         public static void DefaultInfectionSpread(int i, int j, InfectionType infectionType, ushort curedTile)
         {
-            if (InfectedQualitiesUtilities.RefectionMethod(i, j, "nearbyChlorophyte"))
+            if (WorldGen.nearbyChlorophyte(i, j))
             {
                 if (WorldGen.AllowedToSpreadInfections && Main.remixWorld)
                 {
@@ -180,7 +180,7 @@ namespace InfectedQualities.Content.Extras.Tiles
 
         public static void FixSpreadCompability(int i, int j, InfectionType infectionType)
         {
-            if (!InfectedQualitiesUtilities.RefectionMethod(i, j, "nearbyChlorophyte") && Main.hardMode && WorldGen.AllowedToSpreadInfections && !InfectedQualitiesModSupport.PureglowRange(i))
+            if (!WorldGen.nearbyChlorophyte(i, j) && Main.hardMode && WorldGen.AllowedToSpreadInfections && !InfectedQualitiesModSupport.PureglowRange(i))
             {
                 if (NPC.downedPlantBoss && WorldGen.genRand.NextBool(2)) return;
 
@@ -365,7 +365,7 @@ namespace InfectedQualities.Content.Extras.Tiles
 
         public static void WallSpread(int i, int j, InfectionType infectionType)
         {
-            if (InfectedQualitiesUtilities.RefectionMethod(i, j, "nearbyChlorophyte"))
+            if (WorldGen.nearbyChlorophyte(i, j))
             {
                 if (WorldGen.AllowedToSpreadInfections && Main.remixWorld)
                 {

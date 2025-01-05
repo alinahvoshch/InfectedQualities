@@ -142,7 +142,10 @@ namespace InfectedQualities.Common
                                 pool.Add(NPCID.GiantFlyingFox, 1.0f);
                             }
 
-                            if (Main.raining && !NPC.AnyNPCs(NPCID.RainbowSlime)) pool.Add(NPCID.RainbowSlime, 0.05f);
+                            if (Main.raining && !NPC.AnyNPCs(NPCID.RainbowSlime))
+                            {
+                                pool.Add(NPCID.RainbowSlime, 0.05f);
+                            }
                         }
                         else
                         {
@@ -159,7 +162,10 @@ namespace InfectedQualities.Common
                                 pool.Add(NPCID.IlluminantSlime, 1.0f);
                                 pool.Add(NPCID.ChaosElemental, 1.0f);
 
-                                if (!NPC.AnyNPCs(NPCID.Moth)) pool.Add(NPCID.Moth, 0.02f);
+                                if (!NPC.AnyNPCs(NPCID.Moth))
+                                {
+                                    pool.Add(NPCID.Moth, 0.02f);
+                                }
                                 pool.Add(NPCID.EnchantedSword, 0.02f);
                                 pool.Add(NPCID.BigMimicHallow, 0.01f);
                             }
@@ -185,7 +191,7 @@ namespace InfectedQualities.Common
                                 pool.Add(NPCID.ZombieEskimo, hardmodeSpawnChance);
                                 if (Main.bloodMoon)
                                 {
-                                    pool.Add(WorldGen.crimson ? NPCID.CrimsonPenguin : NPCID.CorruptPenguin, hardmodeSpawnChance);
+                                    pool.Add(NPCID.CorruptPenguin, hardmodeSpawnChance);
                                 }
                             }
                         }
@@ -222,7 +228,10 @@ namespace InfectedQualities.Common
                                 pool.Add(NPCID.BigMimicCorruption, 0.01f);
                             }
 
-                            if (!Main.dayTime || spawnInfo.Player.ZoneCavern()) pool.Add(NPCID.IceElemental, 1.0f);
+                            if (!Main.dayTime || spawnInfo.Player.ZoneCavern())
+                            {
+                                pool.Add(NPCID.IceElemental, 1.0f);
+                            }
                         }
                     }
                     else if (spawnInfo.SpawnTileType == TileUtilities.GetSnowType(InfectionType.Crimson) && spawnInfo.Player.ZoneCrimson)
@@ -243,7 +252,7 @@ namespace InfectedQualities.Common
                                 pool.Add(NPCID.ZombieEskimo, hardmodeSpawnChance);
                                 if (Main.bloodMoon)
                                 {
-                                    pool.Add(WorldGen.crimson ? NPCID.CrimsonPenguin : NPCID.CorruptPenguin, hardmodeSpawnChance);
+                                    pool.Add(NPCID.CrimsonPenguin, hardmodeSpawnChance);
                                 }
                             }
                         }
@@ -280,7 +289,10 @@ namespace InfectedQualities.Common
                                 pool.Add(NPCID.BigMimicCrimson, 0.01f);
                             }
 
-                            if (!Main.dayTime || spawnInfo.Player.ZoneCavern()) pool.Add(NPCID.IceElemental, 1.0f);
+                            if (!Main.dayTime || spawnInfo.Player.ZoneCavern())
+                            {
+                                pool.Add(NPCID.IceElemental, 1.0f);
+                            }
                         }
                     }
                     else if (spawnInfo.SpawnTileType == TileUtilities.GetSnowType(InfectionType.Hallowed) && spawnInfo.Player.ZoneHallow)
@@ -295,10 +307,6 @@ namespace InfectedQualities.Common
                             else
                             {
                                 pool.Add(NPCID.ZombieEskimo, hardmodeSpawnChance);
-                                if (Main.bloodMoon)
-                                {
-                                    pool.Add(WorldGen.crimson ? NPCID.CrimsonPenguin : NPCID.CorruptPenguin, hardmodeSpawnChance);
-                                }
                             }
                         }
                         else
@@ -325,8 +333,14 @@ namespace InfectedQualities.Common
 
                                 if (Main.raining)
                                 {
-                                    if (!NPC.AnyNPCs(NPCID.IceGolem)) pool.Add(NPCID.IceGolem, 0.05f);
-                                    if (!NPC.AnyNPCs(NPCID.RainbowSlime)) pool.Add(NPCID.RainbowSlime, 0.05f);
+                                    if (!NPC.AnyNPCs(NPCID.IceGolem))
+                                    {
+                                        pool.Add(NPCID.IceGolem, 0.05f);
+                                    }
+                                    if (!NPC.AnyNPCs(NPCID.RainbowSlime))
+                                    {
+                                        pool.Add(NPCID.RainbowSlime, 0.05f);
+                                    }
                                 }
                             }
                             else
@@ -334,7 +348,10 @@ namespace InfectedQualities.Common
                                 if (spawnInfo.Player.ZoneDirtLayerHeight)
                                 {
                                     pool.Add(NPCID.Pixie, 1.0f);
-                                    if (!Main.dayTime) pool.Add(NPCID.Gastropod, 1.0f);
+                                    if (!Main.dayTime)
+                                    {
+                                        pool.Add(NPCID.Gastropod, 1.0f);
+                                    }
                                 }
                                 else if (spawnInfo.Player.ZoneCavern())
                                 {

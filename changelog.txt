@@ -1,7 +1,7 @@
 0.7.4.1
 =======
 -File organization
--RENAMED EVERY PLACABLE TILE FOR BETTER DISTINGUISMENT. THIS CHANGE WILL RESULT IN ALL PYLON OF NIGHT AND INFECTED SNOW ITEMS IN THE WORLD TO BE CONSIDERED INVALID. MANY APOLOGIES FOR THIS.
+-RENAMED EVERY PLACABLE TILE FOR BETTER DISTINGUISMENT. THIS CHANGE WILL RESULT IN ALL PYLON OF NIGHT AND INFECTED SNOW ITEMS IN THE WORLD TO BE CONSIDERED INVALID. MANY APOLOGIES FOR THIS. PLACED VERSIONS OF THESE TILES WON'T BE HARMED.
 
 -Added a config option to customize the brightness of walls when they are highlighted by the biome sight potion.
 -Added mod compat with 'Terraria Origins' and 'AltLibrary'
@@ -24,7 +24,7 @@
 -Infected grasses(both normal and jungle) no longer spread to grass pre-hardmode, and no longer spread over each other.
 -Infected plantera bulbs' dusts changed to be less bloated.
 -Plantera thorn balls now have their own custom infected textures.
--Resprited the crystal of pylon of night
+-Resprited the crystal of pylon of night, and the mod icon along with it
 
 -Fixed description typo, and added missing features to the description. Also removed comment about Radiance mod compat, since it had no point in existing
 -Fixed vertebrae --> leather recipe not needing workbench. Also fixed duplicate recipe when used with Thorium mod

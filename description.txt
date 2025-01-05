@@ -78,6 +78,9 @@ Infected jungle fooliage is broken, plants and vines are just gone, so the biome
 Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 You can use Calamity pylons to craft a 'PYLON OF NIGHT'.
 
+THORIUM --> Thorium adds it own gemstones to the game in the form of opal and aquamarine, those are untouched by the infected gemstones feature.
+Thorium additionally added its own vertebrae to leather recipe, so to prevent duplicate recipes, this mods vertebrae to leather recipe won't be added with thorium.
+
 CONFECTION REBAKED -->	Conversions between this mods' moss blocks and Confections' moss blocks don't work properly.
 Manual compability with the 'BIOME SIGHT WALL HIGHLIGHTING' was added.
 'DEMON ALTAR EVIL BLOCK SPAWNING' gives all altars a 33% chance to spawn in creamstone if confection was chosen instead of hallow.

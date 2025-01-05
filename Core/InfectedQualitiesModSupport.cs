@@ -113,19 +113,20 @@ namespace InfectedQualities.Core
         {
             if (RecipeGroup.recipeGroupIDs.TryGetValue("TeleportationPylons", out int pylonIndex))
             {
+                RecipeGroup pylons = RecipeGroup.recipeGroups[pylonIndex];
                 if (CalamityMod != null)
                 {
-                    RecipeGroup.recipeGroups[pylonIndex].ValidItems.Add(CalamityMod.Find<ModItem>("AstralPylon").Type);
-                    RecipeGroup.recipeGroups[pylonIndex].ValidItems.Add(CalamityMod.Find<ModItem>("CragsPylon").Type);
-                    RecipeGroup.recipeGroups[pylonIndex].ValidItems.Add(CalamityMod.Find<ModItem>("SulphurPylon").Type);
-                    RecipeGroup.recipeGroups[pylonIndex].ValidItems.Add(CalamityMod.Find<ModItem>("SunkenPylon").Type);
+                    pylons.ValidItems.Add(CalamityMod.Find<ModItem>("AstralPylon").Type);
+                    pylons.ValidItems.Add(CalamityMod.Find<ModItem>("CragsPylon").Type);
+                    pylons.ValidItems.Add(CalamityMod.Find<ModItem>("SulphurPylon").Type);
+                    pylons.ValidItems.Add(CalamityMod.Find<ModItem>("SunkenPylon").Type);
                 }
 
                 if (SpiritMod != null)
                 {
-                    RecipeGroup.recipeGroups[pylonIndex].ValidItems.Add(SpiritMod.Find<ModItem>("AsteroidPylonItem").Type);
-                    RecipeGroup.recipeGroups[pylonIndex].ValidItems.Add(SpiritMod.Find<ModItem>("BriarPylonItem").Type);
-                    RecipeGroup.recipeGroups[pylonIndex].ValidItems.Add(SpiritMod.Find<ModItem>("SpiritPylonItem").Type);
+                    pylons.ValidItems.Add(SpiritMod.Find<ModItem>("AsteroidPylonItem").Type);
+                    pylons.ValidItems.Add(SpiritMod.Find<ModItem>("BriarPylonItem").Type);
+                    pylons.ValidItems.Add(SpiritMod.Find<ModItem>("SpiritPylonItem").Type);
                 }
             }
         }

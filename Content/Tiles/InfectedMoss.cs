@@ -160,11 +160,11 @@ namespace InfectedQualities.Content.Tiles
                                 TileID.Crimstone => InfectionType.Crimson,
                                 TileID.Pearlstone => InfectionType.Hallowed,
                                 _ => null
-                            };
+                            };  
 
                             if(infectionType.HasValue)
                             {
-                                WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(infectionType, mossType), repeat: false, Main.tile[i, j].BlockColorAndCoating());
+                                WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(infectionType, mossType), false, Main.tile[i, j].BlockColorAndCoating());
                                 WorldGen.SquareTileFrame(x, y);
                                 NetMessage.SendTileSquare(-1, i, j, 3);
                             }
@@ -172,13 +172,13 @@ namespace InfectedQualities.Content.Tiles
                             {
                                 if (type == TileID.Stone)
                                 {
-                                    WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(null, mossType), repeat: false, Main.tile[i, j].BlockColorAndCoating());
+                                    WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(null, mossType), false, Main.tile[i, j].BlockColorAndCoating());
                                     WorldGen.SquareTileFrame(x, y);
                                     NetMessage.SendTileSquare(-1, i, j, 3);
                                 }
                                 else if (type == TileID.GrayBrick)
                                 {
-                                    WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(null, mossType, "MossBrick"), repeat: false, Main.tile[i, j].BlockColorAndCoating());
+                                    WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(null, mossType, "MossBrick"), false, Main.tile[i, j].BlockColorAndCoating());
                                     WorldGen.SquareTileFrame(x, y);
                                     NetMessage.SendTileSquare(-1, i, j, 3);
                                 }
@@ -206,13 +206,13 @@ namespace InfectedQualities.Content.Tiles
                             y++;
                             break;
                     }
-
-                    if (!Main.tile[x, y].HasTile && WorldGen.SolidTile(i, j))
+                    Tile tile = Main.tile[x, y];
+                    if (!tile.HasTile && WorldGen.SolidTile(i, j))
                     {
-                        Main.tile[x, y].Get<TileWallWireStateData>().HasTile = true;
-                        Main.tile[x, y].TileType = TileID.LongMoss;
-                        Main.tile[x, y].TileFrameX = (short)((int)mossType * 18);
-                        Main.tile[x, y].TileFrameY = (short)(WorldGen.genRand.Next(3) * 18);
+                        tile.HasTile = true;
+                        tile.TileType = TileID.LongMoss;
+                        tile.TileFrameX = (short)((int)mossType * 18);
+                        tile.TileFrameY = (short)(WorldGen.genRand.Next(3) * 18);
                         WorldGen.SquareTileFrame(x, y);
                         NetMessage.SendTileSquare(-1, x, y);
                     }
@@ -234,7 +234,9 @@ namespace InfectedQualities.Content.Tiles
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if(TileDrawing.IsVisible(Main.tile[i, j]))
+            bool preDraw = mossType != MossType.Helium && mossType >= MossType.Lava;
+
+            if (TileDrawing.IsVisible(Main.tile[i, j]))
             {
                 short frameX = Main.tile[i, j].TileFrameX;
                 short frameY = Main.tile[i, j].TileFrameY;
@@ -514,15 +516,17 @@ namespace InfectedQualities.Content.Tiles
                         }
                     }
                 }
-
-                TextureUtilities.TileDraw(i, j, Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(InfectedStoneType, 0, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, Color.White, true, InfectedStoneType), spriteBatch, new(frameX, frameY));
+                TextureUtilities.TileDraw(i, j, TextureUtilities.TileDrawTexture(InfectedStoneType, Main.tile[i, j].TileColor), TextureUtilities.TileDrawColor(i, j, emitDust: !preDraw, tileShineType: InfectedStoneType), spriteBatch, new(frameX, frameY));
             }
-            return mossType != MossType.Helium && mossType >= MossType.Lava;
+            return preDraw;
         }
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (!TileDrawing.IsVisible(Main.tile[i, j])) return;
+            if (!TileDrawing.IsVisible(Main.tile[i, j]))
+            {
+                return;
+            }
 
             if (mossType == MossType.Helium)
             {
@@ -544,7 +548,7 @@ namespace InfectedQualities.Content.Tiles
                     mossColor.G = (byte)(byte.MaxValue - MossColor.G);
                     mossColor.B = (byte)(byte.MaxValue - MossColor.B);
                 }
-                TextureUtilities.TileDraw(i, j, Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(Type, 0, tileColor), TextureUtilities.TileDrawColor(i, j, mossColor), spriteBatch);
+                TextureUtilities.TileDraw(i, j, TextureUtilities.TileDrawTexture(Type, tileColor), TextureUtilities.TileDrawColor(i, j, mossColor), spriteBatch);
             }
 
             if (infectionType == InfectionType.Corrupt && Main.rand.NextBool(700))
