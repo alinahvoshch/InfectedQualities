@@ -39,7 +39,7 @@ namespace InfectedQualities.Core
                 .AddIngredient(ItemID.DarkShard)
                 .AddIngredient(ItemID.SoulofLight, 7)
                 .AddTile(TileID.MythrilAnvil)
-                .AddCondition(Condition.InHallow)
+                .AddCondition(Condition.InHallow, Condition.NotEclipseAndNotBloodMoon)
                 .DisableDecraft()
                 .Register();
 
@@ -47,7 +47,7 @@ namespace InfectedQualities.Core
                 .AddIngredient(ItemID.LightShard)
                 .AddIngredient(ItemID.SoulofNight, 7)
                 .AddTile(TileID.MythrilAnvil)
-                .AddCondition(Condition.BloodMoon)
+                .AddCondition(Condition.EclipseOrBloodMoon)
                 .DisableDecraft()
                 .Register();
         }
