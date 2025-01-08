@@ -3,7 +3,6 @@ using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -15,8 +14,6 @@ namespace InfectedQualities.Content.Extras
 {
     public static class TextureUtilities
     {
-        internal static Asset<Texture2D> PylonCrystalHighlightTexture { get; set; } = null;
-
         public static void ReplacePlanteraType(InfectionType infectionType)
         {
             TextureAssets.Npc[NPCID.Plantera] = infectionType switch

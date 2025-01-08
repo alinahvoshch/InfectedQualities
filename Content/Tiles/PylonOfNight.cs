@@ -10,7 +10,6 @@ using Terraria.Map;
 using ReLogic.Content;
 using Terraria.Localization;
 using InfectedQualities.Core;
-using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Items.Placables;
 using InfectedQualities.Content.Tiles.TileEntities;
 
@@ -19,6 +18,7 @@ namespace InfectedQualities.Content.Tiles
     public class PylonOfNight : ModPylon
     {
         private Asset<Texture2D> PylonCrystalTexture { get; set; } = null;
+        private Asset<Texture2D> PylonCrystalHighlightTexture { get; set; } = null;
         private Asset<Texture2D> PylonMapIcon { get; set; } = null;
 
         private static Color PylonColor => new(162, 95, 234);
@@ -44,7 +44,8 @@ namespace InfectedQualities.Content.Tiles
             AddMapEntry(PylonColor, Language.GetText("Mods.InfectedQualities.Items.Placables.PylonOfNightBlock.DisplayName"));
             RegisterItemDrop(ModContent.ItemType<PylonOfNightBlock>());
 
-            PylonCrystalTexture = ModContent.Request<Texture2D>(Texture + "_Crystal");
+            PylonCrystalTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/" + Name + "_Crystal");
+            PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
             PylonMapIcon = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/MapIcons/" + Name + "_MapIcon");
         }
 
@@ -69,7 +70,7 @@ namespace InfectedQualities.Content.Tiles
             b = PylonColor.B / 255f;
         }
 
-        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) => DefaultDrawPylonCrystal(spriteBatch, i, j, PylonCrystalTexture, TextureUtilities.PylonCrystalHighlightTexture, new Vector2(0f, -12f), PylonColor * 0.1f, PylonColor, 12, 8);
+        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) => DefaultDrawPylonCrystal(spriteBatch, i, j, PylonCrystalTexture, PylonCrystalHighlightTexture, new Vector2(0f, -12f), PylonColor * 0.1f, PylonColor, 12, 8);
 
         public override void DrawMapIcon(ref MapOverlayDrawContext context, ref string mouseOverText, TeleportPylonInfo pylonInfo, bool isNearPylon, Color drawColor, float deselectedScale, float selectedScale)
         {

@@ -1,6 +1,7 @@
 0.7.4.2
 =======
 -Fixed packets causing a horrifying fps drop. (46 MILLION PACKETS, I really messed up)
+-Touched up the pylon of night sprite, now looking less cluttered.
 
 0.7.4.1
 =======

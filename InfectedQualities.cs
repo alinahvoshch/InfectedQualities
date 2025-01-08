@@ -1,11 +1,9 @@
 using InfectedQualities.Content.Biomes;
-using InfectedQualities.Content.Extras;
 using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Content.Tiles;
 using InfectedQualities.Content.Tiles.Plants;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.ModLoader;
@@ -16,11 +14,6 @@ namespace InfectedQualities
     {
         public override void Load()
         {
-            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().PylonOfNight)
-            {
-                TextureUtilities.PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
-            }
-
             foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
             {
                 AddContent(new InfectedSnow(infectionType));
