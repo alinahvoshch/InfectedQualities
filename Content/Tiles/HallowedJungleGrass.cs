@@ -46,7 +46,10 @@ namespace InfectedQualities.Content.Tiles
             {
                 Main.tile[i, j].TileType = TileID.Mud;
                 WorldGen.SquareTileFrame(i, j);
-                NetMessage.SendTileSquare(-1, i, j);
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    NetMessage.SendTileSquare(-1, i, j);
+                }
             }
             return true;
         }
@@ -65,14 +68,22 @@ namespace InfectedQualities.Content.Tiles
                     WorldGen.SquareTileFrame(i, j - 1);
                 }
                 Main.tile[i, j - 1].CopyPaintAndCoating(Main.tile[i, j]);
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    NetMessage.SendTileSquare(-1, i, j);
+                }
             }
 
-            if (WorldGen.genRand.NextBool(60) && !Main.tile[i, j + 1].HasTile && !Main.tile[i, j].BottomSlope && Main.tile[i, j + 1].LiquidType != LiquidID.Lava && WorldGen.GrowMoreVines(i, j))
+            if (WorldGen.genRand.NextBool(60) && WorldGen.GrowMoreVines(i, j) && !Main.tile[i, j + 1].HasTile && Main.tile[i, j + 1].LiquidType != LiquidID.Lava && Main.tile[i, j].BottomSlope)
             {
-                Main.tile[i, j + 1].Get<TileWallWireStateData>().HasTile = true;
                 Main.tile[i, j + 1].TileType = TileID.HallowedVines;
+                Main.tile[i, j + 1].Get<TileWallWireStateData>().HasTile = true;
                 Main.tile[i, j + 1].CopyPaintAndCoating(Main.tile[i, j]);
                 WorldGen.SquareTileFrame(i, j + 1);
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    NetMessage.SendTileSquare(-1, i, j + 1);
+                }
             }
 
             for (int x = i - 1; x < i + 2; x++)
@@ -86,19 +97,28 @@ namespace InfectedQualities.Content.Tiles
                     {
                         WorldGen.SpreadGrass(x, y, tileType, Type, false, Main.tile[i, j].BlockColorAndCoating());
                         WorldGen.SquareTileFrame(x, y);
-                        NetMessage.SendTileSquare(-1, x, y);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, x, y);
+                        }
                     }
                     else if (tileType == TileID.Grass && flag)
                     {
                         WorldGen.SpreadGrass(x, y, tileType, TileID.HallowedGrass, false, Main.tile[i, j].BlockColorAndCoating());
                         WorldGen.SquareTileFrame(x, y);
-                        NetMessage.SendTileSquare(-1, x, y);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, x, y);
+                        }
                     }
                     else if (tileType == TileID.GolfGrass && flag)
                     {
                         WorldGen.SpreadGrass(x, y, tileType, TileID.GolfGrassHallowed, false, Main.tile[i, j].BlockColorAndCoating());
                         WorldGen.SquareTileFrame(x, y);
-                        NetMessage.SendTileSquare(-1, x, y);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, x, y);
+                        }
                     }
                 }
             }
@@ -123,10 +143,8 @@ namespace InfectedQualities.Content.Tiles
         {
             if (fail && !effectOnly)
             {
-                noItem = true;
                 Main.tile[i, j].TileType = TileID.Mud;
                 WorldGen.SquareTileFrame(i, j);
-                NetMessage.SendTileSquare(-1, i, j);
             }
         }
 

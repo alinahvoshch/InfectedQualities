@@ -166,7 +166,10 @@ namespace InfectedQualities.Content.Tiles
                             {
                                 WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(infectionType, mossType), false, Main.tile[i, j].BlockColorAndCoating());
                                 WorldGen.SquareTileFrame(x, y);
-                                NetMessage.SendTileSquare(-1, i, j, 3);
+                                if(Main.netMode == NetmodeID.Server)
+                                {
+                                    NetMessage.SendTileSquare(-1, i, j, 3);
+                                }
                             }
                             else
                             {
@@ -174,13 +177,19 @@ namespace InfectedQualities.Content.Tiles
                                 {
                                     WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(null, mossType), false, Main.tile[i, j].BlockColorAndCoating());
                                     WorldGen.SquareTileFrame(x, y);
-                                    NetMessage.SendTileSquare(-1, i, j, 3);
+                                    if (Main.netMode == NetmodeID.Server)
+                                    {
+                                        NetMessage.SendTileSquare(-1, i, j, 3);
+                                    }
                                 }
                                 else if (type == TileID.GrayBrick)
                                 {
                                     WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(null, mossType, "MossBrick"), false, Main.tile[i, j].BlockColorAndCoating());
                                     WorldGen.SquareTileFrame(x, y);
-                                    NetMessage.SendTileSquare(-1, i, j, 3);
+                                    if (Main.netMode == NetmodeID.Server)
+                                    {
+                                        NetMessage.SendTileSquare(-1, i, j, 3);
+                                    }
                                 }
                             }
                         }
@@ -214,7 +223,10 @@ namespace InfectedQualities.Content.Tiles
                         tile.TileFrameX = (short)((int)mossType * 18);
                         tile.TileFrameY = (short)(WorldGen.genRand.Next(3) * 18);
                         WorldGen.SquareTileFrame(x, y);
-                        NetMessage.SendTileSquare(-1, x, y);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, x, y);
+                        }
                     }
                 }
             }
@@ -592,10 +604,8 @@ namespace InfectedQualities.Content.Tiles
         {
             if(fail && !effectOnly)
             {
-                noItem = true;
                 Main.tile[i, j].TileType = InfectedStoneType;
                 WorldGen.SquareTileFrame(i, j);
-                NetMessage.SendTileSquare(-1, i, j);
             }
         }
 

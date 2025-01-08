@@ -45,7 +45,10 @@ namespace InfectedQualities.Content.Tiles.Plants
                 if (WorldGen.AllowedToSpreadInfections && Main.remixWorld)
                 {
                     WorldGen.KillTile(i, j);
-                    NetMessage.SendTileSquare(-1, i, j);
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendTileSquare(-1, i, j);
+                    }
                 }
             }
             else

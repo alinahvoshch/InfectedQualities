@@ -181,7 +181,10 @@ namespace InfectedQualities.Content.Tiles.Plants
                             }
                         }
                     }
-                    NetMessage.SendTileSquare(-1, i, j, 2);
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendTileSquare(-1, i, j, 2);
+                    }
                 }
             }
             else if (WorldGen.TileType(i, j - 1) == Type)

@@ -3,5 +3,10 @@ Focused on the 3 infectious biomes, corruption, crimson, and the hallow. Fixing 
 Right now, the mod is in beta, and has not much content. But the content added is at the very least polished.
 The main idea of the mod was to fuse the infection biomes with whatever biome they take over. Instead of just cutting you off from probably important stuff, it only makes it harder to get them.
 
-If you have any bugs or suggestions, you can report to me via GitHub: https://github.com/Mellohi138/InfectedQualities/issues
-If you wish to check out the current features, you can do so here: https://github.com/Mellohi138/InfectedQualities/wiki
+The mod has a GitHub page that you can use to report issues, and check out the Wiki
+https://github.com/Mellohi138/InfectedQualities/
+
+If you have a matter to discuss with me, contact me on Discord: mellohi138
+
+[quote=tModLoader InfectedQualities]
+Developed By Mellohi[/quote]

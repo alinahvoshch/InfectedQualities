@@ -41,7 +41,10 @@ namespace InfectedQualities.Content.Extras.Tiles
                 {
                     Main.tile[i, j].TileType = curedTile;
                     WorldGen.SquareTileFrame(i, j);
-                    NetMessage.SendTileSquare(-1, i, j);
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendTileSquare(-1, i, j);
+                    }
                 }
             }
             else
@@ -101,12 +104,18 @@ namespace InfectedQualities.Content.Extras.Tiles
                         if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && Main.tileMoss[Main.tile[i, j].TileType])
                         {
                             ConvertEnum<MossType>(x, y, infectionType, true);
-                            NetMessage.SendTileSquare(-1, x, y);
+                            if (Main.netMode == NetmodeID.Server)
+                            {
+                                NetMessage.SendTileSquare(-1, x, y);
+                            }
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[i, j].TileType])
                         {
                             ConvertEnum<GemType>(x, y, infectionType, true);
-                            NetMessage.SendTileSquare(-1, x, y);
+                            if (Main.netMode == NetmodeID.Server)
+                            {
+                                NetMessage.SendTileSquare(-1, x, y);
+                            }
                         }
                         else
                         {
@@ -116,7 +125,11 @@ namespace InfectedQualities.Content.Extras.Tiles
                                 {
                                     Main.tile[x, y].TileType = (ushort)convertedTiles[tile][(short)infectionType];
                                     WorldGen.SquareTileFrame(x, y);
-                                    NetMessage.SendTileSquare(-1, x, y);
+                                    if(Main.netMode == NetmodeID.Server)
+                                    {
+                                        NetMessage.SendTileSquare(-1, x, y);
+                                    }
+                                    break;
                                 }
                             }
                         }
@@ -145,7 +158,10 @@ namespace InfectedQualities.Content.Extras.Tiles
                         {
                             Main.tile[x, y].WallType = convertedWalls[listIndex][(short)infectionType];
                             WorldGen.SquareWallFrame(x, y);
-                            NetMessage.SendTileSquare(-1, x, y);
+                            if (Main.netMode == NetmodeID.Server)
+                            {
+                                NetMessage.SendTileSquare(-1, x, y);
+                            }
                             break;
                         }
                     }
@@ -173,7 +189,10 @@ namespace InfectedQualities.Content.Extras.Tiles
                 if (flag && WorldGen.PlaceObject(i, j - 1, type))
                 {
                     WorldGen.SquareTileFrame(i, j - 1);
-                    NetMessage.SendTileSquare(-1, i, j - 1, 5);
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendTileSquare(-1, i, j - 1, 5);
+                    }
                 }
             }
         }
@@ -208,12 +227,18 @@ namespace InfectedQualities.Content.Extras.Tiles
                         if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && Main.tileMoss[Main.tile[i, j].TileType])
                         {
                             ConvertEnum<MossType>(x, y, infectionType, true);
-                            NetMessage.SendTileSquare(-1, x, y);
+                            if (Main.netMode == NetmodeID.Server)
+                            {
+                                NetMessage.SendTileSquare(-1, x, y);
+                            }
                         }
                         else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones && Main.tileStone[Main.tile[i, j].TileType])
                         {
                             ConvertEnum<GemType>(x, y, infectionType, true);
-                            NetMessage.SendTileSquare(-1, x, y);
+                            if (Main.netMode == NetmodeID.Server)
+                            {
+                                NetMessage.SendTileSquare(-1, x, y);
+                            }
                         }
                         else if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                         {
@@ -223,7 +248,10 @@ namespace InfectedQualities.Content.Extras.Tiles
                                 {
                                     Main.tile[x, y].TileType = (ushort)convertedTiles[tile][(short)infectionType];
                                     WorldGen.SquareTileFrame(x, y);
-                                    NetMessage.SendTileSquare(-1, x, y);
+                                    if (Main.netMode == NetmodeID.Server)
+                                    {
+                                        NetMessage.SendTileSquare(-1, x, y);
+                                    }
                                     break;
                                 }
                             }
@@ -245,7 +273,10 @@ namespace InfectedQualities.Content.Extras.Tiles
                 {
                     Main.tile[x, y].WallType = convertedWalls[(short)infectionType];
                     WorldGen.SquareWallFrame(x, y);
-                    NetMessage.SendTileSquare(-1, x, y);
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        NetMessage.SendTileSquare(-1, x, y);
+                    }
                 }
             }
         }
@@ -373,25 +404,37 @@ namespace InfectedQualities.Content.Extras.Tiles
                     {
                         Main.tile[i, j].WallType = WallID.JungleUnsafe;
                         WorldGen.SquareWallFrame(i, j);
-                        NetMessage.SendTileSquare(-1, i, j);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, i, j);
+                        }
                     }
                     else if (Main.tile[i, j].WallType is WallID.EbonstoneUnsafe or WallID.CrimstoneUnsafe or WallID.PearlstoneBrickUnsafe)
                     {
                         Main.tile[i, j].WallType = WallID.Stone;
                         WorldGen.SquareWallFrame(i, j);
-                        NetMessage.SendTileSquare(-1, i, j);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, i, j);
+                        }
                     }
                     else if (Main.tile[i, j].WallType is WallID.CorruptHardenedSand or WallID.CrimsonHardenedSand or WallID.HallowHardenedSand)
                     {
                         Main.tile[i, j].WallType = WallID.HardenedSand;
                         WorldGen.SquareWallFrame(i, j);
-                        NetMessage.SendTileSquare(-1, i, j);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, i, j);
+                        }
                     }
                     else if (Main.tile[i, j].WallType is WallID.CorruptSandstone or WallID.CrimsonSandstone or WallID.HallowSandstone)
                     {
                         Main.tile[i, j].WallType = WallID.Sandstone;
                         WorldGen.SquareWallFrame(i, j);
-                        NetMessage.SendTileSquare(-1, i, j);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, i, j);
+                        }
                     }
                 }
             }
