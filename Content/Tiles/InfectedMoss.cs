@@ -550,7 +550,7 @@ namespace InfectedQualities.Content.Tiles
             }
             else 
             {
-                //Due to the nature of the methods I use for the paint textures, I have to make use of this to at least make the negative painted moss more accurate. Still, it will be darker than expected.
+                //Due to the nature of the methods I use for the paint textures, I have to make use of other methods to make sure the moss of the tile is painted. It will still be inaccurate, but at least it will be close.
                 //I consider it a small price to pay for dynamic texture creation
                 Color mossColor = MossColor;
                 byte tileColor = Main.tile[i, j].TileColor;
@@ -559,6 +559,10 @@ namespace InfectedQualities.Content.Tiles
                     mossColor.R = (byte)(byte.MaxValue - MossColor.R);
                     mossColor.G = (byte)(byte.MaxValue - MossColor.G);
                     mossColor.B = (byte)(byte.MaxValue - MossColor.B);
+                }
+                else
+                {
+                    mossColor.MultiplyRGB(WorldGen.paintColor(tileColor));
                 }
                 TextureUtilities.TileDraw(i, j, TextureUtilities.TileDrawTexture(Type, tileColor), TextureUtilities.TileDrawColor(i, j, mossColor), spriteBatch);
             }
@@ -587,16 +591,13 @@ namespace InfectedQualities.Content.Tiles
             {
                 num = 1;
             }
+            else if (mossType == MossType.Helium)
+            {
+                num = 5;
+            }
             else
             {
-                if (mossType == MossType.Helium)
-                {
-                    num = 5;
-                }
-                else
-                {
-                    num = 3;
-                }
+                num = 3;
             }
         }
 

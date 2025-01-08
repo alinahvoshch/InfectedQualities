@@ -7,6 +7,3 @@ The mod has a GitHub page that you can use to report issues, and check out the W
 https://github.com/Mellohi138/InfectedQualities/
 
 If you have a matter to discuss with me, contact me on Discord: mellohi138
-
-[quote=tModLoader InfectedQualities]
-Developed By Mellohi[/quote]
