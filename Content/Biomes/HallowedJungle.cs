@@ -24,25 +24,17 @@ namespace InfectedQualities.Content.Biomes
                         }
                         return WorldUtilities.OtherworldMusic() ? MusicID.OtherworldlyUGHallow : MusicID.UndergroundHallow;
                     }
-                    else if(!Main.IsItRaining)
+                    else if(!Main.IsItRaining && Main.dayTime)
                     {
-                        if (WorldUtilities.OtherworldMusic() && Main.dayTime)
+                        if (WorldUtilities.OtherworldMusic())
                         {
                             return MusicID.OtherworldlyHallow;
                         }
-
-                        if (Main.dayTime)
+                        if (Main.IsItAHappyWindyDay && !Main.remixWorld)
                         {
-                            if (Main.IsItAHappyWindyDay && !Main.remixWorld)
-                            {
-                                return MusicID.WindyDay;
-                            }
-                            return MusicID.TheHallow;
+                            return MusicID.WindyDay;
                         }
-                        else if(InfectedQualitiesModSupport.HallowNightMusic())
-                        {
-                            return MusicLoader.GetMusicSlot(InfectedQualitiesModSupport.SpiritMod, "Sounds/Music/HallowNight");
-                        }
+                        return MusicID.TheHallow;
                     }
                 }
                 return -1;
