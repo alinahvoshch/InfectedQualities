@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using System;
 using InfectedQualities.Core;
 
-namespace InfectedQualities.Content.Extras.Tiles
+namespace InfectedQualities.Utilities
 {
     public static class TileUtilities
     {
@@ -87,7 +87,7 @@ namespace InfectedQualities.Content.Extras.Tiles
                     [TileID.CorruptThorns, TileID.CrimsonThorns, -1]
                 ];
 
-                if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                 {
                     convertedTiles[3][2] = ModContent.TileType<HallowedJungleGrass>();
                     convertedTiles[7][(short)infectionType] = GetSnowType(infectionType);
@@ -125,7 +125,7 @@ namespace InfectedQualities.Content.Extras.Tiles
                                 {
                                     Main.tile[x, y].TileType = (ushort)convertedTiles[tile][(short)infectionType];
                                     WorldGen.SquareTileFrame(x, y);
-                                    if(Main.netMode == NetmodeID.Server)
+                                    if (Main.netMode == NetmodeID.Server)
                                     {
                                         NetMessage.SendTileSquare(-1, x, y);
                                     }
@@ -240,7 +240,7 @@ namespace InfectedQualities.Content.Extras.Tiles
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
                         }
-                        else if(ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                        else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
                         {
                             for (int tile = 0; tile < tilesToConvert.Length; tile++)
                             {
@@ -342,7 +342,7 @@ namespace InfectedQualities.Content.Extras.Tiles
 
         public static ushort GetEnumType(InfectionType? infectionType, Enum enumType, string prefix = null)
         {
-            if(prefix == null)
+            if (prefix == null)
             {
                 if (enumType.GetType() == typeof(MossType))
                 {
@@ -356,7 +356,7 @@ namespace InfectedQualities.Content.Extras.Tiles
 
             if (!infectionType.HasValue)
             {
-                if(prefix == "Moss")
+                if (prefix == "Moss")
                 {
                     if ((MossType)enumType == MossType.Helium)
                     {

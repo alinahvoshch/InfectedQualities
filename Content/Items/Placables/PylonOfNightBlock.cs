@@ -1,4 +1,5 @@
-﻿using InfectedQualities.Core;
+﻿using InfectedQualities.Content.Tiles;
+using InfectedQualities.Core;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -12,7 +13,7 @@ namespace InfectedQualities.Content.Items.Placables
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<Tiles.PylonOfNight>());
+            Item.DefaultToPlaceableTile(ModContent.TileType<PylonOfNight>());
             Item.SetShopValues(ItemRarityColor.Blue1, Item.buyPrice(gold: 15));
         }
 

@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using InfectedQualities.Core;
 using Terraria.ID;
-using InfectedQualities.Content.Extras;
+using InfectedQualities.Utilities;
 
 namespace InfectedQualities.Content.Biomes
 {
@@ -44,8 +44,6 @@ namespace InfectedQualities.Content.Biomes
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeMedium;
 
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Jungle;
-
-        public override string BestiaryIcon => "InfectedQualities/Content/Extras/BestiaryIcons/Hallowed_Jungle";
 
         public override string BackgroundPath => "Terraria/Images/MapBG22";
 

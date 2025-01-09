@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using InfectedQualities.Core;
-using InfectedQualities.Content.Extras;
+using InfectedQualities.Utilities;
 
 namespace InfectedQualities.Content.Biomes
 {
@@ -16,8 +16,6 @@ namespace InfectedQualities.Content.Biomes
         public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Corrupt;
-
-        public override string BestiaryIcon => "InfectedQualities/Content/Extras/BestiaryIcons/Corrupt_Jungle";
 
         public override string BackgroundPath => "Terraria/Images/MapBG23";
 

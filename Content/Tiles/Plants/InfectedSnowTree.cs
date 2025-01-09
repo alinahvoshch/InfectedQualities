@@ -1,5 +1,5 @@
-﻿using InfectedQualities.Content.Extras.Tiles;
-using InfectedQualities.Core;
+﻿using InfectedQualities.Core;
+using InfectedQualities.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;

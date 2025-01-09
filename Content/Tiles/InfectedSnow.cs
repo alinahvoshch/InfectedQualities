@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using InfectedQualities.Core;
 using InfectedQualities.Content.Items.Placables;
-using InfectedQualities.Content.Extras.Tiles;
+using InfectedQualities.Utilities;
 
 namespace InfectedQualities.Content.Tiles
 {

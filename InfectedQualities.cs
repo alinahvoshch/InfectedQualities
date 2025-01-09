@@ -1,8 +1,8 @@
 using InfectedQualities.Content.Biomes;
-using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Content.Tiles;
 using InfectedQualities.Content.Tiles.Plants;
 using InfectedQualities.Core;
+using InfectedQualities.Utilities;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
@@ -33,7 +33,7 @@ namespace InfectedQualities
                 {
                     for (int i = 1; i <= 2; i++)
                     {
-                        AddBossHeadTexture("InfectedQualities/Content/Extras/MapIcons/" + infectionType.ToString() + "Plantera_MapIcon_" + i);
+                        AddBossHeadTexture("InfectedQualities/Content/MapIcons/" + infectionType.ToString() + "Plantera_MapIcon_" + i);
                     }
                 }
             }

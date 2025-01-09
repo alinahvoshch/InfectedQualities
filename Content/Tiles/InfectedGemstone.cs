@@ -1,6 +1,5 @@
-﻿using InfectedQualities.Content.Extras;
-using InfectedQualities.Content.Extras.Tiles;
-using InfectedQualities.Core;
+﻿using InfectedQualities.Core;
+using InfectedQualities.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Terraria;
 
-namespace InfectedQualities.Content.Extras
+namespace InfectedQualities.Utilities
 {
     public static class WorldUtilities
     {
@@ -25,11 +25,11 @@ namespace InfectedQualities.Content.Extras
 
         public static bool MusicUnderground(this Player player)
         {
-            if (player.position.Y >= Main.worldSurface * 16.0 + (Main.screenHeight / 2) && (Main.remixWorld || !WorldGen.oceanDepths((int)(Main.screenPosition.X + (Main.screenWidth / 2)) / 16, (int)(Main.screenPosition.Y + (Main.screenHeight / 2)) / 16)))
+            if (player.position.Y >= Main.worldSurface * 16.0 + Main.screenHeight / 2 && (Main.remixWorld || !WorldGen.oceanDepths((int)(Main.screenPosition.X + Main.screenWidth / 2) / 16, (int)(Main.screenPosition.Y + Main.screenHeight / 2) / 16)))
             {
                 if (Main.remixWorld)
                 {
-                    return player.position.Y >= Main.rockLayer * 16.0 + (Main.screenHeight / 2);
+                    return player.position.Y >= Main.rockLayer * 16.0 + Main.screenHeight / 2;
                 }
                 return true;
             }

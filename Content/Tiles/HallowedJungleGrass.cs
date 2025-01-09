@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using InfectedQualities.Content.Tiles.Plants;
 using InfectedQualities.Core;
-using InfectedQualities.Content.Extras.Tiles;
+using InfectedQualities.Utilities;
 
 namespace InfectedQualities.Content.Tiles
 {

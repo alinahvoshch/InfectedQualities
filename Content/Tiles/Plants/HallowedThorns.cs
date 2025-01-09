@@ -1,5 +1,5 @@
-﻿using InfectedQualities.Content.Extras.Tiles;
-using InfectedQualities.Core;
+﻿using InfectedQualities.Core;
+using InfectedQualities.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

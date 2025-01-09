@@ -1,7 +1,6 @@
-﻿using InfectedQualities.Content.Extras;
-using InfectedQualities.Content.Extras.Tiles;
-using InfectedQualities.Content.Tiles;
+﻿using InfectedQualities.Content.Tiles;
 using InfectedQualities.Core;
+using InfectedQualities.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
@@ -96,7 +95,7 @@ namespace InfectedQualities.Common
                 if(planteraType.HasValue)
                 {
                     int phaseIndex = npc.life > npc.lifeMax / 2 ? 1 : 2;
-                    index = ModContent.GetModBossHeadSlot("InfectedQualities/Content/Extras/MapIcons/" + planteraType.ToString() + "Plantera_MapIcon_" + phaseIndex);
+                    index = ModContent.GetModBossHeadSlot("InfectedQualities/Content/MapIcons/" + planteraType.ToString() + "Plantera_MapIcon_" + phaseIndex);
                 }
             }
         }

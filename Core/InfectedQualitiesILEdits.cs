@@ -10,8 +10,7 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using InfectedQualities.Content.Tiles.Plants;
 using Terraria.Enums;
-using InfectedQualities.Content.Extras;
-using InfectedQualities.Content.Extras.Tiles;
+using InfectedQualities.Utilities;
 
 namespace InfectedQualities.Core
 {

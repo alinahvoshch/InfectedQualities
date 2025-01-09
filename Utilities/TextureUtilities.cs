@@ -1,5 +1,4 @@
 ﻿using InfectedQualities.Common;
-using InfectedQualities.Content.Extras.Tiles;
 using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,7 +9,7 @@ using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace InfectedQualities.Content.Extras
+namespace InfectedQualities.Utilities
 {
     public static class TextureUtilities
     {
@@ -54,7 +53,7 @@ namespace InfectedQualities.Content.Extras
         public static Texture2D TileDrawTexture(ushort type, byte color)
         {
             Texture2D paintTexture = Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(type, 0, color);
-            if(paintTexture == null)
+            if (paintTexture == null)
             {
                 return TextureAssets.Tile[type].Value;
             }
@@ -75,7 +74,7 @@ namespace InfectedQualities.Content.Extras
                 color.G = Math.Max((byte)50, color.G);
                 color.B = Math.Max((byte)50, color.B);
 
-                if(emitDust && Main.rand.NextBool(30))
+                if (emitDust && Main.rand.NextBool(30))
                 {
                     Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.RedTorch, 0f, 0f, 100, default, 0.3f)];
                     dust.fadeIn = 1;
@@ -85,12 +84,12 @@ namespace InfectedQualities.Content.Extras
                 }
             }
 
-            if(Main.LocalPlayer.findTreasure && Main.IsTileSpelunkable(i, j))
+            if (Main.LocalPlayer.findTreasure && Main.IsTileSpelunkable(i, j))
             {
                 color.R = Math.Max((byte)200, color.R);
                 color.G = Math.Max((byte)170, color.G);
 
-                if(emitDust && Main.rand.NextBool(60))
+                if (emitDust && Main.rand.NextBool(60))
                 {
                     Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.TreasureSparkle, 0f, 0f, 150, default, 0.3f)];
                     dust.fadeIn = 1;
@@ -99,16 +98,16 @@ namespace InfectedQualities.Content.Extras
                 }
             }
 
-            if(Main.LocalPlayer.biomeSight)
+            if (Main.LocalPlayer.biomeSight)
             {
                 Color sightColor = default;
-                if(Main.IsTileBiomeSightable(i, j, ref sightColor))
+                if (Main.IsTileBiomeSightable(i, j, ref sightColor))
                 {
                     color.R = Math.Max(sightColor.R, color.R);
                     color.G = Math.Max(sightColor.G, color.G);
                     color.B = Math.Max(sightColor.B, color.B);
 
-                    if(emitDust && Main.rand.NextBool(480))
+                    if (emitDust && Main.rand.NextBool(480))
                     {
                         Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.RainbowMk2, 0f, 0f, 150, sightColor, 0.3f)];
                         dust.noGravity = true;
@@ -144,7 +143,7 @@ namespace InfectedQualities.Content.Extras
                 {
                     tileShineType = Main.tile[i, j].TileType;
                 }
-                if ((Main.shimmerAlpha > 0f && Main.tileSolid[tileShineType]) || Main.tileShine2[tileShineType])
+                if (Main.shimmerAlpha > 0f && Main.tileSolid[tileShineType] || Main.tileShine2[tileShineType])
                 {
                     color = Main.shine(color, tileShineType);
                 }
@@ -158,7 +157,7 @@ namespace InfectedQualities.Content.Extras
             Vector2 drawVector = new Vector2(i * 16, j * 16) + offscreenVector - Main.screenPosition;
             if (!frames.HasValue)
             {
-                frames = new (Main.tile[i, j].TileFrameX, Main.tile[i, j].TileFrameY);
+                frames = new(Main.tile[i, j].TileFrameX, Main.tile[i, j].TileFrameY);
             }
 
             Rectangle frame = new(frames.Value.X, frames.Value.Y, 16, 16);
@@ -206,7 +205,7 @@ namespace InfectedQualities.Content.Extras
                     spriteBatch.Draw(texture, drawVector + new Vector2(xOffset, q * width + num), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
                 }
 
-                int slopeOffset = (Main.tile[i, j].Slope <= SlopeType.SlopeDownRight) ? 14 : 0;
+                int slopeOffset = Main.tile[i, j].Slope <= SlopeType.SlopeDownRight ? 14 : 0;
                 frame = new(frames.Value.X, frames.Value.Y + slopeOffset, 16, 2);
                 spriteBatch.Draw(texture, drawVector + new Vector2(0, slopeOffset), frame, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
             }

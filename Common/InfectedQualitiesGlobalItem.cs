@@ -5,7 +5,7 @@ using InfectedQualities.Content.Tiles;
 using InfectedQualities.Core;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using InfectedQualities.Content.Extras.Tiles;
+using InfectedQualities.Utilities;
 
 namespace InfectedQualities.Common
 {
