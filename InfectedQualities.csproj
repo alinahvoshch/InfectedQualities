@@ -7,6 +7,11 @@
 	<PropertyGroup>
 		
 	</PropertyGroup>
+	<ItemGroup>
+	  <Reference Include="SpiritMod">
+	    <HintPath>..\..\ModReader\SpiritMod\SpiritMod.dll</HintPath>
+	  </Reference>
+	</ItemGroup>
 
 	<!-- References -->
 

@@ -3,3 +3,4 @@ author = Mellohi
 version = 0.7.4.3
 includeSource = true
 homepage = https://github.com/Mellohi138/InfectedQualities
+weakReferences = SpiritMod

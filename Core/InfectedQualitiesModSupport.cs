@@ -61,6 +61,8 @@ namespace InfectedQualities.Core
             ["Riven_Flesh_Wall", "Quartz_Wall", "Brittle_Quartz_Wall", "Riven_Grass_Wall_Natural"]
         ];
 
+        public static bool PureglowRange(int i) => SpiritMod != null && SuperSunflowerRange(i);
+
         public static void PostSetupContent()
         {
             if (CalamityMod != null)
@@ -130,19 +132,14 @@ namespace InfectedQualities.Core
             }
         }
 
-        public static bool PureglowRange(int i)
+        [JITWhenModsEnabled("SpiritMod")]
+        private static bool SuperSunflowerRange(int i)
         {
-            if(SpiritMod != null)
+            foreach (Point16 point in global::SpiritMod.MyWorld.superSunFlowerPositions)
             {
-                HashSet<Point16> superSunflowerPositions = (HashSet<Point16>)SpiritMod.Code.GetType("SpiritMod.MyWorld").GetField("superSunFlowerPositions").GetValue(null);
-                int superSunflowerRange = (int)SpiritMod.Code.GetType("SpiritMod.Tiles.SuperSunFlower").GetField("Range").GetValue(null);
-
-                foreach (Point16 point in superSunflowerPositions)
+                if (Math.Abs(point.X - i) < global::SpiritMod.Tiles.SuperSunFlower.Range * 2)
                 {
-                    if (Math.Abs(point.X - i) < superSunflowerRange * 2)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
