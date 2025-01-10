@@ -2,6 +2,7 @@
 =======
 -Upgraded the paint support for infected mosses.
 -File organization
+-Fixed duplicate vertebrae --> leather recipe when used with Calamity mod.
 
 0.7.4.2
 =======

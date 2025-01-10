@@ -12,12 +12,11 @@ namespace InfectedQualities.Core
     {
         public override void AddRecipes()
         {
-            if(!ModLoader.HasMod("ThoriumMod"))
+            if(InfectedQualitiesModSupport.CalamityMod == null && !ModLoader.HasMod("ThoriumMod"))
             {
                 Recipe.Create(ItemID.Leather)
                     .AddIngredient(ItemID.Vertebrae, 5)
                     .AddTile(TileID.WorkBenches)
-                    .AddDecraftCondition(Condition.CrimsonWorld)
                     .Register();
             }
 
@@ -74,9 +73,16 @@ namespace InfectedQualities.Core
                     {
                         recipe.AddCondition(Condition.NotInGraveyard);
                     }
-                    else if (recipe.HasIngredient(ItemID.RottenChunk) && recipe.HasResult(ItemID.Leather))
+                    else if (recipe.HasResult(ItemID.Leather))
                     {
-                        recipe.AddDecraftCondition(Condition.CorruptWorld);
+                        if(recipe.HasIngredient(ItemID.RottenChunk))
+                        {
+                            recipe.AddDecraftCondition(Condition.CorruptWorld);
+                        }
+                        else if (recipe.HasIngredient(ItemID.RottenChunk))
+                        {
+                            recipe.AddDecraftCondition(Condition.CrimsonWorld);
+                        }
                     }
                 }
             }
