@@ -48,9 +48,9 @@ namespace InfectedQualities.Content.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            if (Main.hardMode && player.ZoneHallow && player.ZoneJungle && !player.ZoneGlowshroom)
+            if (Main.hardMode && player.ZoneHallow && player.ZoneJungle)
             {
-                return !player.ZoneSkyHeight && !player.ZoneUnderworldHeight && !player.ZoneDungeon && !player.ZoneLihzhardTemple;
+                return !player.ZoneSkyHeight && !player.ZoneUnderworldHeight;
             }
             return false;
         }
