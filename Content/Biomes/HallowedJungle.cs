@@ -1,7 +1,6 @@
 ﻿using Terraria;
 using Terraria.Graphics.Capture;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 using InfectedQualities.Core;
 using Terraria.ID;
 using InfectedQualities.Utilities;
@@ -46,8 +45,6 @@ namespace InfectedQualities.Content.Biomes
         public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Jungle;
 
         public override string BackgroundPath => "Terraria/Images/MapBG22";
-
-        public override Color? BackgroundColor => Color.Blue;
 
         public override bool IsBiomeActive(Player player)
         {

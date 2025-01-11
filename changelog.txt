@@ -4,6 +4,7 @@
 -File organization
 -Fixed duplicate vertebrae --> leather recipe when used with Calamity mod.
 -Removed the use of reflection from SpiritMod pureglow compability. It should make it significantly less performance-consuming.
+-Corrupt and crimson jungle now use corrupt and crimson torches as biome torches instead of cursed and ichor torches.
 
 0.7.4.2
 =======

@@ -2,8 +2,6 @@
 using Terraria.Graphics.Capture;
 using Terraria.ModLoader;
 
-using Microsoft.Xna.Framework;
-using Terraria.ID;
 using InfectedQualities.Core;
 using InfectedQualities.Utilities;
 
@@ -19,15 +17,9 @@ namespace InfectedQualities.Content.Biomes
 
         public override string BackgroundPath => "Terraria/Images/MapBG23";
 
-        public override Color? BackgroundColor => Color.Purple;
-
-        public override int BiomeTorchItemType => ItemID.CursedTorch;
-
-        public override int BiomeCampfireItemType => ItemID.CursedCampfire;
-
         public override bool IsBiomeActive(Player player)
         {
-            if(Main.hardMode && player.ZoneCorrupt && player.ZoneJungle && !player.ZoneGlowshroom)
+            if (Main.hardMode && player.ZoneCorrupt && player.ZoneJungle && !player.ZoneGlowshroom)
             {
                 return player.ZoneCavern() && !player.ZoneDungeon && !player.ZoneLihzhardTemple;
             }
