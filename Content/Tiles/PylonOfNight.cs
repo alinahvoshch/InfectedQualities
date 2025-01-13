@@ -46,7 +46,7 @@ namespace InfectedQualities.Content.Tiles
 
             PylonCrystalTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Tiles/" + Name + "_Crystal");
             PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
-            PylonMapIcon = ModContent.Request<Texture2D>("InfectedQualities/Content/MapIcons/" + Name + "_MapIcon");
+            PylonMapIcon = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/MapIcons/" + Name + "_MapIcon");
         }
 
         public override NPCShop.Entry GetNPCShopEntry() => null;

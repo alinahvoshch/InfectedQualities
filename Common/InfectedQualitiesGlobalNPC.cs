@@ -95,7 +95,7 @@ namespace InfectedQualities.Common
                 if(planteraType.HasValue)
                 {
                     int phaseIndex = npc.life > npc.lifeMax / 2 ? 1 : 2;
-                    index = ModContent.GetModBossHeadSlot("InfectedQualities/Content/MapIcons/" + planteraType.ToString() + "Plantera_MapIcon_" + phaseIndex);
+                    index = ModContent.GetModBossHeadSlot("InfectedQualities/Content/Extras/MapIcons/" + planteraType.ToString() + "Plantera_MapIcon_" + phaseIndex);
                 }
             }
         }
