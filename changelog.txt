@@ -6,6 +6,7 @@
 -Removed the use of reflection from SpiritMod pureglow compability. It should make it significantly less performance-consuming.
 -Corrupt and crimson jungle now use corrupt and crimson torches as biome torches instead of cursed and ichor torches.
 -Another pylon of night crystal resprite
+-Removed config icons due to an issue that occured if certain configs were disabled
 
 0.7.4.2
 =======

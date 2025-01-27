@@ -87,7 +87,7 @@ Mods: {
 			}
 
 			InfectedBiomes: {
-				Label: "[i:836] Infected Biomes"
+				Label: Infected Biomes
 				Tooltip:
 					'''
 					Adds additional content to infected biomes, this is the main meat and bones of the mod.
@@ -97,7 +97,7 @@ Mods: {
 			}
 
 			InfectedMosses: {
-				Label: "[i:5127] Infected Mosses"
+				Label: Infected Mosses
 				Tooltip:
 					'''
 					Corruption, crimson, and Hallow no longer break moss blocks, instead converting their stone to it's own counterpart.
@@ -106,7 +106,7 @@ Mods: {
 			}
 
 			InfectedGemstones: {
-				Label: "[i:InfectedQualities/CorruptDiamondGemstoneBlock] Infected Gemstones"
+				Label: Infected Gemstones
 				Tooltip:
 					'''
 					Gem blocks embeded in stone blocks can now be converted into their infected variant.
@@ -115,12 +115,12 @@ Mods: {
 			}
 
 			PylonOfNight: {
-				Label: "[i:InfectedQualities/PylonOfNightBlock] Pylon of Night"
+				Label: Pylon of Night
 				Tooltip: Enables pylon of night, allowing the player to teleport to corruption or crimson through the pylon system
 			}
 
 			KeyOfNaught: {
-				Label: "[i:InfectedQualities/KeyOfNaught] Key of Naught"
+				Label: Key of Naught
 				Tooltip:
 					'''
 					Enables key of naught, allowing the player to spawn in the mimic of the evil biome that was not chosen
@@ -129,7 +129,7 @@ Mods: {
 			}
 
 			DivinePowder: {
-				Label: "[i:InfectedQualities/DivinePowder] Divine Powder"
+				Label: Divine Powder
 				Tooltip:
 					'''
 					Enables divine powder, allowing the player to create and purify the hallow biome through powders
@@ -138,7 +138,7 @@ Mods: {
 			}
 
 			HardmodeChasmPurification: {
-				Label: "[i:66] Hardmode Chasm Cleansing"
+				Label: Hardmode Chasm Cleansing
 				Tooltip:
 					'''
 					Cleans the corrupt and crimson chasms upon the start of hardmode, this takes place before the V-shape generates
@@ -148,7 +148,7 @@ Mods: {
 			}
 
 			DisableInfectionSpread: {
-				Label: "[i:947] Disable Infection Spreading"
+				Label: Disable Infection Spreading
 				Tooltip:
 					'''
 					What the title says, biomes that can spread will not spread at all
@@ -157,12 +157,12 @@ Mods: {
 			}
 
 			AllowNPCsInEvilBiomes: {
-				Label: "[i:267] Allow NPCs in Evil Biomes"
+				Label: Allow NPCs in Evil Biomes
 				Tooltip: Allows NPCs to live inside evil biomes. Happiness will be at minimum, but it's better than just completetly losing the house
 			}
 
 			AltarEvilSpawning: {
-				Label: "[i:833] Demon Altars Spawn Infection Blocks"
+				Label: Demon Altars Spawn Infection Blocks
 				Tooltip:
 					'''
 					Brings back the notorious feature that had a chance to spawn an evil block whenever you broke a demon altar
@@ -171,7 +171,7 @@ Mods: {
 			}
 
 			InfectedPlantera: {
-				Label: "[i:1370] Infected Plantera Textures"
+				Label: Infected Plantera Textures
 				Tooltip:
 					'''
 					Plantera will have special textures when summoned in corruption, crimson, or hallow
@@ -182,7 +182,7 @@ Mods: {
 			}
 
 			BiomeSightWallHighlightBrightness: {
-				Label: "[i:5211] Biome Sight Wall Brightness"
+				Label: Biome Sight Wall Brightness
 				Tooltip:
 					'''
 					Biome sight potion will highlight infected walls with a specific brightness. Compatible with other mods
@@ -191,7 +191,7 @@ Mods: {
 			}
 
 			HallowedJungleMusic: {
-				Label: "[i:573] Hallow Music in Jungle"
+				Label: Hallow Music in Jungle
 				Tooltip: Hallow music will play in the Hallowed Jungle. May be incompatible with other mods that change music.
 			}
 		}
