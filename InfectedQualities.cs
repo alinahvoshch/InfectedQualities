@@ -48,7 +48,7 @@ namespace InfectedQualities
             ["ZoneHallowedJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<HallowedJungle>(),
             ["SetWallBiomeSightColor", int type, Color color] => delegate() { InfectedQualitiesModSupport.ModWallBiomeSight[type] = color; },
             ["SetDemonAltarBlock", int altar, ushort type] => delegate() { InfectedQualitiesModSupport.AltarToEvilBlock.Add(altar, type); },
-            ["SetAltarGoodBlock", bool condition, ushort type] => delegate () { InfectedQualitiesModSupport.AltarToGoodBlock.Add(condition, type); },
+            ["SetAltarGoodBlock", Func<bool> condition, ushort type] => delegate () { InfectedQualitiesModSupport.AltarToGoodBlock.Add(condition, type); },
             _ => throw new Exception("You buffoon, you failed to use InfectedQualities.Call")
         };
     }

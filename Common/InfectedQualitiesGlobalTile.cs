@@ -504,11 +504,16 @@ namespace InfectedQualities.Common
 
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            if(ModContent.GetInstance<InfectedQualitiesServerConfig>().AltarEvilSpawning && InfectedQualitiesModSupport.AltarToEvilBlock.TryGetValue(type, out ushort evilStone) && !WorldGen.genRand.NextBool(3))
+            if(ModContent.GetInstance<InfectedQualitiesServerConfig>().AltarEvilSpawning && InfectedQualitiesModSupport.AltarToEvilBlock.TryGetValue(type, out ushort infectedStone) && !WorldGen.genRand.NextBool(3))
             {
-                bool evil = WorldGen.genRand.NextBool();
-                ushort goodStone = InfectedQualitiesModSupport.GetGoodStone();
-                if (evilStone == 0) evilStone = Main.tile[i, j].TileFrameX < 54 ? TileID.Ebonstone : TileID.Crimstone;
+                if (WorldGen.genRand.NextBool())
+                {
+                    infectedStone = InfectedQualitiesModSupport.GetGoodStone();
+                }
+                else if (type == TileID.DemonAltar)
+                {
+                    infectedStone = Main.tile[i, j].TileFrameX < 54 ? TileID.Ebonstone : TileID.Crimstone;
+                }
 
                 for (int num = 0; num < 1000; num++)
                 {
@@ -517,7 +522,7 @@ namespace InfectedQualities.Common
 
                     if (WorldGen.TileType(x, y) == TileID.Stone)
                     {
-                        Main.tile[x, y].TileType = evil ? evilStone : goodStone;
+                        Main.tile[x, y].TileType = infectedStone;
                         WorldGen.SquareTileFrame(x, y);
                         if (Main.netMode == NetmodeID.Server)
                         {
