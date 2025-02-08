@@ -17,6 +17,7 @@ namespace InfectedQualities.Core
         internal static readonly Mod ExxoAvalon = ModLoader.TryGetMod("Avalon", out Mod result) ? result : null;
         internal static readonly Mod TerrariaOrigins = ModLoader.TryGetMod("Origins", out Mod result) ? result : null;
 
+        public static readonly Dictionary<bool, ushort> AltarToGoodBlock = [];
         public static readonly Dictionary<int, ushort> AltarToEvilBlock = new() { [TileID.DemonAltar] = 0 };
 
         internal static Color[] ModWallBiomeSight = WallID.Sets.Factory.CreateCustomSet(
@@ -75,6 +76,8 @@ namespace InfectedQualities.Core
 
             if (ConfectionRebaked != null)
             {
+                AltarToGoodBlock.Add((bool)ConfectionRebaked.Call("confectionorHallow"), ConfectionRebaked.Find<ModTile>("Creamstone").Type);
+
                 Color confectionGlow = new(210, 196, 145);
                 foreach (string wallName in ModBlocks[1])
                 {
@@ -248,9 +251,12 @@ namespace InfectedQualities.Core
 
         public static ushort GetGoodStone()
         {
-            if(ConfectionRebaked != null && (bool)ConfectionRebaked.Call("confectionorHallow"))
+            foreach(bool condition in AltarToGoodBlock.Keys)
             {
-                return ConfectionRebaked.Find<ModTile>("Creamstone").Type;
+                if(condition)
+                {
+                    return AltarToGoodBlock[condition];
+                }
             }
 
             return TileID.Pearlstone;
