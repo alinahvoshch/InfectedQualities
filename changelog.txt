@@ -7,6 +7,7 @@
 -Corrupt and crimson jungle now use corrupt and crimson torches as biome torches instead of cursed and ichor torches.
 -Another pylon of night crystal resprite
 -Removed config icons due to an issue that occured if certain configs were disabled
+-Added a new mod call option for demon altar infection spawning, allowing to manually add new "good" infected stones to it. 
 
 0.7.4.2
 =======

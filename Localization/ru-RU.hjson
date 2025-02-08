@@ -18,7 +18,7 @@ Mods: {
 			Placables: {
 				CorruptSnowBlock.DisplayName: Нечестивый снег
 				CrimsonSnowBlock.DisplayName: Свернувшаяся кровь
-				HallowedSnowBlock.DisplayName: Кристаллизовавшийся снег
+				HallowedSnowBlock.DisplayName: Святой снег
 
 				PylonOfNightBlock: {
 					DisplayName: Пилон ночи
