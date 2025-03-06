@@ -50,6 +50,7 @@ namespace InfectedQualities.Content.Items.Placables
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 100;
+            ItemID.Sets.DisableAutomaticPlaceableDrop[Item.type] = true;
         }
 
         public override void SetDefaults()

@@ -8,6 +8,7 @@
 -Another pylon of night crystal resprite
 -Removed config icons due to an issue that occured if certain configs were disabled
 -Added a new mod call option for demon altar infection spawning, allowing to manually add new "good" infected stones to it. 
+-Fixed Basic Automated Veinmining incompability, causing infected gemstone blocks to drop themselves instead of their gems when used with instant mining on, along with removing some unneeded stuff related to tile drops.
 
 0.7.4.2
 =======

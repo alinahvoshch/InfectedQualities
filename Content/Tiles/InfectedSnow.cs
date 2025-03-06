@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ModLoader;
 using InfectedQualities.Core;
-using InfectedQualities.Content.Items.Placables;
 using InfectedQualities.Utilities;
 
 namespace InfectedQualities.Content.Tiles
@@ -41,7 +40,6 @@ namespace InfectedQualities.Content.Tiles
                     TileID.Sets.CorruptBiomeSight[Type] = true;
                     TileID.Sets.CorruptCountCollection.Add(Type);
                     TileUtilities.TileMerge(Type, TileID.CorruptIce);
-                    RegisterItemDrop(ModContent.ItemType<CorruptSnowBlock>());
                     AddMapEntry(new(214, 203, 236));
                     break;
                 case InfectionType.Crimson:
@@ -50,7 +48,6 @@ namespace InfectedQualities.Content.Tiles
                     TileID.Sets.CrimsonBiomeSight[Type] = true;
                     TileID.Sets.CrimsonCountCollection.Add(Type);
                     TileUtilities.TileMerge(Type, TileID.FleshIce);
-                    RegisterItemDrop(ModContent.ItemType<CrimsonSnowBlock>());
                     AddMapEntry(new(234, 210, 205));
                     break;
                 case InfectionType.Hallowed:
@@ -61,7 +58,6 @@ namespace InfectedQualities.Content.Tiles
                     TileID.Sets.HallowCountCollection.Add(Type);
                     TileID.Sets.CanGrowCrystalShards[Type] = true;
                     TileUtilities.TileMerge(Type, TileID.HallowedIce);
-                    RegisterItemDrop(ModContent.ItemType<HallowedSnowBlock>());
                     AddMapEntry(new(247, 228, 233));
                     break;
             }

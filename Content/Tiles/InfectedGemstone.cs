@@ -2,7 +2,6 @@
 using InfectedQualities.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
@@ -27,6 +26,7 @@ namespace InfectedQualities.Content.Tiles
             MinPick = 65;
             MineResist = 2;
             HitSound = SoundID.Tink;
+            RegisterItemDrop(ItemID.Search.GetId(gemType.ToString()));
 
             switch (infectionType)
             {
@@ -84,8 +84,6 @@ namespace InfectedQualities.Content.Tiles
         }
 
         public override void RandomUpdate(int i, int j) => TileUtilities.DefaultInfectionSpread(i, j, infectionType, TileUtilities.GetEnumType(null, gemType));
-
-        public override IEnumerable<Item> GetItemDrops(int i, int j) => [new Item(ItemID.Search.GetId(gemType.ToString()))];
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {

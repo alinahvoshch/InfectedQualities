@@ -42,7 +42,6 @@ namespace InfectedQualities.Content.Tiles
 
             AddToArray(ref TileID.Sets.CountsAsPylon);
             AddMapEntry(PylonColor, Language.GetText("Mods.InfectedQualities.Items.Placables.PylonOfNightBlock.DisplayName"));
-            RegisterItemDrop(ModContent.ItemType<PylonOfNightBlock>());
 
             PylonCrystalTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Tiles/" + Name + "_Crystal");
             PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
