@@ -16,7 +16,7 @@ namespace InfectedQualities.Content.Items
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.PurificationPowder);
-            Item.shoot = ModContent.ProjectileType<DivineDustProjectile>();
+            Item.shoot = ModContent.ProjectileType<DivinePowderProjectile>();
             Item.value = Item.buyPrice(silver: 3, copper : 25);
         }
 

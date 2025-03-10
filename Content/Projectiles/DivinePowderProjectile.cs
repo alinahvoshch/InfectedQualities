@@ -4,11 +4,14 @@ using Terraria.ModLoader;
 
 using Microsoft.Xna.Framework;
 using InfectedQualities.Core;
+using Terraria.Localization;
 
 namespace InfectedQualities.Content.Projectiles
 {
-    public class DivineDustProjectile : ModProjectile
+    public class DivinePowderProjectile : ModProjectile
     {
+        public override LocalizedText DisplayName => Language.GetText("Mods.InfectedQualities.Items.DivinePowder.DisplayName");
+
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.PurificationPowder);
