@@ -178,7 +178,7 @@ namespace InfectedQualities.Utilities
                 {
                     for (int n = j - range; n < j + range; n += 2)
                     {
-                        if (!WorldGen.InWorld(m, n) || Main.tile[m, n].HasTile && (Main.tile[m, n].TileType == type || Main.tile[m, n].TileType == vanillaVariant))
+                        if (!WorldGen.InWorld(m, n) || (Main.tile[m, n].HasTile && (Main.tile[m, n].TileType == type || Main.tile[m, n].TileType == vanillaVariant)))
                         {
                             flag = false;
                             break;

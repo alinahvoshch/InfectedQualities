@@ -12,6 +12,14 @@ namespace InfectedQualities.Content.Projectiles
     {
         public override LocalizedText DisplayName => Language.GetText("Mods.InfectedQualities.Items.DivinePowder.DisplayName");
 
+        public ref float Lifespan => ref Projectile.ai[0];
+
+        private bool DustSpawned
+        {
+            get => Projectile.ai[1] != 0;
+            set => Projectile.ai[1] = value.ToInt();
+        }
+
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.PurificationPowder);
@@ -21,15 +29,15 @@ namespace InfectedQualities.Content.Projectiles
         public override void AI()
         {
             Projectile.velocity *= 0.95f;
-            Projectile.ai[0] += 1f;
-            if (Projectile.ai[0] == 180f)
+            Lifespan++;
+            if (Lifespan == 180)
             {
                 Projectile.Kill();
             }
 
-            if (Projectile.ai[1] == 0f)
+            if (!DustSpawned)
             {
-                Projectile.ai[1] = 1f;
+                DustSpawned = true;
                 for (int i = 0; i < 30; i++)
                 {
                     Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PurificationPowder, Projectile.velocity.X, Projectile.velocity.Y, 50, Color.LightBlue);
