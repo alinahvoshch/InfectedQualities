@@ -17,9 +17,9 @@ namespace InfectedQualities.Utilities
         {
             TextureAssets.Npc[NPCID.Plantera] = infectionType switch
             {
-                InfectionType.Corrupt => InfectedQualitiesGlobalNPC.CorruptPlantera,
-                InfectionType.Crimson => InfectedQualitiesGlobalNPC.CrimsonPlantera,
-                InfectionType.Hallowed => InfectedQualitiesGlobalNPC.HallowedPlantera,
+                InfectionType.Corrupt => InfectedPlantera.CorruptPlantera,
+                InfectionType.Crimson => InfectedPlantera.CrimsonPlantera,
+                InfectionType.Hallowed => InfectedPlantera.HallowedPlantera,
                 _ => TextureAssets.Npc[NPCID.Plantera]
             };
 
@@ -35,15 +35,15 @@ namespace InfectedQualities.Utilities
 
         public static InfectionType? GetPlanteraType()
         {
-            if (TextureAssets.Npc[NPCID.Plantera] == InfectedQualitiesGlobalNPC.CorruptPlantera)
+            if (TextureAssets.Npc[NPCID.Plantera] == InfectedPlantera.CorruptPlantera)
             {
                 return InfectionType.Corrupt;
             }
-            else if (TextureAssets.Npc[NPCID.Plantera] == InfectedQualitiesGlobalNPC.CrimsonPlantera)
+            else if (TextureAssets.Npc[NPCID.Plantera] == InfectedPlantera.CrimsonPlantera)
             {
                 return InfectionType.Crimson;
             }
-            else if (TextureAssets.Npc[NPCID.Plantera] == InfectedQualitiesGlobalNPC.HallowedPlantera)
+            else if (TextureAssets.Npc[NPCID.Plantera] == InfectedPlantera.HallowedPlantera)
             {
                 return InfectionType.Hallowed;
             }

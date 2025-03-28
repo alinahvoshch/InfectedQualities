@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace InfectedQualities.Common
 {
-    public class InfectedQualitiesGlobalNPC : GlobalNPC
+    public class InfectedPlantera : GlobalNPC
     {
         private static Asset<Texture2D> Plantera { get; set; } = null;
         private static Asset<Texture2D> PlanteraHook { get; set; } = null;
@@ -28,7 +28,23 @@ namespace InfectedQualities.Common
 
         public override void SetStaticDefaults()
         {
-            if (ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
+            Plantera = TextureAssets.Npc[NPCID.Plantera];
+            PlanteraHook = TextureAssets.Npc[NPCID.PlanterasHook];
+            PlanteraHookVine = TextureAssets.Chain26;
+            PlanteraTentacle = TextureAssets.Npc[NPCID.PlanterasTentacle];
+            PlanteraTentacleVine = TextureAssets.Chain27;
+            PlanteraSpore = TextureAssets.Npc[NPCID.Spore];
+            PlanteraSeed = TextureAssets.Projectile[ProjectileID.SeedPlantera];
+            PlanteraThornBall = TextureAssets.Projectile[ProjectileID.ThornBall];
+
+            CorruptPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/CorruptPlantera");
+            CrimsonPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/CrimsonPlantera");
+            HallowedPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/HallowedPlantera");
+        }
+
+        public override void OnSpawn(NPC npc, IEntitySource source)
+        {
+            if (TextureAssets.Npc[NPCID.Plantera] != CorruptPlantera && TextureAssets.Npc[NPCID.Plantera] != CrimsonPlantera && TextureAssets.Npc[NPCID.Plantera] != HallowedPlantera)
             {
                 Plantera = TextureAssets.Npc[NPCID.Plantera];
                 PlanteraHook = TextureAssets.Npc[NPCID.PlanterasHook];
@@ -38,71 +54,68 @@ namespace InfectedQualities.Common
                 PlanteraSpore = TextureAssets.Npc[NPCID.Spore];
                 PlanteraSeed = TextureAssets.Projectile[ProjectileID.SeedPlantera];
                 PlanteraThornBall = TextureAssets.Projectile[ProjectileID.ThornBall];
-
-                CorruptPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/CorruptPlantera");
-                CrimsonPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/CrimsonPlantera");
-                HallowedPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/HallowedPlantera");
             }
-        }
 
-        public override void OnSpawn(NPC npc, IEntitySource source)
-        {
-            if(npc.type == NPCID.Plantera && ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
+            if (Main.LocalPlayer.ZoneCorrupt)
             {
-                if (TextureAssets.Npc[NPCID.Plantera] != CorruptPlantera && TextureAssets.Npc[NPCID.Plantera] != CrimsonPlantera && TextureAssets.Npc[NPCID.Plantera] != HallowedPlantera)
-                {
-                    Plantera = TextureAssets.Npc[NPCID.Plantera];
-                    PlanteraHook = TextureAssets.Npc[NPCID.PlanterasHook];
-                    PlanteraHookVine = TextureAssets.Chain26;
-                    PlanteraTentacle = TextureAssets.Npc[NPCID.PlanterasTentacle];
-                    PlanteraTentacleVine = TextureAssets.Chain27;
-                    PlanteraSpore = TextureAssets.Npc[NPCID.Spore];
-                    PlanteraSeed = TextureAssets.Projectile[ProjectileID.SeedPlantera];
-                    PlanteraThornBall = TextureAssets.Projectile[ProjectileID.ThornBall];
-                }
-
-                if (Main.LocalPlayer.ZoneCorrupt)
-                {
-                    TextureUtilities.ReplacePlanteraType(InfectionType.Corrupt);
-                }
-                else if (Main.LocalPlayer.ZoneCrimson)
-                {
-                    TextureUtilities.ReplacePlanteraType(InfectionType.Crimson);
-                }
-                else if (Main.LocalPlayer.ZoneHallow)
-                {
-                    TextureUtilities.ReplacePlanteraType(InfectionType.Hallowed);
-                }
-                else
-                {
-                    TextureAssets.Npc[NPCID.Plantera] = Plantera;
-                    TextureAssets.Npc[NPCID.PlanterasHook] = PlanteraHook;
-                    TextureAssets.Chain26 = PlanteraHookVine;
-                    TextureAssets.Npc[NPCID.PlanterasTentacle] = PlanteraTentacle;
-                    TextureAssets.Chain27 = PlanteraTentacleVine;
-                    TextureAssets.Npc[NPCID.Spore] = PlanteraSpore;
-                    TextureAssets.Projectile[ProjectileID.SeedPlantera] = PlanteraSeed;
-                    TextureAssets.Projectile[ProjectileID.ThornBall] = PlanteraThornBall;
-                }
+                TextureUtilities.ReplacePlanteraType(InfectionType.Corrupt);
+            }
+            else if (Main.LocalPlayer.ZoneCrimson)
+            {
+                TextureUtilities.ReplacePlanteraType(InfectionType.Crimson);
+            }
+            else if (Main.LocalPlayer.ZoneHallow)
+            {
+                TextureUtilities.ReplacePlanteraType(InfectionType.Hallowed);
+            }
+            else
+            {
+                TextureAssets.Npc[NPCID.Plantera] = Plantera;
+                TextureAssets.Npc[NPCID.PlanterasHook] = PlanteraHook;
+                TextureAssets.Chain26 = PlanteraHookVine;
+                TextureAssets.Npc[NPCID.PlanterasTentacle] = PlanteraTentacle;
+                TextureAssets.Chain27 = PlanteraTentacleVine;
+                TextureAssets.Npc[NPCID.Spore] = PlanteraSpore;
+                TextureAssets.Projectile[ProjectileID.SeedPlantera] = PlanteraSeed;
+                TextureAssets.Projectile[ProjectileID.ThornBall] = PlanteraThornBall;
             }
         }
 
         public override void BossHeadSlot(NPC npc, ref int index)
         {
-            if (npc.type == NPCID.Plantera && ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
+            InfectionType? planteraType = TextureUtilities.GetPlanteraType();
+            if (planteraType.HasValue)
             {
-                InfectionType? planteraType = TextureUtilities.GetPlanteraType();
-                if(planteraType.HasValue)
-                {
-                    int phaseIndex = npc.life > npc.lifeMax / 2 ? 1 : 2;
-                    index = ModContent.GetModBossHeadSlot("InfectedQualities/Content/Extras/MapIcons/" + planteraType.ToString() + "Plantera_MapIcon_" + phaseIndex);
-                }
+                int phaseIndex = npc.life > npc.lifeMax / 2 ? 1 : 2;
+                index = ModContent.GetModBossHeadSlot("InfectedQualities/Content/Extras/MapIcons/" + planteraType.ToString() + "Plantera_MapIcon_" + phaseIndex);
             }
         }
 
+        public override void Unload()
+        {
+            if (TextureUtilities.GetPlanteraType().HasValue)
+            {
+                TextureAssets.Npc[NPCID.Plantera] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.Plantera}");
+                TextureAssets.Npc[NPCID.PlanterasHook] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.PlanterasHook}");
+                TextureAssets.Chain26 = Main.Assets.Request<Texture2D>("Images/Extra_26");
+                TextureAssets.Npc[NPCID.PlanterasTentacle] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.PlanterasTentacle}");
+                TextureAssets.Chain27 = Main.Assets.Request<Texture2D>("Images/Extra_27");
+                TextureAssets.Npc[NPCID.Spore] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.Spore}");
+                TextureAssets.Projectile[ProjectileID.SeedPlantera] = Main.Assets.Request<Texture2D>($"Images/Projectile_{ProjectileID.SeedPlantera}");
+                TextureAssets.Projectile[ProjectileID.ThornBall] = Main.Assets.Request<Texture2D>($"Images/Projectile_{ProjectileID.ThornBall}");
+            }
+        }
+
+        public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.type == NPCID.Plantera;
+
+        public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera;
+    }
+
+    public class NPCSpawning : GlobalNPC
+    {
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
-            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && pool.ContainsKey(0) && !spawnInfo.Player.ZoneUnderworldHeight && !spawnInfo.Sky && !spawnInfo.PlayerInTown)
+            if (pool.ContainsKey(0) && !spawnInfo.Player.ZoneUnderworldHeight && !spawnInfo.Sky && !spawnInfo.PlayerInTown)
             {
                 float hardmodeSpawnChance = Main.hardMode ? 0.4f : 1f;
                 if (spawnInfo.SpawnTileType == ModContent.TileType<HallowedJungleGrass>() && spawnInfo.Player.ZoneJungle && spawnInfo.Player.ZoneHallow)
@@ -373,19 +386,6 @@ namespace InfectedQualities.Common
             }
         }
 
-        public override void Unload()
-        {
-            if (ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera && TextureUtilities.GetPlanteraType().HasValue)
-            {
-                TextureAssets.Npc[NPCID.Plantera] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.Plantera}");
-                TextureAssets.Npc[NPCID.PlanterasHook] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.PlanterasHook}");
-                TextureAssets.Chain26 = Main.Assets.Request<Texture2D>("Images/Extra_26");
-                TextureAssets.Npc[NPCID.PlanterasTentacle] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.PlanterasTentacle}");
-                TextureAssets.Chain27 = Main.Assets.Request<Texture2D>("Images/Extra_27");
-                TextureAssets.Npc[NPCID.Spore] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.Spore}");
-                TextureAssets.Projectile[ProjectileID.SeedPlantera] = Main.Assets.Request<Texture2D>($"Images/Projectile_{ProjectileID.SeedPlantera}");
-                TextureAssets.Projectile[ProjectileID.ThornBall] = Main.Assets.Request<Texture2D>($"Images/Projectile_{ProjectileID.ThornBall}");
-            }
-        }
+        public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes;
     }
 }
