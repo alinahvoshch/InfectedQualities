@@ -14,6 +14,7 @@
 -Added a mod icon for bestiary
 -Divine Powder now has white particles instead of light blue
 -Reverted infected powder changes. They no longer affect walls without tiles.
+-Fixed infected plantera textures not working on servers
 
 0.7.4.2
 =======

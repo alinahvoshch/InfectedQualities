@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,7 +25,7 @@ namespace InfectedQualities.Common
         internal static Asset<Texture2D> CrimsonPlantera { get; set; } = null;
         internal static Asset<Texture2D> HallowedPlantera { get; set; } = null;
 
-        public override void SetStaticDefaults()
+        public override void Load()
         {
             Plantera = TextureAssets.Npc[NPCID.Plantera];
             PlanteraHook = TextureAssets.Npc[NPCID.PlanterasHook];
@@ -42,42 +41,45 @@ namespace InfectedQualities.Common
             HallowedPlantera = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/HallowedPlantera");
         }
 
-        public override void OnSpawn(NPC npc, IEntitySource source)
+        public override void SetDefaults(NPC entity)
         {
-            if (TextureAssets.Npc[NPCID.Plantera] != CorruptPlantera && TextureAssets.Npc[NPCID.Plantera] != CrimsonPlantera && TextureAssets.Npc[NPCID.Plantera] != HallowedPlantera)
+            if(Main.netMode != NetmodeID.Server)
             {
-                Plantera = TextureAssets.Npc[NPCID.Plantera];
-                PlanteraHook = TextureAssets.Npc[NPCID.PlanterasHook];
-                PlanteraHookVine = TextureAssets.Chain26;
-                PlanteraTentacle = TextureAssets.Npc[NPCID.PlanterasTentacle];
-                PlanteraTentacleVine = TextureAssets.Chain27;
-                PlanteraSpore = TextureAssets.Npc[NPCID.Spore];
-                PlanteraSeed = TextureAssets.Projectile[ProjectileID.SeedPlantera];
-                PlanteraThornBall = TextureAssets.Projectile[ProjectileID.ThornBall];
-            }
+                if (TextureAssets.Npc[NPCID.Plantera] != CorruptPlantera && TextureAssets.Npc[NPCID.Plantera] != CrimsonPlantera && TextureAssets.Npc[NPCID.Plantera] != HallowedPlantera)
+                {
+                    Plantera = TextureAssets.Npc[NPCID.Plantera];
+                    PlanteraHook = TextureAssets.Npc[NPCID.PlanterasHook];
+                    PlanteraHookVine = TextureAssets.Chain26;
+                    PlanteraTentacle = TextureAssets.Npc[NPCID.PlanterasTentacle];
+                    PlanteraTentacleVine = TextureAssets.Chain27;
+                    PlanteraSpore = TextureAssets.Npc[NPCID.Spore];
+                    PlanteraSeed = TextureAssets.Projectile[ProjectileID.SeedPlantera];
+                    PlanteraThornBall = TextureAssets.Projectile[ProjectileID.ThornBall];
+                }
 
-            if (Main.LocalPlayer.ZoneCorrupt)
-            {
-                TextureUtilities.ReplacePlanteraType(InfectionType.Corrupt);
-            }
-            else if (Main.LocalPlayer.ZoneCrimson)
-            {
-                TextureUtilities.ReplacePlanteraType(InfectionType.Crimson);
-            }
-            else if (Main.LocalPlayer.ZoneHallow)
-            {
-                TextureUtilities.ReplacePlanteraType(InfectionType.Hallowed);
-            }
-            else
-            {
-                TextureAssets.Npc[NPCID.Plantera] = Plantera;
-                TextureAssets.Npc[NPCID.PlanterasHook] = PlanteraHook;
-                TextureAssets.Chain26 = PlanteraHookVine;
-                TextureAssets.Npc[NPCID.PlanterasTentacle] = PlanteraTentacle;
-                TextureAssets.Chain27 = PlanteraTentacleVine;
-                TextureAssets.Npc[NPCID.Spore] = PlanteraSpore;
-                TextureAssets.Projectile[ProjectileID.SeedPlantera] = PlanteraSeed;
-                TextureAssets.Projectile[ProjectileID.ThornBall] = PlanteraThornBall;
+                if (Main.LocalPlayer.ZoneCorrupt)
+                {
+                    TextureUtilities.ReplacePlanteraType(InfectionType.Corrupt);
+                }
+                else if (Main.LocalPlayer.ZoneCrimson)
+                {
+                    TextureUtilities.ReplacePlanteraType(InfectionType.Crimson);
+                }
+                else if (Main.LocalPlayer.ZoneHallow)
+                {
+                    TextureUtilities.ReplacePlanteraType(InfectionType.Hallowed);
+                }
+                else
+                {
+                    TextureAssets.Npc[NPCID.Plantera] = Plantera;
+                    TextureAssets.Npc[NPCID.PlanterasHook] = PlanteraHook;
+                    TextureAssets.Chain26 = PlanteraHookVine;
+                    TextureAssets.Npc[NPCID.PlanterasTentacle] = PlanteraTentacle;
+                    TextureAssets.Chain27 = PlanteraTentacleVine;
+                    TextureAssets.Npc[NPCID.Spore] = PlanteraSpore;
+                    TextureAssets.Projectile[ProjectileID.SeedPlantera] = PlanteraSeed;
+                    TextureAssets.Projectile[ProjectileID.ThornBall] = PlanteraThornBall;
+                }
             }
         }
 
