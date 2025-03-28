@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using InfectedQualities.Core;
 using Terraria.Localization;
+using InfectedQualities.Content.Dusts;
 
 namespace InfectedQualities.Content.Projectiles
 {
@@ -40,7 +41,7 @@ namespace InfectedQualities.Content.Projectiles
                 DustSpawned = true;
                 for (int i = 0; i < 30; i++)
                 {
-                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.PurificationPowder, Projectile.velocity.X, Projectile.velocity.Y, 50, Color.LightBlue);
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<DivinePowderDust>(), Projectile.velocity.X, Projectile.velocity.Y, 50, Color.White);
                 }
             }
 

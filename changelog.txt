@@ -12,6 +12,7 @@
 -Removed an unneeded localization
 -Code organization for readability
 -Added a mod icon for bestiary
+-Divine Powder now has white particles instead of light blue
 
 0.7.4.2
 =======
