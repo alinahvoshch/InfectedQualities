@@ -56,7 +56,7 @@ namespace InfectedQualities.Content.Projectiles
                 {
                     for (int k = top; k < bottom; k++)
                     {
-                        if (Projectile.position.X + Projectile.width > j * 16 && Projectile.position.X < j * 16 && Projectile.position.Y + Projectile.height > k * 16 && Projectile.position.Y < k * 16)
+                        if (Projectile.position.X + Projectile.width > j * 16 && Projectile.position.X < j * 16 && Projectile.position.Y + Projectile.height > k * 16 && Projectile.position.Y < k * 16 && Main.tile[j, k].HasTile)
                         {
                             WorldGen.Convert(j, k, BiomeConversionID.Hallow, 1);
                         }

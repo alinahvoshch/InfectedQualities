@@ -13,6 +13,7 @@
 -Code organization for readability
 -Added a mod icon for bestiary
 -Divine Powder now has white particles instead of light blue
+-Reverted infected powder changes. They no longer affect walls without tiles.
 
 0.7.4.2
 =======
