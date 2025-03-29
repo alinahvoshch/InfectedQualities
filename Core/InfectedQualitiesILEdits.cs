@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using InfectedQualities.Content.Tiles.Plants;
 using Terraria.Enums;
 using InfectedQualities.Utilities;
+using InfectedQualities.Common;
 
 namespace InfectedQualities.Core
 {
@@ -20,6 +21,7 @@ namespace InfectedQualities.Core
         {
             if(ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
             {
+                IL_NPC.SpawnOnPlayer += NPC_SpawnOnPlayer;
                 On_Gore.NewGore_IEntitySource_Vector2_Vector2_int_float += Gore_NewGore;
                 On_Dust.NewDust += Dust_NewDust;
             }
@@ -29,7 +31,7 @@ namespace InfectedQualities.Core
                 On_TileDrawing.GetTreeVariant += TileDrawing_GetTreeVariant;
                 On_WorldGen.GetTreeLeaf += WorldGen_GetTreeLeaf;
                 IL_WorldGen.GetCommonTreeFoliageData += WorldGen_GetCommonTreeFoliageData;
-
+                
                 IL_WorldGen.CheckAlch += WorldGen_CheckAlch;
                 IL_WorldGen.PlaceAlch += WorldGen_PlaceAlch;
                 IL_WorldGen.PlantAlch += WorldGen_PlantAlch;
@@ -57,9 +59,28 @@ namespace InfectedQualities.Core
             On_WorldGen.GetDesiredStalagtiteStyle += WorldGen_GetDesiredStalagtiteStyle;
         }
 
+        private void NPC_SpawnOnPlayer(ILContext il)
+        {
+            ILCursor cursor = new(il);
+
+            cursor.Emit(OpCodes.Ldarg_0);
+            cursor.Emit(OpCodes.Ldarg_1);
+            cursor.EmitDelegate<Action<int, int>>((targetIndex, npcType) =>
+            {
+                if(Main.netMode != NetmodeID.Server && npcType == NPCID.Plantera && targetIndex > -1 && targetIndex < 255)
+                {
+                    Player targetPlayer = Main.player[targetIndex];
+                    if(targetPlayer.active && !targetPlayer.dead && !targetPlayer.ghost)
+                    {
+                        InfectedPlanteraSystem.ReplacePlanteraTextures(targetPlayer);
+                    }
+                }
+            });
+        }
+
         private static int Gore_NewGore(On_Gore.orig_NewGore_IEntitySource_Vector2_Vector2_int_float orig, IEntitySource source, Vector2 Position, Vector2 Velocity, int Type, float Scale)
         {
-            InfectionType? planteraType = TextureUtilities.GetPlanteraType();
+            InfectionType? planteraType = InfectedPlanteraSystem.PlanteraType;
             if (planteraType.HasValue)
             {
                 if (Type >= 378 && Type < 381)
@@ -86,7 +107,7 @@ namespace InfectedQualities.Core
         {
             if (Type == DustID.Plantera_Green)
             {
-                switch (TextureUtilities.GetPlanteraType())
+                switch (InfectedPlanteraSystem.PlanteraType)
                 {
                     case InfectionType.Corrupt:
                         Type = DustID.CorruptPlants;
@@ -101,7 +122,7 @@ namespace InfectedQualities.Core
             }
             else if (Type == DustID.Plantera_Pink)
             {
-                switch (TextureUtilities.GetPlanteraType())
+                switch (InfectedPlanteraSystem.PlanteraType)
                 {
                     case InfectionType.Corrupt:
                         Type = DustID.Corruption;

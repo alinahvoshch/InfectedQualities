@@ -13,43 +13,6 @@ namespace InfectedQualities.Utilities
 {
     public static class TextureUtilities
     {
-        public static void ReplacePlanteraType(InfectionType infectionType)
-        {
-            TextureAssets.Npc[NPCID.Plantera] = infectionType switch
-            {
-                InfectionType.Corrupt => InfectedPlantera.CorruptPlantera,
-                InfectionType.Crimson => InfectedPlantera.CrimsonPlantera,
-                InfectionType.Hallowed => InfectedPlantera.HallowedPlantera,
-                _ => TextureAssets.Npc[NPCID.Plantera]
-            };
-
-            string planteraType = infectionType.ToString();
-            TextureAssets.Npc[NPCID.PlanterasHook] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/" + planteraType + "Plantera_Hook");
-            TextureAssets.Chain26 = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/" + planteraType + "Plantera_Hook_Vine");
-            TextureAssets.Npc[NPCID.PlanterasTentacle] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/" + planteraType + "Plantera_Tentacle");
-            TextureAssets.Chain27 = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/" + planteraType + "Plantera_Tentacle_Vine");
-            TextureAssets.Npc[NPCID.Spore] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/" + planteraType + "Plantera_Spore");
-            TextureAssets.Projectile[ProjectileID.SeedPlantera] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Projectiles/" + planteraType + "Plantera_Seed");
-            TextureAssets.Projectile[ProjectileID.ThornBall] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Projectiles/" + planteraType + "Plantera_ThornBall");
-        }
-
-        public static InfectionType? GetPlanteraType()
-        {
-            if (TextureAssets.Npc[NPCID.Plantera] == InfectedPlantera.CorruptPlantera)
-            {
-                return InfectionType.Corrupt;
-            }
-            else if (TextureAssets.Npc[NPCID.Plantera] == InfectedPlantera.CrimsonPlantera)
-            {
-                return InfectionType.Crimson;
-            }
-            else if (TextureAssets.Npc[NPCID.Plantera] == InfectedPlantera.HallowedPlantera)
-            {
-                return InfectionType.Hallowed;
-            }
-            return null;
-        }
-
         public static Texture2D TileDrawTexture(ushort type, byte color)
         {
             Texture2D paintTexture = Main.instance.TilePaintSystem.TryGetTileAndRequestIfNotReady(type, 0, color);
