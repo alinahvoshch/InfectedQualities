@@ -1,21 +1,23 @@
 0.7.4.3
 =======
--Upgraded the paint support for infected mosses.
--File organization
--Fixed duplicate vertebrae --> leather recipe when used with Calamity mod.
--Removed the use of reflection from SpiritMod pureglow compability. It should make it significantly less performance-consuming.
--Corrupt and crimson jungle now use corrupt and crimson torches as biome torches instead of cursed and ichor torches.
--Another pylon of night crystal resprite
--Removed config icons due to an issue that occured if certain configs were disabled
+-File & code organization for readability and optimization
 -Added a new mod call option for demon altar infection spawning, allowing to manually add new "good" infected stones to it. 
--Fixed Basic Automated Veinmining incompability, causing infected gemstone blocks to drop themselves instead of their gems when used with instant mining on, along with removing some unneeded stuff related to tile drops.
--Removed an unneeded localization
--Code organization for readability
 -Added a mod icon for bestiary
 -Divine Powder now has white particles instead of light blue
--Reverted infected powder changes. They no longer affect walls without tiles.
+
+-Another pylon of night crystal resprite
+-Touched up on the paint support for infected mosses.
+-Corrupt and crimson jungle now use corrupt and crimson torches as biome torches instead of cursed and ichor torches.
+
+-Fixed duplicate vertebrae --> leather recipe when used with Calamity mod.
+-Fixed Basic Automated Veinmining incompability, causing infected gemstone blocks to drop themselves instead of their gems when used with instant mining on
 -Fixed infected plantera textures not working on servers. Plantera will now change it's variant based on what biome the summoning player is in.
 -Fixed infected plantera textures randomly deciding to not load
+
+-Removed config icons due to an issue that occured if certain configs were disabled
+-Reverted infected powder changes. They no longer affect walls without tiles.
+-Removed unneeded localizations for projectile(s)
+-Removed the use of reflection on the compability with SpiritMod's pureglow flowers. It should be more efficient now 
 
 0.7.4.2
 =======

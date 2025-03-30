@@ -28,6 +28,14 @@ namespace InfectedQualities
                 {
                     AddContent(new InfectedMoss(infectionType, mossType));
                 }
+
+                if (ModContent.GetInstance<InfectedQualitiesClientConfig>().InfectedPlantera)
+                {
+                    for (int i = 1; i <= 2; i++)
+                    {
+                        AddBossHeadTexture("InfectedQualities/Content/Extras/MapIcons/" + infectionType.ToString() + "Plantera_MapIcon_" + i);
+                    }
+                }
             }
         }
 

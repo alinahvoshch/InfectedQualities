@@ -105,34 +105,38 @@ namespace InfectedQualities.Core
 
         private static int Dust_NewDust(On_Dust.orig_NewDust orig, Vector2 Position, int Width, int Height, int Type, float SpeedX, float SpeedY, int Alpha, Color newColor, float Scale)
         {
-            if (Type == DustID.Plantera_Green)
+            InfectionType? planteraType = InfectedPlanteraSystem.PlanteraType;
+            if(planteraType.HasValue)
             {
-                switch (InfectedPlanteraSystem.PlanteraType)
+                if (Type == DustID.Plantera_Green)
                 {
-                    case InfectionType.Corrupt:
-                        Type = DustID.CorruptPlants;
-                        break;
-                    case InfectionType.Crimson:
-                        Type = DustID.CrimsonPlants;
-                        break;
-                    case InfectionType.Hallowed:
-                        Type = DustID.HallowedPlants;
-                        break;
+                    switch (planteraType)
+                    {
+                        case InfectionType.Corrupt:
+                            Type = DustID.CorruptPlants;
+                            break;
+                        case InfectionType.Crimson:
+                            Type = DustID.CrimsonPlants;
+                            break;
+                        case InfectionType.Hallowed:
+                            Type = DustID.HallowedPlants;
+                            break;
+                    }
                 }
-            }
-            else if (Type == DustID.Plantera_Pink)
-            {
-                switch (InfectedPlanteraSystem.PlanteraType)
+                else if (Type == DustID.Plantera_Pink)
                 {
-                    case InfectionType.Corrupt:
-                        Type = DustID.Corruption;
-                        break;
-                    case InfectionType.Crimson:
-                        Type = DustID.Crimson;
-                        break;
-                    case InfectionType.Hallowed:
-                        newColor.MultiplyRGB(Color.Magenta);
-                        break;
+                    switch (planteraType)
+                    {
+                        case InfectionType.Corrupt:
+                            Type = DustID.Corruption;
+                            break;
+                        case InfectionType.Crimson:
+                            Type = DustID.Crimson;
+                            break;
+                        case InfectionType.Hallowed:
+                            newColor.MultiplyRGB(Color.Magenta);
+                            break;
+                    }
                 }
             }
             return orig(Position, Width, Height, Type, SpeedX, SpeedY, Alpha, newColor, Scale);

@@ -21,13 +21,13 @@ namespace InfectedQualities.Common
         private static Asset<Texture2D> PlanteraSpore { get; set; } = null;
         private static Asset<Texture2D> PlanteraSeed { get; set; } = null;
         private static Asset<Texture2D> PlanteraThornBall { get; set; } = null;
-        private static Asset<Texture2D> PlanteraIcon1 { get; set; } = null;
-        private static Asset<Texture2D> PlanteraIcon2 { get; set; } = null;
 
         public static InfectionType? PlanteraType { get; set; } = null;
 
         public override void Load()
         {
+            if (Main.netMode == NetmodeID.Server) return;
+
             Plantera = TextureAssets.Npc[NPCID.Plantera];
             PlanteraHook = TextureAssets.Npc[NPCID.PlanterasHook];
             PlanteraHookVine = TextureAssets.Chain26;
@@ -36,8 +36,6 @@ namespace InfectedQualities.Common
             PlanteraSpore = TextureAssets.Npc[NPCID.Spore];
             PlanteraSeed = TextureAssets.Projectile[ProjectileID.SeedPlantera];
             PlanteraThornBall = TextureAssets.Projectile[ProjectileID.ThornBall];
-            PlanteraIcon1 = TextureAssets.NpcHeadBoss[11];
-            PlanteraIcon2 = TextureAssets.NpcHeadBoss[12];
         }
 
         public static void ReplacePlanteraTextures(Player player)
@@ -52,8 +50,6 @@ namespace InfectedQualities.Common
                 PlanteraSpore = TextureAssets.Npc[NPCID.Spore];
                 PlanteraSeed = TextureAssets.Projectile[ProjectileID.SeedPlantera];
                 PlanteraThornBall = TextureAssets.Projectile[ProjectileID.ThornBall];
-                PlanteraIcon1 = TextureAssets.NpcHeadBoss[11];
-                PlanteraIcon2 = TextureAssets.NpcHeadBoss[12];
             }
 
             if (player.ZoneCorrupt)
@@ -80,8 +76,6 @@ namespace InfectedQualities.Common
                 TextureAssets.Npc[NPCID.Spore] = PlanteraSpore;
                 TextureAssets.Projectile[ProjectileID.SeedPlantera] = PlanteraSeed;
                 TextureAssets.Projectile[ProjectileID.ThornBall] = PlanteraThornBall;
-                TextureAssets.NpcHeadBoss[11] = PlanteraIcon1;
-                TextureAssets.NpcHeadBoss[12] = PlanteraIcon2;
                 return;
             }
 
@@ -94,13 +88,20 @@ namespace InfectedQualities.Common
             TextureAssets.Npc[NPCID.Spore] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/NPCs/" + planteraType + "Plantera_Spore", AssetRequestMode.ImmediateLoad);
             TextureAssets.Projectile[ProjectileID.SeedPlantera] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Projectiles/" + planteraType + "Plantera_Seed", AssetRequestMode.ImmediateLoad);
             TextureAssets.Projectile[ProjectileID.ThornBall] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Projectiles/" + planteraType + "Plantera_ThornBall", AssetRequestMode.ImmediateLoad);
-            TextureAssets.NpcHeadBoss[11] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/MapIcons/" + planteraType + "Plantera_MapIcon_1", AssetRequestMode.ImmediateLoad);
-            TextureAssets.NpcHeadBoss[12] = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/MapIcons/" + planteraType + "Plantera_MapIcon_2", AssetRequestMode.ImmediateLoad);
+        }
+
+        public override void BossHeadSlot(NPC npc, ref int index)
+        {
+            if (PlanteraType.HasValue)
+            {
+                int phaseIndex = npc.life > npc.lifeMax / 2 ? 1 : 2;
+                index = ModContent.GetModBossHeadSlot("InfectedQualities/Content/Extras/MapIcons/" + PlanteraType.ToString() + "Plantera_MapIcon_" + phaseIndex);
+            }
         }
 
         public override void Unload()
         {
-            if (PlanteraType.HasValue)
+            if (PlanteraType.HasValue && Main.netMode != NetmodeID.Server)
             {
                 TextureAssets.Npc[NPCID.Plantera] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.Plantera}");
                 TextureAssets.Npc[NPCID.PlanterasHook] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.PlanterasHook}");
@@ -110,8 +111,6 @@ namespace InfectedQualities.Common
                 TextureAssets.Npc[NPCID.Spore] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.Spore}");
                 TextureAssets.Projectile[ProjectileID.SeedPlantera] = Main.Assets.Request<Texture2D>($"Images/Projectile_{ProjectileID.SeedPlantera}");
                 TextureAssets.Projectile[ProjectileID.ThornBall] = Main.Assets.Request<Texture2D>($"Images/Projectile_{ProjectileID.ThornBall}");
-                TextureAssets.NpcHeadBoss[11] = TextureAssets.Chain27 = Main.Assets.Request<Texture2D>("Images/NPC_Head_Boss_11");
-                TextureAssets.NpcHeadBoss[12] = TextureAssets.Chain27 = Main.Assets.Request<Texture2D>("Images/NPC_Head_Boss_12");
             }
         }
 
