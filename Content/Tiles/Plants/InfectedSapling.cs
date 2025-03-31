@@ -28,10 +28,28 @@ namespace InfectedQualities.Content.Tiles.Plants
             TileObjectData.addTile(Type);
             
             AdjTiles = [TileID.Saplings];
+            DustType = DustID.WoodFurniture;
             AddMapEntry(new(151, 107, 75), Language.GetText("MapObject.Sapling"));
         }
 
-        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
+        public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 3 : 10;
+
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            switch (Main.tile[i, j].TileFrameX / 54)
+            {
+                case 3:
+                    type = DustID.Ebonwood;
+                    break;
+                case 4:
+                    type = DustID.Shadewood_Tree;
+                    break;
+                case 5:
+                    type = DustID.Pearlwood;
+                    break;
+            }
+            return true;
+        }
 
         public override void RandomUpdate(int i, int j)
         {

@@ -38,10 +38,9 @@ namespace InfectedQualities.Content.Projectiles
             if (!DustSpawned)
             {
                 DustSpawned = true;
-                int dustType = ModContent.DustType<DivinePowderDust>();
                 for (int i = 0; i < 30; i++)
                 {
-                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dustType, Projectile.velocity.X, Projectile.velocity.Y, 50);
+                    Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<DivinePowderDust>(), Projectile.velocity.X, Projectile.velocity.Y, 50);
                 }
             }
 
