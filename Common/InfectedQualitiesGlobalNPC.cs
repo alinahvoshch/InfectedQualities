@@ -26,8 +26,6 @@ namespace InfectedQualities.Common
 
         public override void Load()
         {
-            if (Main.netMode == NetmodeID.Server) return;
-
             Plantera = TextureAssets.Npc[NPCID.Plantera];
             PlanteraHook = TextureAssets.Npc[NPCID.PlanterasHook];
             PlanteraHookVine = TextureAssets.Chain26;
@@ -101,7 +99,7 @@ namespace InfectedQualities.Common
 
         public override void Unload()
         {
-            if (PlanteraType.HasValue && Main.netMode != NetmodeID.Server)
+            if (PlanteraType.HasValue)
             {
                 TextureAssets.Npc[NPCID.Plantera] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.Plantera}");
                 TextureAssets.Npc[NPCID.PlanterasHook] = Main.Assets.Request<Texture2D>($"Images/NPC_{NPCID.PlanterasHook}");
