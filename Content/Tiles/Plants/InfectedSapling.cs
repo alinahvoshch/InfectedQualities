@@ -53,9 +53,11 @@ namespace InfectedQualities.Content.Tiles.Plants
 
         public override void RandomUpdate(int i, int j)
         {
-            if (WorldGen.genRand.NextBool(20) && WorldGen.GrowTree(i, j) && WorldGen.PlayerLOS(i, j))
+            bool underground = j > (int)Main.worldSurface - 1;
+            int rand = underground ? 5 : 20;
+            if (WorldGen.genRand.NextBool(rand))
             {
-                WorldGen.TreeGrowFXCheck(i, j);
+                TileUtilities.TryToGrowTree(i, j, underground);
             }
         }
 

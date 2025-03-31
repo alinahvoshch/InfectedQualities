@@ -8,6 +8,7 @@
 -Another pylon of night crystal resprite
 -Touched up on the paint support for infected mosses.
 -Corrupt and crimson jungle now use corrupt and crimson torches as biome torches instead of cursed and ichor torches.
+-Fertilizer now affects the saplings from this mod
 
 -Fixed duplicate vertebrae --> leather recipe when used with Calamity mod.
 -Fixed Basic Automated Veinmining incompability, causing infected gemstone blocks to drop themselves instead of their gems when used with instant mining on

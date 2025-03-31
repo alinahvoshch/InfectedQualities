@@ -315,6 +315,19 @@ namespace InfectedQualities.Utilities
             }
         }
 
+        public static void TryToGrowTree(int i, int j, bool underground)
+        {
+            if (underground)
+            {
+                return;
+            }
+
+            if(WorldGen.GrowTree(i, j) && WorldGen.PlayerLOS(i, j))
+            {
+                WorldGen.TreeGrowFXCheck(i, j);
+            }
+        }
+
         public static void ConvertEnum<T>(int i, int j, InfectionType? infectionType, bool safe = false) where T : Enum
         {
             foreach (T enumType in Enum.GetValues(typeof(T)))
