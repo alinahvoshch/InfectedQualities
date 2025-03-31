@@ -317,14 +317,17 @@ namespace InfectedQualities.Utilities
 
         public static void TryToGrowTree(int i, int j, bool underground)
         {
-            if (underground)
+            if(Main.netMode != NetmodeID.MultiplayerClient)
             {
-                return;
-            }
+                if (underground)
+                {
+                    return;
+                }
 
-            if(WorldGen.GrowTree(i, j) && WorldGen.PlayerLOS(i, j))
-            {
-                WorldGen.TreeGrowFXCheck(i, j);
+                if (WorldGen.GrowTree(i, j) && WorldGen.PlayerLOS(i, j))
+                {
+                    WorldGen.TreeGrowFXCheck(i, j);
+                }
             }
         }
 
