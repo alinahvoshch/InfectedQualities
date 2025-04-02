@@ -15,6 +15,7 @@
 -Fixed infected plantera textures not working on servers. Plantera will now change it's variant based on what biome the summoning player is in.
 -Fixed infected plantera textures randomly deciding to not load
 -Fixed incorrect dust values for all tiles
+-Fixed divine powder breaking vines and plants
 
 -Removed config icons due to an issue that occured if certain configs were disabled
 -Reverted infected powder changes. They no longer affect walls without tiles.

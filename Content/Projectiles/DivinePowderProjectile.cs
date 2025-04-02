@@ -64,6 +64,8 @@ namespace InfectedQualities.Content.Projectiles
             }
         }
 
+        public override bool? CanCutTiles() => false;
+
         public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.PurificationPowder}";
 
         public override bool IsLoadingEnabled(Mod mod) => ModContent.GetInstance<InfectedQualitiesServerConfig>().DivinePowder;
