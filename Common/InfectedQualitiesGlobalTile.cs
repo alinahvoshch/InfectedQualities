@@ -386,9 +386,9 @@ namespace InfectedQualities.Common
 
                 if (type is TileID.CorruptJungleGrass or TileID.CrimsonJungleGrass)
                 {
-                    if (j < Main.worldSurface && !Main.remixWorld && WorldGen.genRand.NextBool(500) && (!Main.tile[i, j - 1].HasTile || TileID.Sets.IgnoredByGrowingSaplings[Main.tile[i, j - 1].TileType]))
+                    if (!Main.remixWorld && WorldGen.genRand.NextBool(500) && (!Main.tile[i, j - 1].HasTile || TileID.Sets.IgnoredByGrowingSaplings[Main.tile[i, j - 1].TileType]))
                     {
-                        TileUtilities.TryToGrowTree(i, j, false);
+                        TileUtilities.TryToGrowTree(i, j, j >= Main.worldSurface);
                     }
                     else if (WorldGen.genRand.NextBool(10) && !Main.tile[i, j - 1].HasTile && Main.tile[i, j - 1].LiquidAmount > 0 && Main.tile[i, j - 1].LiquidType == LiquidID.Water)
                     {
