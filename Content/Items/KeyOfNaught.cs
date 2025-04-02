@@ -7,6 +7,8 @@ namespace InfectedQualities.Content.Items
 {
     public class KeyOfNaught : ModItem
     {
+        public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) => itemGroup = ContentSamples.CreativeHelper.ItemGroup.Keys;
+
         public override void SetDefaults() => Item.CloneDefaults(ItemID.NightKey);
 
         public override void AddRecipes()

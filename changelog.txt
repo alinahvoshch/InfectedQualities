@@ -16,6 +16,7 @@
 -Fixed infected plantera textures randomly deciding to not load
 -Fixed incorrect dust values for all tiles
 -Fixed divine powder breaking vines and plants
+-Fixed some items not having journey mode categories
 
 -Removed config icons due to an issue that occured if certain configs were disabled
 -Reverted infected powder changes. They no longer affect walls without tiles.

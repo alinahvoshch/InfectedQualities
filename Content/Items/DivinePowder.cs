@@ -11,7 +11,11 @@ namespace InfectedQualities.Content.Items
         public override void SetStaticDefaults()
         {
             Item.ResearchUnlockCount = 99;
+            ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.PurificationPowder;
+            ItemID.Sets.SortingPriorityTerraforming[Type] = 87;
         }
+
+        public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) => itemGroup = ContentSamples.CreativeHelper.ItemGroup.ConsumableThatDoesNotDamage;
 
         public override void SetDefaults()
         {
