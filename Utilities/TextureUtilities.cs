@@ -176,7 +176,7 @@ namespace InfectedQualities.Utilities
 
         public static Color WallBiomeColor(int i, int j, int type)
         {
-            if (Main.LocalPlayer.biomeSight && ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlightBrightness != 0 && !WorldGen.SolidTile(i, j, true) && (Main.tile[i, j].LiquidAmount == 0 || Main.tile[i, j].LiquidType == LiquidID.Water))
+            if (Main.LocalPlayer.biomeSight && !WorldGen.SolidTile(i, j, true) && (Main.tile[i, j].LiquidAmount == 0 || Main.tile[i, j].LiquidType == LiquidID.Water))
             {
                 return InfectedQualitiesModSupport.ModWallBiomeSight[type];
             }

@@ -2,6 +2,7 @@
 using InfectedQualities.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -65,9 +66,18 @@ namespace InfectedQualities.Common
             Color sightColor = TextureUtilities.WallBiomeColor(i, j, type);
             if (Main.rand.NextBool(480) && sightColor != default)
             {
-                if (!Main.tile[i, j].IsWallFullbright) sightColor *= 0.7f;
+                if (!Main.tile[i, j].IsWallFullbright)
+                {
+                    sightColor *= 4 / 3f;
+                    sightColor *= ModContent.GetInstance<InfectedQualitiesClientConfig>().BiomeSightWallHighlightBrightness / 255f;
 
-                Dust dust = Main.dust[Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.RainbowMk2, 0f, 0f, 150, sightColor, 0.3f)];
+                    sightColor.R = Math.Min(sightColor.R, (byte)255);
+                    sightColor.G = Math.Min(sightColor.G, (byte)255);
+                    sightColor.B = Math.Min(sightColor.B, (byte)255);
+                    sightColor.A = Math.Min(sightColor.A, (byte)255);
+                }
+
+                Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, DustID.RainbowMk2, 0f, 0f, 150, sightColor, 0.3f);
                 dust.noGravity = true;
                 dust.fadeIn = 1f;
                 dust.velocity *= 0.1f;

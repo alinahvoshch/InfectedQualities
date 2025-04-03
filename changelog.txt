@@ -11,6 +11,7 @@
 -Fertilizer now affects the saplings from this mod
 -Adjusted code to the new tModLoader changes
 -Because of how inconsistent the vanilla wall spreading is, it's very difficult and tedious to create a consistient wall spread system without either breaking the game or messing up another mods take on walls, such an Confection Rebaked. So, I removed the current wall spreading system and replaced it with just grass and stone wall spreading.
+-Adjusted biome sight wall highlighting dust colors
 
 -Fixed duplicate vertebrae --> leather recipe when used with Calamity mod.
 -Fixed Basic Automated Veinmining incompability, causing infected gemstone blocks to drop themselves instead of their gems when used with instant mining on
