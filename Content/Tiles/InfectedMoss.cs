@@ -130,6 +130,42 @@ namespace InfectedQualities.Content.Tiles
                     AddMapEntry(new (255, 76, 195));
                     break;
             }
+
+            TileLoader.RegisterConversion(TileUtilities.GetMossType(null, mossType), infectionType.ToConversionID(), ApplyConversion);
+        }
+
+        public bool ApplyConversion(int i, int j, int type, int conversionType)
+        {
+            WorldGen.ConvertTile(i, j, Type);
+            return false;
+        }
+
+        public override void Convert(int i, int j, int conversionType)
+        {
+            if (infectionType.ToConversionID() != conversionType)
+            {
+                if (infectionType == InfectionType.Hallowed && conversionType == BiomeConversionID.PurificationPowder)
+                {
+                    return;
+                }
+
+                switch (conversionType)
+                {
+                    case BiomeConversionID.PurificationPowder:
+                    case BiomeConversionID.Purity:
+                        WorldGen.ConvertTile(i, j, TileUtilities.GetMossType(null, mossType));
+                        break;
+                    case BiomeConversionID.Corruption:
+                        WorldGen.ConvertTile(i, j, TileUtilities.GetMossType(InfectionType.Corrupt, mossType));
+                        return;
+                    case BiomeConversionID.Crimson:
+                        WorldGen.ConvertTile(i, j, TileUtilities.GetMossType(InfectionType.Crimson, mossType));
+                        return;
+                    case BiomeConversionID.Hallow:
+                        WorldGen.ConvertTile(i, j, TileUtilities.GetMossType(InfectionType.Hallowed, mossType));
+                        return;
+                }
+            }
         }
 
         public override ushort GetMapOption(int i, int j)
@@ -143,7 +179,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override void RandomUpdate(int i, int j)
         {
-            TileUtilities.DefaultInfectionSpread(i, j, infectionType, TileUtilities.GetEnumType(null, mossType));
+            WorldGen.SpreadInfectionToNearbyTile(i, j, infectionType.ToConversionID());
             if (WorldGen.genRand.NextDouble() < 0.5)
             {
                 for (int x = i - 1; x < i + 2; x++)
@@ -163,32 +199,20 @@ namespace InfectedQualities.Content.Tiles
 
                             if(infectionType.HasValue)
                             {
-                                WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(infectionType, mossType), false, Main.tile[i, j].BlockColorAndCoating());
+                                WorldGen.SpreadGrass(x, y, type, TileUtilities.GetMossType(infectionType, mossType), false, Main.tile[i, j].BlockColorAndCoating());
                                 WorldGen.SquareTileFrame(x, y);
                                 if(Main.netMode == NetmodeID.Server)
                                 {
                                     NetMessage.SendTileSquare(-1, i, j, 3);
                                 }
                             }
-                            else
+                            else if (type is TileID.Stone or TileID.GrayBrick)
                             {
-                                if (type == TileID.Stone)
+                                WorldGen.SpreadGrass(x, y, type, TileUtilities.GetMossType(null, mossType, type == TileID.GrayBrick), false, Main.tile[i, j].BlockColorAndCoating());
+                                WorldGen.SquareTileFrame(x, y);
+                                if (Main.netMode == NetmodeID.Server)
                                 {
-                                    WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(null, mossType), false, Main.tile[i, j].BlockColorAndCoating());
-                                    WorldGen.SquareTileFrame(x, y);
-                                    if (Main.netMode == NetmodeID.Server)
-                                    {
-                                        NetMessage.SendTileSquare(-1, i, j, 3);
-                                    }
-                                }
-                                else if (type == TileID.GrayBrick)
-                                {
-                                    WorldGen.SpreadGrass(x, y, type, TileUtilities.GetEnumType(null, mossType, "MossBrick"), false, Main.tile[i, j].BlockColorAndCoating());
-                                    WorldGen.SquareTileFrame(x, y);
-                                    if (Main.netMode == NetmodeID.Server)
-                                    {
-                                        NetMessage.SendTileSquare(-1, i, j, 3);
-                                    }
+                                    NetMessage.SendTileSquare(-1, i, j, 3);
                                 }
                             }
                         }

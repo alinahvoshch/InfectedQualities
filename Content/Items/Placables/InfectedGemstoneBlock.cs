@@ -55,7 +55,7 @@ namespace InfectedQualities.Content.Items.Placables
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(TileUtilities.GetEnumType(infectionType, gemType));
+            Item.DefaultToPlaceableTile(TileUtilities.GetGemstoneType(infectionType, gemType));
             ItemID.Sets.ExtractinatorMode[Type] = Type;
         }
 

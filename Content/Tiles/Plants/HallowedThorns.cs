@@ -1,5 +1,4 @@
 ﻿using InfectedQualities.Core;
-using InfectedQualities.Utilities;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -31,6 +30,31 @@ namespace InfectedQualities.Content.Tiles.Plants
             HitSound = SoundID.Grass;
 
             AddMapEntry(new(29, 160, 247), Language.GetText("MapObject.Thorn"));
+
+            TileLoader.RegisterConversion(TileID.JungleThorns, BiomeConversionID.Hallow, ApplyConversion);
+            TileLoader.RegisterConversion(Type, BiomeConversionID.Hallow, ApplyConversion); //Placing this here prevents hallowed thorns from breaking via blue solution, the delegate returning false is very important
+        }
+
+        public bool ApplyConversion(int i, int j, int type, int conversionType)
+        {
+            WorldGen.ConvertTile(i, j, Type);
+            return false;
+        }
+
+        public override void Convert(int i, int j, int conversionType)
+        {
+            switch (conversionType)
+            {
+                case BiomeConversionID.Purity:
+                    WorldGen.ConvertTile(i, j, TileID.JungleThorns);
+                    break;
+                case BiomeConversionID.Corruption:
+                    WorldGen.ConvertTile(i, j, TileID.CorruptThorns);
+                    return;
+                case BiomeConversionID.Crimson:
+                    WorldGen.ConvertTile(i, j, TileID.CrimsonThorns);
+                    return;
+            }
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 3 : 10;
@@ -40,21 +64,7 @@ namespace InfectedQualities.Content.Tiles.Plants
         public override void RandomUpdate(int i, int j)
         {
             WorldGen.GrowSpike(i, j, Type, (ushort)ModContent.TileType<HallowedJungleGrass>());
-            if (WorldGen.nearbyChlorophyte(i, j))
-            {
-                if (WorldGen.AllowedToSpreadInfections && Main.remixWorld)
-                {
-                    WorldGen.KillTile(i, j);
-                    if (Main.netMode == NetmodeID.Server)
-                    {
-                        NetMessage.SendTileSquare(-1, i, j);
-                    }
-                }
-            }
-            else
-            {
-                TileUtilities.SpreadInfection(i, j, InfectionType.Hallowed);
-            }
+            WorldGen.SpreadInfectionToNearbyTile(i, j, BiomeConversionID.Hallow);
         }
 
         public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)

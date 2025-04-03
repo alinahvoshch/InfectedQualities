@@ -23,9 +23,13 @@ namespace InfectedQualities.Content.Worldgen
             {
                 for (int n = top; n < bottom; n++)
                 {
-                    if (TileID.Sets.Corrupt[Main.tile[m, n].TileType] || WallID.Sets.Corrupt[Main.tile[m, n].WallType] || TileID.Sets.Crimson[Main.tile[m, n].TileType] || WallID.Sets.Crimson[Main.tile[m, n].WallType] || InfectedQualitiesModSupport.IsAltEvilBlock(m, n))
+                    if (TileID.Sets.Corrupt[Main.tile[m, n].TileType] || TileID.Sets.Crimson[Main.tile[m, n].TileType] || InfectedQualitiesModSupport.IsAltEvilBlock(m, n, true))
                     {
-                        WorldGen.Convert(m, n, BiomeConversionID.Purity, 0);
+                        WorldGen.Convert(m, n, BiomeConversionID.Purity, 0, walls: false);
+                    }
+                    else if (WallID.Sets.Corrupt[Main.tile[m, n].WallType] || WallID.Sets.Crimson[Main.tile[m, n].WallType] || InfectedQualitiesModSupport.IsAltEvilBlock(m, n, false))
+                    {
+                        WorldGen.Convert(m, n, BiomeConversionID.Purity, 0, tiles: false);
                     }
                 }
             }

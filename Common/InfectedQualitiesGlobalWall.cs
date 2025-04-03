@@ -22,17 +22,26 @@ namespace InfectedQualities.Common
 
         public override void RandomUpdate(int i, int j, int type)
         {
-            if (WallID.Sets.Corrupt[type] && !(Main.tile[i, j].HasTile && TileID.Sets.Corrupt[Main.tile[i, j].TileType]))
+            if(WorldGen.AllowedToSpreadInfections)
             {
-                TileUtilities.WallSpread(i, j, InfectionType.Corrupt);
-            }
-            else if (WallID.Sets.Crimson[type] && !(Main.tile[i, j].HasTile && TileID.Sets.Crimson[Main.tile[i, j].TileType]))
-            {
-                TileUtilities.WallSpread(i, j, InfectionType.Crimson);
-            }
-            else if (WallID.Sets.Hallow[type] && !(Main.tile[i, j].HasTile && TileID.Sets.Hallow[Main.tile[i, j].TileType]))
-            {
-                TileUtilities.WallSpread(i, j, InfectionType.Hallowed);
+                if (type is WallID.EbonstoneUnsafe or WallID.CrimstoneUnsafe or WallID.PearlstoneBrickUnsafe)
+                {
+                    int x = i + WorldGen.genRand.Next(-2, 3);
+                    int y = j + WorldGen.genRand.Next(-2, 3);
+                    if(WorldGen.InWorld(x, y, 10) && Main.tile[x, y].WallType == WallID.Stone) 
+                    {
+                        WorldGen.ConvertWall(x, y, type);
+                    }
+                }
+                else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && type is WallID.CorruptGrassUnsafe or WallID.CrimsonGrassUnsafe or WallID.HallowedGrassUnsafe)
+                {
+                    int x = i + WorldGen.genRand.Next(-2, 3);
+                    int y = j + WorldGen.genRand.Next(-2, 3);
+                    if (WorldGen.InWorld(x, y, 10) && Main.tile[x, y].WallType is WallID.GrassUnsafe or WallID.FlowerUnsafe or WallID.JungleUnsafe)
+                    {
+                        WorldGen.ConvertWall(x, y, type);
+                    }
+                }
             }
         }
 

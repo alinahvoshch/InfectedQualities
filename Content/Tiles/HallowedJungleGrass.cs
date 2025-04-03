@@ -38,6 +38,30 @@ namespace InfectedQualities.Content.Tiles
             DustType = DustID.HallowedPlants;
             RegisterItemDrop(ItemID.MudBlock);
             AddMapEntry(new(78, 193, 227));
+
+            TileLoader.RegisterConversion(TileID.JungleGrass, BiomeConversionID.Hallow, ApplyConversion);
+        }
+
+        public bool ApplyConversion(int i, int j, int type, int conversionType)
+        {
+            WorldGen.ConvertTile(i, j, Type);
+            return true;
+        }
+
+        public override void Convert(int i, int j, int conversionType)
+        {
+            switch (conversionType)
+            {
+                case BiomeConversionID.Purity:
+                    WorldGen.ConvertTile(i, j, TileID.JungleGrass);
+                    break;
+                case BiomeConversionID.Corruption:
+                    WorldGen.ConvertTile(i, j, TileID.CorruptJungleGrass);
+                    return;
+                case BiomeConversionID.Crimson:
+                    WorldGen.ConvertTile(i, j, TileID.CrimsonJungleGrass);
+                    return;
+            }
         }
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
@@ -67,7 +91,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override void RandomUpdate(int i, int j)
         {
-            TileUtilities.DefaultInfectionSpread(i, j, InfectionType.Hallowed, TileID.JungleGrass);
+            WorldGen.SpreadInfectionToNearbyTile(i, j, BiomeConversionID.Hallow);
 
             if (WorldGen.genRand.NextBool(10) && !Main.tile[i, j - 1].HasTile && WorldGen.PlaceTile(i, j - 1, TileID.HallowedPlants, true))
             {

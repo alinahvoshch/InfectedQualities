@@ -61,13 +61,49 @@ namespace InfectedQualities.Content.Tiles
                     AddMapEntry(new(247, 228, 233));
                     break;
             }
+
+            TileLoader.RegisterConversion(TileID.SnowBlock, infectionType.ToConversionID(), ApplyConversion);
+        }
+
+        public bool ApplyConversion(int i, int j, int type, int conversionType)
+        {
+            WorldGen.ConvertTile(i, j, Type);
+            return true;
+        }
+
+        public override void Convert(int i, int j, int conversionType)
+        {
+            if (infectionType.ToConversionID() != conversionType)
+            {
+                if (infectionType == InfectionType.Hallowed && conversionType == BiomeConversionID.PurificationPowder)
+                {
+                    return;
+                }
+
+                switch (conversionType)
+                {
+                    case BiomeConversionID.PurificationPowder:
+                    case BiomeConversionID.Purity:
+                        WorldGen.ConvertTile(i, j, TileID.SnowBlock);
+                        break;
+                    case BiomeConversionID.Corruption:
+                        WorldGen.ConvertTile(i, j, TileUtilities.GetSnowType(InfectionType.Corrupt));
+                        return;
+                    case BiomeConversionID.Crimson:
+                        WorldGen.ConvertTile(i, j, TileUtilities.GetSnowType(InfectionType.Crimson));
+                        return;
+                    case BiomeConversionID.Hallow:
+                        WorldGen.ConvertTile(i, j, TileUtilities.GetSnowType(InfectionType.Hallowed));
+                        return;
+                }
+            }
         }
 
         public override bool HasWalkDust() => true;
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 3 : 10;
 
-        public override void RandomUpdate(int i, int j) => TileUtilities.DefaultInfectionSpread(i, j, infectionType, TileID.SnowBlock);
+        public override void RandomUpdate(int i, int j) => WorldGen.SpreadInfectionToNearbyTile(i, j, infectionType.ToConversionID());
 
         public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight)
         {

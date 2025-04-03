@@ -81,9 +81,45 @@ namespace InfectedQualities.Content.Tiles
                     AddMapEntry(new(233, 180, 90), Language.GetText("ItemName.Amber"));
                     break;
             }
+
+            TileLoader.RegisterConversion(TileUtilities.GetGemstoneType(null, gemType), infectionType.ToConversionID(), ApplyConversion);
         }
 
-        public override void RandomUpdate(int i, int j) => TileUtilities.DefaultInfectionSpread(i, j, infectionType, TileUtilities.GetEnumType(null, gemType));
+        public bool ApplyConversion(int i, int j, int type, int conversionType)
+        {
+            WorldGen.ConvertTile(i, j, Type);
+            return true;
+        }
+
+        public override void Convert(int i, int j, int conversionType)
+        {
+            if(infectionType.ToConversionID() != conversionType)
+            {
+                if(infectionType == InfectionType.Hallowed && conversionType == BiomeConversionID.PurificationPowder)
+                {
+                    return;
+                }
+
+                switch (conversionType)
+                {
+                    case BiomeConversionID.PurificationPowder:
+                    case BiomeConversionID.Purity:
+                        WorldGen.ConvertTile(i, j, TileUtilities.GetGemstoneType(null, gemType));
+                        break;
+                    case BiomeConversionID.Corruption:
+                        WorldGen.ConvertTile(i, j, TileUtilities.GetGemstoneType(InfectionType.Corrupt, gemType));
+                        return;
+                    case BiomeConversionID.Crimson:
+                        WorldGen.ConvertTile(i, j, TileUtilities.GetGemstoneType(InfectionType.Crimson, gemType));
+                        return;
+                    case BiomeConversionID.Hallow:
+                        WorldGen.ConvertTile(i, j, TileUtilities.GetGemstoneType(InfectionType.Hallowed, gemType));
+                        return;
+                }
+            }
+        }
+
+        public override void RandomUpdate(int i, int j) => WorldGen.SpreadInfectionToNearbyTile(i, j, infectionType.ToConversionID());
 
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {

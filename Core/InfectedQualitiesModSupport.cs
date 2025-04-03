@@ -191,58 +191,69 @@ namespace InfectedQualities.Core
             return false;
         }
 
-        public static bool IsAltEvilBlock(int i, int j)
+        public static bool IsAltEvilBlock(int i, int j, bool tiles)
         {
-            if (ExxoAvalon != null)
+            if(tiles)
             {
-                foreach (string wallName in ModBlocks[3])
+                if (ExxoAvalon != null)
                 {
-                    if (Main.tile[i, j].WallType == ExxoAvalon.Find<ModWall>(wallName).Type)
+                    foreach (string tileName in ModBlocks[2])
                     {
-                        return true;
+                        if (Main.tile[i, j].TileType == ExxoAvalon.Find<ModTile>(tileName).Type)
+                        {
+                            return true;
+                        }
                     }
                 }
 
-                foreach (string tileName in ModBlocks[2])
+                if (TerrariaOrigins != null)
                 {
-                    if (Main.tile[i, j].TileType == ExxoAvalon.Find<ModTile>(tileName).Type)
+                    foreach (string tileName in ModBlocks[4])
                     {
-                        return true;
+                        if (Main.tile[i, j].TileType == TerrariaOrigins.Find<ModTile>(tileName).Type)
+                        {
+                            return true;
+                        }
+                    }
+
+                    foreach (string tileName in ModBlocks[6])
+                    {
+                        if (Main.tile[i, j].TileType == TerrariaOrigins.Find<ModTile>(tileName).Type)
+                        {
+                            return true;
+                        }
                     }
                 }
             }
-
-            if (TerrariaOrigins != null)
+            else
             {
-                foreach (string wallName in ModBlocks[5])
+                if (ExxoAvalon != null)
                 {
-                    if (Main.tile[i, j].WallType == TerrariaOrigins.Find<ModWall>(wallName).Type)
+                    foreach (string wallName in ModBlocks[3])
                     {
-                        return true;
+                        if (Main.tile[i, j].WallType == ExxoAvalon.Find<ModWall>(wallName).Type)
+                        {
+                            return true;
+                        }
                     }
                 }
 
-                foreach (string tileName in ModBlocks[4])
+                if (TerrariaOrigins != null)
                 {
-                    if (Main.tile[i, j].TileType == TerrariaOrigins.Find<ModTile>(tileName).Type)
+                    foreach (string wallName in ModBlocks[5])
                     {
-                        return true;
+                        if (Main.tile[i, j].WallType == TerrariaOrigins.Find<ModWall>(wallName).Type)
+                        {
+                            return true;
+                        }
                     }
-                }
 
-                foreach (string wallName in ModBlocks[7])
-                {
-                    if (Main.tile[i, j].WallType == TerrariaOrigins.Find<ModWall>(wallName).Type)
+                    foreach (string wallName in ModBlocks[7])
                     {
-                        return true;
-                    }
-                }
-
-                foreach (string tileName in ModBlocks[6])
-                {
-                    if (Main.tile[i, j].TileType == TerrariaOrigins.Find<ModTile>(tileName).Type)
-                    {
-                        return true;
+                        if (Main.tile[i, j].WallType == TerrariaOrigins.Find<ModWall>(wallName).Type)
+                        {
+                            return true;
+                        }
                     }
                 }
             }
