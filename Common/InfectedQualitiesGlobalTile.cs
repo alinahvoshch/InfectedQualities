@@ -175,192 +175,117 @@ namespace InfectedQualities.Common
 
         public override void RandomUpdate(int i, int j, int type)
         {
-            if(type is TileID.Chlorophyte or TileID.ChlorophyteBrick)
+            if(type is TileID.Chlorophyte or TileID.ChlorophyteBrick && NPC.downedPlantBoss)
             {
-                if(NPC.downedPlantBoss)
+                int x = i + Main.rand.Next(-6, 7);
+                int y = j + Main.rand.Next(-6, 7);
+
+                if (Main.tile[x, y].HasTile)
                 {
-                    int x = i + Main.rand.Next(-6, 7);
-                    int y = j + Main.rand.Next(-6, 7);
-
-                    if(Main.tile[x, y].WallType is WallID.GrassUnsafe or WallID.CorruptGrassUnsafe or WallID.CrimsonGrassUnsafe or WallID.HallowedGrassUnsafe) 
+                    foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
                     {
-                        Main.tile[x, y].WallType = WallID.JungleUnsafe;
-                        WorldGen.SquareWallFrame(x, y);
-                        if (Main.netMode == NetmodeID.Server)
+                        if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
                         {
-                            NetMessage.SendTileSquare(-1, x, y);
-                        }
-                    }
-                    else if (Main.tile[x, y].WallType is WallID.CaveUnsafe or WallID.CorruptionUnsafe1 or WallID.CrimsonUnsafe1 or WallID.HallowUnsafe1)
-                    {
-                        Main.tile[x, y].WallType = WallID.JungleUnsafe1;
-                        WorldGen.SquareWallFrame(x, y);
-                        if (Main.netMode == NetmodeID.Server)
-                        {
-                            NetMessage.SendTileSquare(-1, x, y);
-                        }
-                    }
-                    else if (Main.tile[x, y].WallType is WallID.Cave2Unsafe or WallID.CorruptionUnsafe2 or WallID.CrimsonUnsafe2 or WallID.HallowUnsafe2)
-                    {
-                        Main.tile[x, y].WallType = WallID.JungleUnsafe2;
-                        WorldGen.SquareWallFrame(x, y);
-                        if (Main.netMode == NetmodeID.Server)
-                        {
-                            NetMessage.SendTileSquare(-1, x, y);
-                        }
-                    }
-                    else if (Main.tile[x, y].WallType is WallID.Cave3Unsafe or WallID.CorruptionUnsafe3 or WallID.CrimsonUnsafe3 or WallID.HallowUnsafe3)
-                    {
-                        Main.tile[x, y].WallType = WallID.JungleUnsafe3;
-                        WorldGen.SquareWallFrame(x, y);
-                        if (Main.netMode == NetmodeID.Server)
-                        {
-                            NetMessage.SendTileSquare(-1, x, y);
-                        }
-                    }
-                    else if (Main.tile[x, y].WallType is WallID.Cave4Unsafe or WallID.CorruptionUnsafe4 or WallID.CrimsonUnsafe4 or WallID.HallowUnsafe4)
-                    {
-                        Main.tile[x, y].WallType = WallID.JungleUnsafe4;
-                        WorldGen.SquareWallFrame(x, y);
-                        if (Main.netMode == NetmodeID.Server)
-                        {
-                            NetMessage.SendTileSquare(-1, x, y);
-                        }
-                    }
-                    else if (Main.tile[x, y].WallType is WallID.EbonstoneUnsafe or WallID.CrimstoneUnsafe or WallID.PearlstoneBrickUnsafe)
-                    {
-                        Main.tile[x, y].WallType = WallID.Stone;
-                        WorldGen.SquareWallFrame(x, y);
-                        if (Main.netMode == NetmodeID.Server)
-                        {
-                            NetMessage.SendTileSquare(-1, x, y);
-                        }
-                    }
-                    else if (Main.tile[x, y].WallType is WallID.CorruptHardenedSand or WallID.CrimsonHardenedSand or WallID.HallowHardenedSand)
-                    {
-                        Main.tile[x, y].WallType = WallID.HardenedSand;
-                        WorldGen.SquareWallFrame(x, y);
-                        if (Main.netMode == NetmodeID.Server)
-                        {
-                            NetMessage.SendTileSquare(-1, x, y);
-                        }
-                    }
-                    else if (Main.tile[x, y].WallType is WallID.CorruptSandstone or WallID.CrimsonSandstone or WallID.HallowSandstone)
-                    {
-                        Main.tile[x, y].WallType = WallID.Sandstone;
-                        WorldGen.SquareWallFrame(x, y);
-                        if (Main.netMode == NetmodeID.Server)
-                        {
-                            NetMessage.SendTileSquare(-1, x, y);
-                        }
-                    }
-                    if (Main.tile[x, y].HasTile)
-                    {
-                        foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
-                        {
-                            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses)
+                            foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
                             {
-                                foreach (MossType mossType in Enum.GetValues(typeof(MossType)))
+                                if (Main.tile[x, y].TileType == TileUtilities.GetMossType(infectionType, mossType))
                                 {
-                                    if (Main.tile[x, y].TileType == TileUtilities.GetMossType(infectionType, mossType))
+                                    Main.tile[x, y].TileType = TileUtilities.GetMossType(null, mossType);
+                                    WorldGen.SquareTileFrame(x, y);
+                                    if (Main.netMode == NetmodeID.Server)
                                     {
-                                        Main.tile[x, y].TileType = TileUtilities.GetMossType(null, mossType);
-                                        WorldGen.SquareTileFrame(x, y);
-                                        if (Main.netMode == NetmodeID.Server)
-                                        {
-                                            NetMessage.SendTileSquare(-1, x, y);
-                                        }
-                                        return;
+                                        NetMessage.SendTileSquare(-1, x, y);
                                     }
+                                    return;
                                 }
                             }
+                        }
 
-                            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones)
+                        if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones)
+                        {
+                            foreach (GemType gemType in Enum.GetValues(typeof(GemType)))
                             {
-                                foreach (GemType gemType in Enum.GetValues(typeof(GemType)))
+                                if (Main.tile[x, y].TileType == TileUtilities.GetGemstoneType(infectionType, gemType))
                                 {
-                                    if (Main.tile[x, y].TileType == TileUtilities.GetGemstoneType(infectionType, gemType))
+                                    Main.tile[x, y].TileType = TileUtilities.GetGemstoneType(null, gemType);
+                                    WorldGen.SquareTileFrame(x, y);
+                                    if (Main.netMode == NetmodeID.Server)
                                     {
-                                        Main.tile[x, y].TileType = TileUtilities.GetGemstoneType(null, gemType);
-                                        WorldGen.SquareTileFrame(x, y);
-                                        if (Main.netMode == NetmodeID.Server)
-                                        {
-                                            NetMessage.SendTileSquare(-1, x, y);
-                                        }
-                                        return;
+                                        NetMessage.SendTileSquare(-1, x, y);
                                     }
+                                    return;
                                 }
                             }
                         }
+                    }
 
-                        if (Main.tile[x, y].TileType == TileID.Pearlstone)
+                    if (Main.tile[x, y].TileType == TileID.Pearlstone)
+                    {
+                        Main.tile[x, y].TileType = TileID.Stone;
+                        WorldGen.SquareTileFrame(x, y);
+                        if (Main.netMode == NetmodeID.Server)
                         {
-                            Main.tile[x, y].TileType = TileID.Stone;
+                            NetMessage.SendTileSquare(-1, x, y);
+                        }
+                    }
+                    else if (Main.tile[x, y].TileType == TileID.Pearlsand)
+                    {
+                        Main.tile[x, y].TileType = TileID.Sand;
+                        WorldGen.SquareTileFrame(x, y);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, x, y);
+                        }
+                    }
+                    else if (Main.tile[x, y].TileType == TileID.HallowHardenedSand)
+                    {
+                        Main.tile[x, y].TileType = TileID.HardenedSand;
+                        WorldGen.SquareTileFrame(x, y);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, x, y);
+                        }
+                    }
+                    else if (Main.tile[x, y].TileType == TileID.HallowSandstone)
+                    {
+                        Main.tile[x, y].TileType = TileID.Sandstone;
+                        WorldGen.SquareTileFrame(x, y);
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            NetMessage.SendTileSquare(-1, x, y);
+                        }
+                    }
+                    else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+                    {
+                        if (Main.tile[x, y].TileType == ModContent.TileType<HallowedJungleGrass>())
+                        {
+                            Main.tile[x, y].TileType = TileID.JungleGrass;
                             WorldGen.SquareTileFrame(x, y);
                             if (Main.netMode == NetmodeID.Server)
                             {
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
                         }
-                        else if (Main.tile[x, y].TileType == TileID.Pearlsand)
+                        else if (Main.tile[x, y].TileType == ModContent.TileType<HallowedThorns>())
                         {
-                            Main.tile[x, y].TileType = TileID.Sand;
+                            Main.tile[x, y].TileType = TileID.JungleThorns;
                             WorldGen.SquareTileFrame(x, y);
                             if (Main.netMode == NetmodeID.Server)
                             {
                                 NetMessage.SendTileSquare(-1, x, y);
                             }
                         }
-                        else if (Main.tile[x, y].TileType == TileID.HallowHardenedSand)
+                        else
                         {
-                            Main.tile[x, y].TileType = TileID.HardenedSand;
-                            WorldGen.SquareTileFrame(x, y);
-                            if (Main.netMode == NetmodeID.Server)
+                            foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
                             {
-                                NetMessage.SendTileSquare(-1, x, y);
-                            }
-                        }
-                        else if (Main.tile[x, y].TileType == TileID.HallowSandstone)
-                        {
-                            Main.tile[x, y].TileType = TileID.Sandstone;
-                            WorldGen.SquareTileFrame(x, y);
-                            if (Main.netMode == NetmodeID.Server)
-                            {
-                                NetMessage.SendTileSquare(-1, x, y);
-                            }
-                        }
-                        else if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
-                        {
-                            if (Main.tile[x, y].TileType == ModContent.TileType<HallowedJungleGrass>())
-                            {
-                                Main.tile[x, y].TileType = TileID.JungleGrass;
-                                WorldGen.SquareTileFrame(x, y);
-                                if (Main.netMode == NetmodeID.Server)
+                                if (Main.tile[x, y].TileType == TileUtilities.GetSnowType(infectionType))
                                 {
-                                    NetMessage.SendTileSquare(-1, x, y);
-                                }
-                            }
-                            else if (Main.tile[x, y].TileType == ModContent.TileType<HallowedThorns>())
-                            {
-                                Main.tile[x, y].TileType = TileID.JunglePlants2;
-                                WorldGen.SquareTileFrame(x, y);
-                                if (Main.netMode == NetmodeID.Server)
-                                {
-                                    NetMessage.SendTileSquare(-1, x, y);
-                                }
-                            }
-                            else
-                            {
-                                foreach (InfectionType infectionType in Enum.GetValues(typeof(InfectionType)))
-                                {
-                                    if(Main.tile[x, y].TileType == TileUtilities.GetSnowType(infectionType))
+                                    Main.tile[x, y].TileType = TileID.SnowBlock;
+                                    WorldGen.SquareTileFrame(x, y);
+                                    if (Main.netMode == NetmodeID.Server)
                                     {
-                                        Main.tile[x, y].TileType = TileID.SnowBlock;
-                                        WorldGen.SquareTileFrame(x, y);
-                                        if (Main.netMode == NetmodeID.Server)
-                                        {
-                                            NetMessage.SendTileSquare(-1, x, y);
-                                        }
+                                        NetMessage.SendTileSquare(-1, x, y);
                                     }
                                 }
                             }
@@ -446,7 +371,7 @@ namespace InfectedQualities.Common
             }
 
             //Making vanilla moss spread to infected blocks
-            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && (TileID.Sets.Conversion.Moss[type] || TileID.Sets.Conversion.MossBrick[type]) && type < TileID.Count && WorldGen.genRand.NextDouble() < 0.5)
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses && (TileID.Sets.Conversion.Moss[type] || TileID.Sets.Conversion.MossBrick[type]) && type < TileID.Count && WorldGen.genRand.NextBool())
             {
                 int mossColor = WorldGen.GetTileMossColor(type);
                 if (mossColor != -1)

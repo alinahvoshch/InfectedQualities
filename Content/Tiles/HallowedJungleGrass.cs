@@ -82,7 +82,7 @@ namespace InfectedQualities.Content.Tiles
 
         public override bool CreateDust(int i, int j, ref int type)
         {
-            if (WorldGen.genRand.NextBool(2))
+            if (WorldGen.genRand.NextBool())
             {
                 type = DustID.Mud;
             }

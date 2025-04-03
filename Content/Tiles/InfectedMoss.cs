@@ -180,7 +180,7 @@ namespace InfectedQualities.Content.Tiles
         public override void RandomUpdate(int i, int j)
         {
             WorldGen.SpreadInfectionToNearbyTile(i, j, infectionType.ToConversionID());
-            if (WorldGen.genRand.NextDouble() < 0.5)
+            if (WorldGen.genRand.NextBool())
             {
                 for (int x = i - 1; x < i + 2; x++)
                 {
