@@ -902,6 +902,16 @@ namespace InfectedQualities.Core
 
         private static void WorldGen_ChlorophyteDefense(On_WorldGen.orig_ChlorophyteDefense orig, int x, int y)
         {
+            if (!Main.remixWorld && ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && Main.tile[x, y].TileType == ModContent.TileType<HallowedThorns>())
+            {
+                WorldGen.KillTile(x, y);
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    NetMessage.SendTileSquare(-1, x, y);
+                }
+                return;
+            }
+
             orig(x, y);
 
             if (Main.tile[x, y].TileType == TileID.HallowedGrass)
