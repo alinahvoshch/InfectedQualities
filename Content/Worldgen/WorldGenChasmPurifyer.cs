@@ -27,7 +27,8 @@ namespace InfectedQualities.Content.Worldgen
                     {
                         WorldGen.Convert(m, n, BiomeConversionID.Purity, 0, walls: false);
                     }
-                    else if (WallID.Sets.Corrupt[Main.tile[m, n].WallType] || WallID.Sets.Crimson[Main.tile[m, n].WallType] || InfectedQualitiesModSupport.IsAltEvilBlock(m, n, false))
+
+                    if (WallID.Sets.Corrupt[Main.tile[m, n].WallType] || WallID.Sets.Crimson[Main.tile[m, n].WallType] || InfectedQualitiesModSupport.IsAltEvilBlock(m, n, false))
                     {
                         WorldGen.Convert(m, n, BiomeConversionID.Purity, 0, tiles: false);
                     }
