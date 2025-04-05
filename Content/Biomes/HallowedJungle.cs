@@ -15,7 +15,7 @@ namespace InfectedQualities.Content.Biomes
             {
                 if(ModContent.GetInstance<InfectedQualitiesClientConfig>().HallowedJungleMusic && !Main.LocalPlayer.ZoneGraveyard && !Main.LocalPlayer.ZoneMeteor)
                 {
-                    if(Main.LocalPlayer.MusicUnderground())
+                    if(WorldUtilities.MusicUnderground())
                     {
                         if(Main.remixWorld)
                         {

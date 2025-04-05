@@ -21,7 +21,7 @@ namespace InfectedQualities.Content.Biomes
         {
             if (Main.hardMode && player.ZoneCrimson && player.ZoneJungle && !player.ZoneGlowshroom)
             {
-                return player.ZoneCavern() && !player.ZoneDungeon && !player.ZoneLihzhardTemple;
+                return player.ZoneSurfaceOrUnderground(true) && !player.ZoneDungeon && !player.ZoneLihzhardTemple;
             }
             return false;
         }

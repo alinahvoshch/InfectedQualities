@@ -145,7 +145,7 @@ namespace InfectedQualities.Common
                         pool.Add(NPCID.GiantTortoise, 1.0f);
                         pool.Add(NPCID.AngryTrapper, 1.0f);
 
-                        if (spawnInfo.Player.ZoneSurface())
+                        if (spawnInfo.Player.ZoneSurfaceOrUnderground(false))
                         {
                             pool.Add(NPCID.Pixie, 1.0f);
                             pool.Add(NPCID.Unicorn, 1.0f);
@@ -172,7 +172,7 @@ namespace InfectedQualities.Common
                                 pool.Add(NPCID.Pixie, 1.0f);
                                 if (!Main.dayTime) pool.Add(NPCID.Gastropod, 1.0f);
                             }
-                            else if (spawnInfo.Player.ZoneCavern())
+                            else if (spawnInfo.Player.ZoneSurfaceOrUnderground(true))
                             {
                                 pool.Add(NPCID.JungleCreeper, 1.0f);
                                 pool.Add(NPCID.MossHornet, 1.0f);
@@ -198,7 +198,7 @@ namespace InfectedQualities.Common
                         pool.Add(NPCID.EaterofSouls, hardmodeSpawnChance);
                         pool.Add(NPCID.DevourerHead, hardmodeSpawnChance / 4f);
 
-                        if (spawnInfo.Player.ZoneSurface() || spawnInfo.Player.ZoneDirtLayerHeight)
+                        if (spawnInfo.Player.ZoneSurfaceOrUnderground(false) || spawnInfo.Player.ZoneDirtLayerHeight)
                         {
                             if (Main.dayTime)
                             {
@@ -228,12 +228,12 @@ namespace InfectedQualities.Common
                             pool.Add(NPCID.CorruptSlime, 1.0f);
                             pool.Add(NPCID.Slimeling, 1.0f);
 
-                            if (spawnInfo.Player.ZoneSurface())
+                            if (spawnInfo.Player.ZoneSurfaceOrUnderground(false))
                             {
                                 if (!Main.dayTime) pool.Add(NPCID.Wolf, 1.0f);
                                 if (Main.raining && !NPC.AnyNPCs(NPCID.IceGolem)) pool.Add(NPCID.IceGolem, 0.05f);
                             }
-                            else if (spawnInfo.Player.ZoneCavern())
+                            else if (spawnInfo.Player.ZoneSurfaceOrUnderground(true))
                             {
                                 pool.Add(NPCID.ArmoredViking, 1.0f);
                                 pool.Add(NPCID.IceTortoise, 1.0f);
@@ -246,7 +246,7 @@ namespace InfectedQualities.Common
                                 pool.Add(NPCID.BigMimicCorruption, 0.01f);
                             }
 
-                            if (!Main.dayTime || spawnInfo.Player.ZoneCavern())
+                            if (!Main.dayTime || spawnInfo.Player.ZoneSurfaceOrUnderground(true))
                             {
                                 pool.Add(NPCID.IceElemental, 1.0f);
                             }
@@ -259,7 +259,7 @@ namespace InfectedQualities.Common
                         pool.Add(NPCID.FaceMonster, hardmodeSpawnChance);
                         pool.Add(NPCID.Crimera, hardmodeSpawnChance);
 
-                        if (spawnInfo.Player.ZoneSurface() || spawnInfo.Player.ZoneDirtLayerHeight)
+                        if (spawnInfo.Player.ZoneSurfaceOrUnderground(false) || spawnInfo.Player.ZoneDirtLayerHeight)
                         {
                             if (Main.dayTime)
                             {
@@ -288,12 +288,12 @@ namespace InfectedQualities.Common
                             pool.Add(NPCID.Crimslime, 1.0f);
                             pool.Add(NPCID.Herpling, 1.0f);
 
-                            if (spawnInfo.Player.ZoneSurface())
+                            if (spawnInfo.Player.ZoneSurfaceOrUnderground(false))
                             {
                                 if (!Main.dayTime) pool.Add(NPCID.Wolf, 1.0f);
                                 if (Main.raining && !NPC.AnyNPCs(NPCID.IceGolem)) pool.Add(NPCID.IceGolem, 0.05f);
                             }
-                            else if (spawnInfo.Player.ZoneCavern())
+                            else if (spawnInfo.Player.ZoneSurfaceOrUnderground(true))
                             {
                                 pool.Add(NPCID.ArmoredViking, 1.0f);
                                 pool.Add(NPCID.IceTortoise, 1.0f);
@@ -307,7 +307,7 @@ namespace InfectedQualities.Common
                                 pool.Add(NPCID.BigMimicCrimson, 0.01f);
                             }
 
-                            if (!Main.dayTime || spawnInfo.Player.ZoneCavern())
+                            if (!Main.dayTime || spawnInfo.Player.ZoneSurfaceOrUnderground(true))
                             {
                                 pool.Add(NPCID.IceElemental, 1.0f);
                             }
@@ -316,7 +316,7 @@ namespace InfectedQualities.Common
                     else if (spawnInfo.SpawnTileType == TileUtilities.GetSnowType(InfectionType.Hallowed) && spawnInfo.Player.ZoneHallow)
                     {
                         pool.Remove(0);
-                        if (spawnInfo.Player.ZoneSurface() || spawnInfo.Player.ZoneDirtLayerHeight)
+                        if (spawnInfo.Player.ZoneSurfaceOrUnderground(false) || spawnInfo.Player.ZoneDirtLayerHeight)
                         {
                             if (Main.dayTime)
                             {
@@ -338,7 +338,7 @@ namespace InfectedQualities.Common
 
                         if (Main.hardMode)
                         {
-                            if (spawnInfo.Player.ZoneSurface())
+                            if (spawnInfo.Player.ZoneSurfaceOrUnderground(false))
                             {
                                 pool.Add(NPCID.Pixie, 1.0f);
                                 pool.Add(NPCID.Unicorn, 1.0f);
@@ -371,7 +371,7 @@ namespace InfectedQualities.Common
                                         pool.Add(NPCID.Gastropod, 1.0f);
                                     }
                                 }
-                                else if (spawnInfo.Player.ZoneCavern())
+                                else if (spawnInfo.Player.ZoneSurfaceOrUnderground(true))
                                 {
                                     pool.Add(NPCID.ArmoredViking, 1.0f);
                                     pool.Add(NPCID.IceTortoise, 1.0f);
