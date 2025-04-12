@@ -43,8 +43,6 @@ namespace InfectedQualities
 
         public override object Call(params object[] args) => args switch
         {
-            ["ZoneCorruptJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CorruptJungle>(),
-            ["ZoneCrimsonJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<CrimsonJungle>(),
             ["ZoneHallowedJungle", Player player] => ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && player.InModBiome<HallowedJungle>(),
             ["SetWallBiomeSightColor", int type, Color color] => delegate() { InfectedQualitiesModSupport.ModWallBiomeSight[type] = color; },
             ["SetDemonAltarBlock", int altar, ushort type] => delegate() { InfectedQualitiesModSupport.AltarToEvilBlock.Add(altar, type); },

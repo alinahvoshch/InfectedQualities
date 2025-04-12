@@ -55,16 +55,6 @@ Mods: {
 		}
 
 		Biomes: {
-			CorruptJungle: {
-				DisplayName: Corrupt Jungle
-				TownNPCDialogueName: the Corrupt Jungle
-			}
-
-			CrimsonJungle: {
-				DisplayName: Crimson Jungle
-				TownNPCDialogueName: the Crimson Jungle
-			}
-
 			HallowedJungle: {
 				DisplayName: Hallowed Jungle
 				TownNPCDialogueName: the Hallowed Jungle

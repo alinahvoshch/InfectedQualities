@@ -55,16 +55,6 @@ Mods: {
 		}
 
 		Biomes: {
-			CorruptJungle: {
-				DisplayName: Искажённые джунгли
-				TownNPCDialogueName: Искажённые джунгли
-			}
-
-			CrimsonJungle: {
-				DisplayName: Багряные джунгли
-				TownNPCDialogueName: Багряные джунгли
-			}
-
 			HallowedJungle: {
 				DisplayName: Освящённые джунгли
 				TownNPCDialogueName: Освящённые джунгли

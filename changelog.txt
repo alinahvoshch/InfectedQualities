@@ -7,7 +7,6 @@
 
 -Another pylon of night crystal resprite
 -Touched up on the paint support for infected mosses.
--Corrupt and crimson jungle now use corrupt and crimson torches as biome torches instead of cursed and ichor torches.
 -Fertilizer now affects the saplings from this mod
 -Adjusted code to the new tModLoader changes
 -Because of how inconsistent the vanilla wall spreading is, it's very difficult and tedious to create a consistient wall spread system without either breaking the game or messing up another mods take on walls, such an Confection Rebaked. So, I removed the current wall spreading system and replaced it with just grass and stone wall spreading.
@@ -21,6 +20,7 @@
 -Fixed divine powder breaking vines and plants
 -Fixed some items not having journey mode categories
 
+-Removed the corrupt and crimson jungle biomes.. for now. They will be re-added when these biomes get a worthwhile effect. When will that happen? I do not know, sorry.
 -Removed config icons due to an issue that occured if certain configs were disabled
 -Reverted infected powder changes. They no longer affect walls without tiles.
 -Removed unneeded localizations for projectile(s)
