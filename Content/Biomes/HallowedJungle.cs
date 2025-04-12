@@ -23,7 +23,7 @@ namespace InfectedQualities.Content.Biomes
                         }
                         return WorldUtilities.OtherworldMusic() ? MusicID.OtherworldlyUGHallow : MusicID.UndergroundHallow;
                     }
-                    else if(!Main.IsItRaining && Main.dayTime)
+                    else if(Main.dayTime && !Main.IsItRaining)
                     {
                         if (WorldUtilities.OtherworldMusic())
                         {

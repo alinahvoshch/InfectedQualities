@@ -1,6 +1,4 @@
 ﻿using InfectedQualities.Content.Tiles;
-using InfectedQualities.Core;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
