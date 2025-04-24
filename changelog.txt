@@ -24,7 +24,7 @@
 -Removed config icons due to an issue that occured if certain configs were disabled
 -Reverted infected powder changes. They no longer affect walls without tiles.
 -Removed unneeded localizations for projectile(s)
--Removed the use of reflection on the compability with SpiritMod's pureglow flowers. It should be more efficient now 
+-Removed compability with SpiritMod's pureglow flowers, as this mod no longer uses its own custom methods to spread tiles
 -Removed purification powder purifying hallow
 
 0.7.4.2

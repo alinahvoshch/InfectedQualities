@@ -385,7 +385,7 @@ namespace InfectedQualities.Common
                         for (int y = j - 1; y < j + 2; y++)
                         {
                             ushort tileType = Main.tile[x, y].TileType;
-                            bool flag = Main.hardMode && WorldGen.AllowedToSpreadInfections && Main.tile[x, y - 1].TileType != TileID.Sunflower && !InfectedQualitiesModSupport.PureglowRange(i);
+                            bool flag = Main.hardMode && WorldGen.AllowedToSpreadInfections && Main.tile[x, y - 1].TileType != TileID.Sunflower;
 
                             if (tileType == TileID.Mud || (tileType == TileID.JungleGrass && flag))
                             {

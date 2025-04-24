@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -61,8 +60,6 @@ namespace InfectedQualities.Core
             ["Riven_Flesh", "Riven_Grass", "Silica", "Brittle_Quartz", "Quartz", "Primordial_Permafrost", "Riven_Jungle_Grass"],
             ["Riven_Flesh_Wall", "Quartz_Wall", "Brittle_Quartz_Wall", "Riven_Grass_Wall_Natural"]
         ];
-
-        public static bool PureglowRange(int i) => SpiritMod != null && SuperSunflowerRange(i);
 
         public static void PostSetupContent()
         {
@@ -133,19 +130,6 @@ namespace InfectedQualities.Core
                     pylons.ValidItems.Add(SpiritMod.Find<ModItem>("SpiritPylonItem").Type);
                 }
             }
-        }
-
-        [JITWhenModsEnabled("SpiritMod")]
-        private static bool SuperSunflowerRange(int i)
-        {
-            foreach (Point16 point in global::SpiritMod.MyWorld.superSunFlowerPositions)
-            {
-                if (Math.Abs(point.X - i) < global::SpiritMod.Tiles.SuperSunFlower.Range * 2)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         public static bool EnoughTilesForAltEvilBiome(SceneMetrics sceneMetrics)
