@@ -51,7 +51,6 @@ namespace InfectedQualities.Core
 
             IL_WorldGen.UpdateWorld_Inner += WorldGen_UpdateWorld_Inner;
             IL_WorldGen.hardUpdateWorld += WorldGen_hardUpdateWorld;
-            On_WorldGen.ChlorophyteDefense += WorldGen_ChlorophyteDefense;
 
             IL_WorldGen.CheckLilyPad += WorldGen_CheckLilyPad;
             IL_WorldGen.CheckCatTail += WorldGen_CheckCatTail;
@@ -898,93 +897,6 @@ namespace InfectedQualities.Core
                 return false;
             }
             return orig(i, j);
-        }
-
-        private static void WorldGen_ChlorophyteDefense(On_WorldGen.orig_ChlorophyteDefense orig, int x, int y)
-        {
-            if (!Main.remixWorld && ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes && Main.tile[x, y].TileType == ModContent.TileType<HallowedThorns>())
-            {
-                WorldGen.KillTile(x, y);
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    NetMessage.SendTileSquare(-1, x, y);
-                }
-                return;
-            }
-
-            orig(x, y);
-
-            if (Main.tile[x, y].TileType == TileID.HallowedGrass)
-            {
-                Main.tile[x, y].TileType = TileID.JungleGrass;
-                WorldGen.SquareTileFrame(x, y);
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    NetMessage.SendTileSquare(-1, x, y);
-                }
-            }
-            else if (Main.tile[x, y].TileType == TileID.Pearlstone)
-            {
-                Main.tile[x, y].TileType = TileID.Stone;
-                WorldGen.SquareTileFrame(x, y);
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    NetMessage.SendTileSquare(-1, x, y);
-                }
-            }
-            else if (Main.tile[x, y].TileType == TileID.Pearlsand)
-            {
-                Main.tile[x, y].TileType = TileID.Sand;
-                WorldGen.SquareTileFrame(x, y);
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    NetMessage.SendTileSquare(-1, x, y);
-                }
-            }
-            else if (Main.tile[x, y].TileType == TileID.HallowHardenedSand)
-            {
-                Main.tile[x, y].TileType = TileID.HardenedSand;
-                WorldGen.SquareTileFrame(x, y);
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    NetMessage.SendTileSquare(-1, x, y);
-                }
-            }
-            else if (Main.tile[x, y].TileType == TileID.HallowSandstone)
-            {
-                Main.tile[x, y].TileType = TileID.Sandstone;
-                WorldGen.SquareTileFrame(x, y);
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    NetMessage.SendTileSquare(-1, x, y);
-                }
-            }
-            else if (Main.tile[x, y].TileType == TileID.HallowSandstone)
-            {
-                Main.tile[x, y].TileType = TileID.Sandstone;
-                WorldGen.SquareTileFrame(x, y);
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    NetMessage.SendTileSquare(-1, x, y);
-                }
-            }
-            else if (Main.tile[x, y].TileType == TileID.HallowedIce)
-            {
-                Main.tile[x, y].TileType = TileID.IceBlock;
-                WorldGen.SquareTileFrame(x, y);
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    NetMessage.SendTileSquare(-1, x, y);
-                }
-            }
-            else if (Main.tile[x, y].TileType is TileID.HallowedPlants or TileID.HallowedPlants2 or TileID.HallowedVines)
-            {
-                WorldGen.KillTile(x, y);
-                if (Main.netMode == NetmodeID.Server)
-                {
-                    NetMessage.SendTileSquare(-1, x, y);
-                }
-            }
         }
 
         private static void WorldGen_CheckLilyPad(ILContext il)
