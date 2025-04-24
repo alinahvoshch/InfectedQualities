@@ -8,7 +8,6 @@ using InfectedQualities.Content.Tiles.Plants;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using InfectedQualities.Core;
-using System;
 using Terraria.GameContent.Drawing;
 using InfectedQualities.Utilities;
 

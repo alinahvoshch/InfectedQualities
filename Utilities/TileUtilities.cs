@@ -15,19 +15,22 @@ namespace InfectedQualities.Utilities
 
         public static bool TileExposedToLava(int i, int j)
         {
-            bool flag = false;
-            for (int x = i - 1; x < i + 2; x++)
+            for (int x = i - 1; x <= i + 1; x++)
             {
-                for (int y = j - 1; y < j + 2; y++)
+                for (int y = j - 1; y <= j + 1; y++)
                 {
-                    if (Main.tile[x, y] != null && Main.tile[x, y].LiquidAmount > 0 && Main.tile[x, y].LiquidType == LiquidID.Lava)
+                    if(!WorldGen.InWorld(x, y, 10))
                     {
-                        flag = true;
-                        break;
+                        return false;
+                    }
+
+                    if (Main.tile[x, y].LiquidType == LiquidID.Lava && Main.tile[x, y].LiquidAmount != 0)
+                    {
+                        return true;
                     }
                 }
             }
-            return flag;
+            return false;
         }
 
         public static void AttemptToPlaceInfectedPlant(int i, int j, int type, ushort vanillaVariant, int range)
