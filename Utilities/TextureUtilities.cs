@@ -1,5 +1,4 @@
-﻿using InfectedQualities.Common;
-using InfectedQualities.Core;
+﻿using InfectedQualities.Core;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -7,7 +6,6 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace InfectedQualities.Utilities
 {
