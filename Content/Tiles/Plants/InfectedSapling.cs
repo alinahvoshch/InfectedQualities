@@ -30,6 +30,8 @@ namespace InfectedQualities.Content.Tiles.Plants
             AdjTiles = [TileID.Saplings];
             DustType = DustID.WoodFurniture;
             AddMapEntry(new(151, 107, 75), Language.GetText("MapObject.Sapling"));
+
+            VanillaFallbackOnModDeletion = TileID.Saplings;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 3 : 10;

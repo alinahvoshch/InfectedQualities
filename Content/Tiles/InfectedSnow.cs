@@ -63,6 +63,7 @@ namespace InfectedQualities.Content.Tiles
 			}
 
 			TileLoader.RegisterConversion(TileID.SnowBlock, infectionType.ToConversionID(), ApplyConversion);
+			VanillaFallbackOnModDeletion = TileID.SnowBlock;
 		}
 
 		public bool ApplyConversion(int i, int j, int type, int conversionType)

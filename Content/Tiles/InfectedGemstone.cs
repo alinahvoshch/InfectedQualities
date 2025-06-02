@@ -83,6 +83,7 @@ namespace InfectedQualities.Content.Tiles
 			}
 
 			TileLoader.RegisterConversion(TileUtilities.GetGemstoneType(null, gemType), infectionType.ToConversionID(), ApplyConversion);
+			VanillaFallbackOnModDeletion = TileUtilities.GetGemstoneType(null, gemType);
 		}
 
 		public bool ApplyConversion(int i, int j, int type, int conversionType)

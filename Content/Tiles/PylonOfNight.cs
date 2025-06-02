@@ -46,6 +46,8 @@ namespace InfectedQualities.Content.Tiles
             PylonCrystalTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Tiles/" + Name + "_Crystal");
             PylonCrystalHighlightTexture = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/Tiles/Pylon_CrystalHighlight");
             PylonMapIcon = ModContent.Request<Texture2D>("InfectedQualities/Content/Extras/MapIcons/" + Name + "_MapIcon");
+
+            VanillaFallbackOnModDeletion = TileID.TeleportationPylon;
         }
 
         public override NPCShop.Entry GetNPCShopEntry() => null;

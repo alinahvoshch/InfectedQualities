@@ -33,6 +33,8 @@ namespace InfectedQualities.Content.Tiles.Plants
             AddMapEntry(new(109, 106, 174), Language.GetText("MapObject.PlanterasBulb"));
             AddMapEntry(new(183, 69, 68), Language.GetText("MapObject.PlanterasBulb"));
             AddMapEntry(new(228, 139, 215), Language.GetText("MapObject.PlanterasBulb"));
+
+            VanillaFallbackOnModDeletion = TileID.PlanteraBulb;
         }
 
         public override ushort GetMapOption(int i, int j) => (ushort)TileObjectData.GetTileStyle(Main.tile[i, j]);

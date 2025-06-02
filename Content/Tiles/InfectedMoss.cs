@@ -132,6 +132,7 @@ namespace InfectedQualities.Content.Tiles
 			}
 
 			TileLoader.RegisterConversion(TileUtilities.GetMossType(null, mossType), infectionType.ToConversionID(), ApplyConversion);
+			VanillaFallbackOnModDeletion = TileUtilities.GetMossType(null, mossType);
 		}
 
 		public bool ApplyConversion(int i, int j, int type, int conversionType)

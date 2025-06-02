@@ -1,3 +1,8 @@
+0.7.4.4
+=======
+-Added vanilla fallback values for every tile in the mod
+
+
 0.7.4.3
 =======
 -File & code organization for readability and optimization

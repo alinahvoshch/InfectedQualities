@@ -33,6 +33,8 @@ namespace InfectedQualities.Content.Tiles.Plants
 
 			TileLoader.RegisterConversion(TileID.JungleThorns, BiomeConversionID.Hallow, ApplyConversion);
 			TileLoader.RegisterConversion(Type, BiomeConversionID.Hallow, ApplyConversion); //Placing this here prevents hallowed thorns from breaking via blue solution, the delegate returning false is very important
+
+			VanillaFallbackOnModDeletion = TileID.JungleThorns;
 		}
 
 		public bool ApplyConversion(int i, int j, int type, int conversionType)

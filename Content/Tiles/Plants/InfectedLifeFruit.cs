@@ -38,6 +38,8 @@ namespace InfectedQualities.Content.Tiles.Plants
             AddMapEntry(new(87, 84, 151), Language.GetText("ItemName.LifeFruit"));
             AddMapEntry(new(180, 82, 82), Language.GetText("ItemName.LifeFruit"));
             AddMapEntry(new(82, 166, 199), Language.GetText("ItemName.LifeFruit"));
+
+            VanillaFallbackOnModDeletion = TileID.LifeFruit;
         }
 
         public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameY / 36);
