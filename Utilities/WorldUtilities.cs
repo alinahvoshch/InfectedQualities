@@ -4,7 +4,7 @@ namespace InfectedQualities.Utilities
 {
     public static class WorldUtilities
     {
-        public static bool ZoneSurfaceOrUnderground(this Player player, bool underground)
+        public static bool DetermineZone(this Player player, bool underground)
         {
             bool surfaceLayer = player.ZoneOverworldHeight;
             bool remixSurfaceLayer = player.ZoneRockLayerHeight;
