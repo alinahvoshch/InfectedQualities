@@ -100,7 +100,7 @@ namespace InfectedQualities.Common
 				if (type is TileID.CorruptPlants or TileID.CrimsonPlants or TileID.HallowedPlants or TileID.HallowedPlants2 or TileID.JunglePlants or TileID.JunglePlants2)
 				{
 					Tile soil = Main.tile[i, j + 1];
-					if (soil.HasTile && !soil.IsHalfBlock && soil.Slope == SlopeType.Solid)
+					if (soil.HasUnactuatedTile && !soil.IsHalfBlock && soil.Slope == SlopeType.Solid)
 					{
 						bool isSpore = type == TileID.JunglePlants && Main.tile[i, j].TileFrameX == 144;
 						bool isMushroom = type == TileID.CrimsonPlants ? Main.tile[i, j].TileFrameX == 270 : type is TileID.CorruptPlants or TileID.HallowedPlants && Main.tile[i, j].TileFrameX == 144;
@@ -145,7 +145,7 @@ namespace InfectedQualities.Common
 				else if (TileID.Sets.IsVine[type])
 				{
 					Tile soil = Main.tile[i, j - 1];
-					if (soil.TileType == ModContent.TileType<HallowedJungleGrass>() && soil.HasTile && !soil.BottomSlope)
+					if (soil.TileType == ModContent.TileType<HallowedJungleGrass>() && soil.HasUnactuatedTile && !soil.BottomSlope)
 					{
 						if (type != TileID.HallowedVines)
 						{

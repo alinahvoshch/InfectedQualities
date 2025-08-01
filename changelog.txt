@@ -1,6 +1,7 @@
 0.7.4.4
 =======
 -Fixed corrupt and crimson jungle grass not getting converted by blue solution.
+-Made some plants to check for actuation before updating
 
 0.7.4.4
 =======
