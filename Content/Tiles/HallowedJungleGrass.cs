@@ -40,6 +40,8 @@ namespace InfectedQualities.Content.Tiles
             AddMapEntry(new(78, 193, 227));
 
             TileLoader.RegisterConversion(TileID.JungleGrass, BiomeConversionID.Hallow, ApplyConversion);
+			TileLoader.RegisterConversion(TileID.CorruptJungleGrass, BiomeConversionID.Hallow, ApplyConversion);
+			TileLoader.RegisterConversion(TileID.CrimsonJungleGrass, BiomeConversionID.Hallow, ApplyConversion);
 			VanillaFallbackOnModDeletion = TileID.JungleGrass;
 		}
 
