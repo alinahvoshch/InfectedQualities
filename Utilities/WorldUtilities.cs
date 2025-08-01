@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Terraria;
+﻿using Terraria;
 
 namespace InfectedQualities.Utilities
 {
@@ -21,23 +20,14 @@ namespace InfectedQualities.Utilities
             return surfaceLayer;
         }
 
-        public static bool MusicUnderground()
+        public static bool MusicUnderground(bool remixFlag)
         {
-            if (Main.LocalPlayer.position.Y >= Main.worldSurface * 16.0 + Main.screenHeight / 2 && (Main.remixWorld || !WorldGen.oceanDepths((int)(Main.screenPosition.X + Main.screenWidth / 2) / 16, (int)(Main.screenPosition.Y + Main.screenHeight / 2) / 16)))
+            if(remixFlag)
             {
-                if (Main.remixWorld)
-                {
-                    return Main.LocalPlayer.position.Y >= Main.rockLayer * 16.0 + Main.screenHeight / 2;
-                }
-                return true;
-            }
-            return false;
-        }
+                return Main.remixWorld && Main.LocalPlayer.position.Y >= Main.rockLayer * 16.0 + Main.screenHeight / 2;
+			}
 
-        public static bool OtherworldMusic()
-        {
-            FieldInfo swapMusic = typeof(Main).GetField("swapMusic", BindingFlags.NonPublic | BindingFlags.Static);
-            return Main.drunkWorld ^ (bool)swapMusic.GetValue(null);
+            return Main.LocalPlayer.position.Y >= Main.worldSurface * 16.0 + Main.screenHeight / 2 && (Main.remixWorld || !WorldGen.oceanDepths((int)(Main.screenPosition.X + Main.screenWidth / 2) / 16, (int)(Main.screenPosition.Y + Main.screenHeight / 2) / 16));
         }
     }
 }
