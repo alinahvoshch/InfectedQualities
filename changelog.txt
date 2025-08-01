@@ -1,9 +1,9 @@
-0.7.4.4
+0.7.4.5
 =======
 -Fixed corrupt and crimson jungle grass not getting converted by blue solution.
 -Made some plants to check for actuation before updating
 -Fixed hallowed jungle playing underground hallow music at the surface of remix worlds
---Additionally removed the use of reflection as it's no longer needed with the current tModLoader update (v.2025.6.3.0)
+--Additionally removed the use of reflection as it's no longer needed with the current tModLoader update (v2025.6.3.0)
 
 0.7.4.4
 =======
