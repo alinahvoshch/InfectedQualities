@@ -61,7 +61,6 @@ namespace InfectedQualities.Common
 
                 if (stoneInfectionType.HasValue)
                 {
-                    Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
                     Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = TileUtilities.GetMossType(stoneInfectionType.Value, mossType.Value);
                     WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
                     SoundEngine.PlaySound(SoundID.Dig, new Vector2(Player.tileTargetX, Player.tileTargetY) * 16);
