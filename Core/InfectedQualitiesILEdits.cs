@@ -826,7 +826,6 @@ namespace InfectedQualities.Core
         {
             ILCursor cursor = new(il);
             ILLabel label = cursor.DefineLabel();
-            ILLabel nextLabel = cursor.DefineLabel();
 
             if (cursor.TryGotoNext(i => i.MatchLdcI4(1), i => i.MatchStloc(15), i => i.MatchBr(out label)))
             {
@@ -863,31 +862,16 @@ namespace InfectedQualities.Core
                     cursor.EmitDelegate<Func<int, int, bool>>((m, n) => !Main.tileMoss[Main.tile[m, n].TileType]);
                     cursor.Emit(OpCodes.Brfalse, label);
                 }
-            }
 
-            label = cursor.DefineLabel();
-            if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdloc(22), i => i.MatchLdloc(23), i => i.MatchLdcI4(10), i => i.MatchCall(typeof(WorldGen).GetMethod("InWorld")), i => i.MatchBrfalse(out label)))
-            {
-                if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedMosses) 
-                {
-                    cursor.Emit(OpCodes.Ldloc, 22);
-                    cursor.Emit(OpCodes.Ldloc, 23);
-                    cursor.EmitDelegate<Func<int, int, bool>>((m, n) => !Main.tileMoss[Main.tile[m, n].TileType]);
-                    cursor.Emit(OpCodes.Brfalse, label);
-                }
-
-                cursor.Emit(OpCodes.Ldloc, 22);
-                cursor.Emit(OpCodes.Ldloc, 23);
-                cursor.Emit(OpCodes.Call, typeof(WorldGen).GetMethod("nearbyChlorophyte", [typeof(int), typeof(int)]));
-                cursor.Emit(OpCodes.Brfalse, nextLabel);
-
-                cursor.Emit(OpCodes.Ldloc, 22);
-                cursor.Emit(OpCodes.Ldloc, 23);
-                cursor.Emit(OpCodes.Call, typeof(WorldGen).GetMethod("ChlorophyteDefense", [typeof(int), typeof(int)]));
-                cursor.Emit(OpCodes.Br, label);
-
-                cursor.MarkLabel(nextLabel);
-            }
+				label = cursor.DefineLabel();
+				if (cursor.TryGotoNext(MoveType.After, i => i.MatchLdloc(22), i => i.MatchLdloc(23), i => i.MatchLdcI4(10), i => i.MatchCall(typeof(WorldGen).GetMethod("InWorld")), i => i.MatchBrfalse(out label)))
+				{
+					cursor.Emit(OpCodes.Ldloc, 22);
+					cursor.Emit(OpCodes.Ldloc, 23);
+					cursor.EmitDelegate<Func<int, int, bool>>((m, n) => !Main.tileMoss[Main.tile[m, n].TileType]);
+					cursor.Emit(OpCodes.Brfalse, label);
+				}
+			}
         }
 
         private static bool WorldGen_nearbyChlorophyte(On_WorldGen.orig_nearbyChlorophyte orig, int i, int j)

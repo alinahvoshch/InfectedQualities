@@ -42,16 +42,6 @@ namespace InfectedQualities.Common
 			TileID.Sets.CanGrowCrystalShards[TileID.HallowedGrass] = true;
 			TileID.Sets.CanGrowCrystalShards[TileID.GolfGrassHallowed] = true;
 
-			TileLoader.RegisterConversion(TileID.HallowedGrass, BiomeConversionID.Chlorophyte, ApplyConversion);
-			TileLoader.RegisterConversion(TileID.Pearlstone, BiomeConversionID.Chlorophyte, ApplyConversion);
-			TileLoader.RegisterConversion(TileID.Pearlsand, BiomeConversionID.Chlorophyte, ApplyConversion);
-			TileLoader.RegisterConversion(TileID.HallowHardenedSand, BiomeConversionID.Chlorophyte, ApplyConversion);
-			TileLoader.RegisterConversion(TileID.HallowSandstone, BiomeConversionID.Chlorophyte, ApplyConversion);
-			TileLoader.RegisterConversion(TileID.HallowedIce, BiomeConversionID.Chlorophyte, ApplyConversion);
-			TileLoader.RegisterConversion(TileID.HallowedPlants, BiomeConversionID.Chlorophyte, ApplyConversion);
-			TileLoader.RegisterConversion(TileID.HallowedPlants2, BiomeConversionID.Chlorophyte, ApplyConversion);
-			TileLoader.RegisterConversion(TileID.HallowedVines, BiomeConversionID.Chlorophyte, ApplyConversion);
-
 			if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
 			{
 				TileID.Sets.SlowlyDiesInWater[TileID.CorruptPlants] = false;
@@ -64,33 +54,6 @@ namespace InfectedQualities.Common
 				TileObjectData sunflower = TileObjectData.GetTileData(TileID.Sunflower, 0);
 				sunflower.AnchorValidTiles = [.. sunflower.AnchorValidTiles, ModContent.TileType<HallowedJungleGrass>()];
 			}
-		}
-
-		private bool ApplyConversion(int i, int j, int type, int conversionType)
-		{
-			int convertType = type switch
-			{
-				TileID.HallowedGrass => TileID.JungleGrass,
-				TileID.Pearlstone => TileID.Stone,
-				TileID.Pearlsand => TileID.Sand,
-				TileID.HallowHardenedSand => TileID.HardenedSand,
-				TileID.HallowSandstone => TileID.Sandstone,
-				TileID.HallowedIce => TileID.IceBlock,
-				_ => -1
-			};
-
-			if (convertType == -1)
-			{
-				WorldGen.KillTile(i, j);
-				if (Main.netMode != NetmodeID.SinglePlayer)
-				{
-					NetMessage.SendTileSquare(-1, i, j);
-				}
-				return true;
-			}
-
-			WorldGen.ConvertTile(i, j, convertType);
-			return true;
 		}
 
 		public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak)

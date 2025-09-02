@@ -39,36 +39,11 @@ namespace InfectedQualities.Content.Tiles
             RegisterItemDrop(ItemID.MudBlock);
             AddMapEntry(new(78, 193, 227));
 
-            TileLoader.RegisterConversion(TileID.JungleGrass, BiomeConversionID.Hallow, ApplyConversion);
-			TileLoader.RegisterConversion(TileID.CorruptJungleGrass, BiomeConversionID.Hallow, ApplyConversion);
-			TileLoader.RegisterConversion(TileID.CrimsonJungleGrass, BiomeConversionID.Hallow, ApplyConversion);
+			TileLoader.RegisterSimpleConversion(TileID.JungleGrass, BiomeConversionID.Hallow, Type);
 			VanillaFallbackOnModDeletion = TileID.JungleGrass;
 		}
 
-        public bool ApplyConversion(int i, int j, int type, int conversionType)
-        {
-            WorldGen.ConvertTile(i, j, Type);
-            return true;
-        }
-
-        public override void Convert(int i, int j, int conversionType)
-        {
-            switch (conversionType)
-            {
-                case BiomeConversionID.Chlorophyte:
-                case BiomeConversionID.Purity:
-                    WorldGen.ConvertTile(i, j, TileID.JungleGrass);
-                    break;
-                case BiomeConversionID.Corruption:
-                    WorldGen.ConvertTile(i, j, TileID.CorruptJungleGrass);
-                    return;
-                case BiomeConversionID.Crimson:
-                    WorldGen.ConvertTile(i, j, TileID.CrimsonJungleGrass);
-                    return;
-            }
-        }
-
-        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
             if (TileUtilities.TileExposedToLava(i, j))
             {

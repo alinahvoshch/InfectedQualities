@@ -131,43 +131,8 @@ namespace InfectedQualities.Content.Tiles
 					break;
 			}
 
-			TileLoader.RegisterConversion(TileUtilities.GetMossType(null, mossType), infectionType.ToConversionID(), ApplyConversion);
+			TileLoader.RegisterSimpleConversion(TileUtilities.GetMossType(null, mossType), infectionType.ToConversionID(), Type);
 			VanillaFallbackOnModDeletion = TileUtilities.GetMossType(null, mossType);
-		}
-
-		public bool ApplyConversion(int i, int j, int type, int conversionType)
-		{
-			WorldGen.ConvertTile(i, j, Type);
-			return false;
-		}
-
-		public override void Convert(int i, int j, int conversionType)
-		{
-			if (infectionType.ToConversionID() != conversionType)
-			{
-				if (infectionType == InfectionType.Hallowed && conversionType == BiomeConversionID.PurificationPowder)
-				{
-					return;
-				}
-
-				switch (conversionType)
-				{
-					case BiomeConversionID.Chlorophyte:
-					case BiomeConversionID.PurificationPowder:
-					case BiomeConversionID.Purity:
-						WorldGen.ConvertTile(i, j, TileUtilities.GetMossType(null, mossType));
-						break;
-					case BiomeConversionID.Corruption:
-						WorldGen.ConvertTile(i, j, TileUtilities.GetMossType(InfectionType.Corrupt, mossType));
-						return;
-					case BiomeConversionID.Crimson:
-						WorldGen.ConvertTile(i, j, TileUtilities.GetMossType(InfectionType.Crimson, mossType));
-						return;
-					case BiomeConversionID.Hallow:
-						WorldGen.ConvertTile(i, j, TileUtilities.GetMossType(InfectionType.Hallowed, mossType));
-						return;
-				}
-			}
 		}
 
 		public override ushort GetMapOption(int i, int j)

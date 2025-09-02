@@ -62,43 +62,8 @@ namespace InfectedQualities.Content.Tiles
 					break;
 			}
 
-			TileLoader.RegisterConversion(TileID.SnowBlock, infectionType.ToConversionID(), ApplyConversion);
+			TileLoader.RegisterSimpleConversion(TileID.SnowBlock, infectionType.ToConversionID(), Type);
 			VanillaFallbackOnModDeletion = TileID.SnowBlock;
-		}
-
-		public bool ApplyConversion(int i, int j, int type, int conversionType)
-		{
-			WorldGen.ConvertTile(i, j, Type);
-			return true;
-		}
-
-		public override void Convert(int i, int j, int conversionType)
-		{
-			if (infectionType.ToConversionID() != conversionType)
-			{
-				if (infectionType == InfectionType.Hallowed && conversionType == BiomeConversionID.PurificationPowder)
-				{
-					return;
-				}
-
-				switch (conversionType)
-				{
-					case BiomeConversionID.Chlorophyte:
-					case BiomeConversionID.PurificationPowder:
-					case BiomeConversionID.Purity:
-						WorldGen.ConvertTile(i, j, TileID.SnowBlock);
-						break;
-					case BiomeConversionID.Corruption:
-						WorldGen.ConvertTile(i, j, TileUtilities.GetSnowType(InfectionType.Corrupt));
-						return;
-					case BiomeConversionID.Crimson:
-						WorldGen.ConvertTile(i, j, TileUtilities.GetSnowType(InfectionType.Crimson));
-						return;
-					case BiomeConversionID.Hallow:
-						WorldGen.ConvertTile(i, j, TileUtilities.GetSnowType(InfectionType.Hallowed));
-						return;
-				}
-			}
 		}
 
 		public override bool HasWalkDust() => true;

@@ -31,39 +31,9 @@ namespace InfectedQualities.Content.Tiles.Plants
 
 			AddMapEntry(new(29, 160, 247), Language.GetText("MapObject.Thorn"));
 
-			TileLoader.RegisterConversion(TileID.JungleThorns, BiomeConversionID.Hallow, ApplyConversion);
-			TileLoader.RegisterConversion(Type, BiomeConversionID.Hallow, ApplyConversion); //Placing this here prevents hallowed thorns from breaking via blue solution, the delegate returning false is very important
-
+			TileLoader.RegisterSimpleConversion(TileID.JungleThorns, BiomeConversionID.Hallow, Type);
+			TileLoader.RegisterConversion(Type, BiomeConversionID.Hallow, (i, j, type, conversionType) => false); //Placing this here prevents hallowed thorns from breaking via blue solution, the delegate returning false is very important
 			VanillaFallbackOnModDeletion = TileID.JungleThorns;
-		}
-
-		public bool ApplyConversion(int i, int j, int type, int conversionType)
-		{
-			WorldGen.ConvertTile(i, j, Type);
-			return false;
-		}
-
-		public override void Convert(int i, int j, int conversionType)
-		{
-			switch (conversionType)
-			{
-				case BiomeConversionID.Chlorophyte:
-					WorldGen.KillTile(i, j);
-					if (Main.netMode != NetmodeID.SinglePlayer)
-					{
-						NetMessage.SendTileSquare(-1, i, j);
-					}
-					break;
-				case BiomeConversionID.Purity:
-					WorldGen.ConvertTile(i, j, TileID.JungleThorns);
-					break;
-				case BiomeConversionID.Corruption:
-					WorldGen.ConvertTile(i, j, TileID.CorruptThorns);
-					return;
-				case BiomeConversionID.Crimson:
-					WorldGen.ConvertTile(i, j, TileID.CrimsonThorns);
-					return;
-			}
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 3 : 10;
