@@ -2,6 +2,7 @@
 =======
 -Made changes to tile conversions based on the current tModLoader update.
 --As a side effect, chlorophyte no longer purifies vanilla hallowed blocks. Yet the hallowed blocks from this mod will get purified by chlorophyte and purification powder. When Terraria gets updated to 1.4.5, changes will be made such that vanilla hallowed blocks are purified by those as well.
+-Infected moss blocks now visually merge with dirt blocks
 
 0.7.4.5
 =======

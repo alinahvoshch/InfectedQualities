@@ -26,6 +26,7 @@ namespace InfectedQualities.Content.Tiles
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ResetsHalfBrickPlacementAttempt[Type] = false;
 			TileID.Sets.Conversion.Moss[Type] = true;
+			Main.tileMerge[TileID.Dirt][Type] = true;
 
 			MinPick = 65;
 			MineResist = 2;
@@ -573,6 +574,8 @@ namespace InfectedQualities.Content.Tiles
 			{
 				up = Type;
 			}
+
+			WorldGen.TileMergeAttempt(Type, TileID.Sets.Dirt, ref up, ref down, ref left, ref right, ref upLeft, ref upRight, ref downLeft, ref downRight);
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num)
