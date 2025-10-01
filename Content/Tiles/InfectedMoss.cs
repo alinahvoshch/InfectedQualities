@@ -36,8 +36,6 @@ namespace InfectedQualities.Content.Tiles
 			{
 				case InfectionType.Corrupt:
 					InfectedStoneType = TileID.Ebonstone;
-					Main.tileMerge[TileID.Ebonstone][Type] = true;
-					TileID.Sets.NeedsGrassFramingDirt[Type] = TileID.Ebonstone;
 					TileID.Sets.Corrupt[Type] = true;
 					TileID.Sets.AddCorruptionTile(Type);
 					TileID.Sets.CorruptBiomeSight[Type] = true;
@@ -46,8 +44,6 @@ namespace InfectedQualities.Content.Tiles
 					break;
 				case InfectionType.Crimson:
 					InfectedStoneType = TileID.Crimstone;
-					Main.tileMerge[TileID.Crimstone][Type] = true;
-					TileID.Sets.NeedsGrassFramingDirt[Type] = TileID.Crimstone;
 					TileID.Sets.Crimson[Type] = true;
 					TileID.Sets.AddCrimsonTile(Type);
 					TileID.Sets.CrimsonBiomeSight[Type] = true;
@@ -57,8 +53,6 @@ namespace InfectedQualities.Content.Tiles
 				case InfectionType.Hallowed:
 					InfectedStoneType = TileID.Pearlstone;
 					Main.tileShine[Type] = 9000;
-					Main.tileMerge[TileID.Pearlstone][Type] = true;
-					TileID.Sets.NeedsGrassFramingDirt[Type] = TileID.Pearlstone;
 					TileID.Sets.Hallow[Type] = true;
 					TileID.Sets.HallowBiome[Type] = 1;
 					TileID.Sets.HallowBiomeSight[Type] = true;
@@ -132,6 +126,8 @@ namespace InfectedQualities.Content.Tiles
 					break;
 			}
 
+			Main.tileMerge[InfectedStoneType][Type] = true;
+			TileID.Sets.NeedsGrassFramingDirt[Type] = InfectedStoneType;
 			TileLoader.RegisterSimpleConversion(TileUtilities.GetMossType(null, mossType), infectionType.ToConversionID(), Type);
 			VanillaFallbackOnModDeletion = TileUtilities.GetMossType(null, mossType);
 		}
