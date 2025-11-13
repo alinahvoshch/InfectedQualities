@@ -6,6 +6,7 @@ using InfectedQualities.Utilities;
 using Microsoft.Xna.Framework;
 using System;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace InfectedQualities
@@ -39,7 +40,23 @@ namespace InfectedQualities
             }
         }
 
-        public override void PostSetupContent() => InfectedQualitiesModSupport.PostSetupContent();
+        public override void PostSetupContent() 
+        { 
+            InfectedQualitiesModSupport.PostSetupContent();
+
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedBiomes)
+            {
+                TileID.Sets.Infectable[TileID.SnowBlock] = true;
+            }
+
+            if (ModContent.GetInstance<InfectedQualitiesServerConfig>().InfectedGemstones)
+            {
+	            foreach (GemType gemType in Enum.GetValues(typeof(GemType)))
+	            {
+		            TileID.Sets.Infectable[TileUtilities.GetGemstoneType(null, gemType)] = true;
+	            }
+            }
+        }
 
         public override object Call(params object[] args) => args switch
         {
